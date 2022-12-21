@@ -34,8 +34,7 @@ public abstract class User {
 
     }
 
-    public User (int idUser, String email) {
-        this.idUser = idUser;
+    public User (String email) {
         this.email = email;
     }
 

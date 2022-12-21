@@ -9,20 +9,20 @@ import jakarta.persistence.Entity;
 public abstract class TelegramOperationalUser extends TelegramUser {
     @Column(name="isOperational")
     private boolean isOperational;
-    @Column(name="accessKey")
-    private String accessKey;
+    @Column(name="accessType")
+    private String accessType;
     @Column(name="accessAddedBy")
     private int accessAddedBy;
-    @Column(name="accessAddedBy")
+    @Column(name="accessDisabledBy")
     private int accessDisabledBy;
 
     public TelegramOperationalUser() {
     }
 
-    public TelegramOperationalUser(int idUser, String email, int idTelegramUser, String displayName) {
-        super(idUser, email, idTelegramUser, displayName);
+    public TelegramOperationalUser(String email, int idTelegramUser, String displayName) {
+        super(email, idTelegramUser, displayName);
         this.isOperational = false;
-        this.accessKey = "none";
+        this.accessType = "none";
         this.accessAddedBy = 0;
         this.accessDisabledBy = 0;
     }
@@ -36,11 +36,11 @@ public abstract class TelegramOperationalUser extends TelegramUser {
     }
 
     public String getAccessKey() {
-        return accessKey;
+        return accessType;
     }
 
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
+    public void setAccessType(String accessType) {
+        this.accessType = accessType;
     }
 
     public int getAccessAddedBy() {

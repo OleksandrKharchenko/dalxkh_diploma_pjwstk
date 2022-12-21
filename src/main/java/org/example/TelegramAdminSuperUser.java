@@ -14,8 +14,8 @@ public class TelegramAdminSuperUser extends TelegramOperationalUser{
 
     }
 
-    public TelegramAdminSuperUser(int idUser, String email, int idTelegramUser, String displayName, String accessSuperKey) {
-        super(idUser, email, idTelegramUser, displayName);
+    public TelegramAdminSuperUser(String email, int idTelegramUser, String displayName, String accessSuperKey) {
+        super(email, idTelegramUser, displayName);
         this.accessSuperKey = accessSuperKey;
     }
 
