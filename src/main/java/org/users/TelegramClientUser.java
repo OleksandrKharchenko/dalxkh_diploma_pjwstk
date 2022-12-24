@@ -1,4 +1,4 @@
-package org.example;
+package org.users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -17,10 +17,6 @@ public class TelegramClientUser extends TelegramUser {
     private boolean banStatus;
     @Column(name="bannedBy")
     private int bannedBy;
-
-
-    public TelegramClientUser() {
-    }
 
     public TelegramClientUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);

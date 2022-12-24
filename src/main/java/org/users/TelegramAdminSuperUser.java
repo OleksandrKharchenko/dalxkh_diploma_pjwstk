@@ -1,4 +1,4 @@
-package org.example;
+package org.users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -9,10 +9,6 @@ import jakarta.persistence.Entity;
 public class TelegramAdminSuperUser extends TelegramOperationalUser{
     @Column(name="accessSuperKey")
     private String accessSuperKey;
-
-    public TelegramAdminSuperUser() {
-
-    }
 
     public TelegramAdminSuperUser(String email, int idTelegramUser, String displayName, String accessSuperKey) {
         super(email, idTelegramUser, displayName);

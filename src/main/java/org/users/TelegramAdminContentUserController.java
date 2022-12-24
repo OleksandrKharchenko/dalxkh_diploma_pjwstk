@@ -1,4 +1,4 @@
-package org.example;
+package org.users;
 
 public abstract class TelegramAdminContentUserController {
 

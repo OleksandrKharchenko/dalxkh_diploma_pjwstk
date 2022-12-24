@@ -1,6 +1,5 @@
-package org.example;
+package org.users;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
@@ -8,13 +7,8 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue(value="TelegramAdminSuperContentUser")
 public class TelegramAdminContentUser extends TelegramOperationalUser {
 
-    public TelegramAdminContentUser() {
-
-    }
-
     public TelegramAdminContentUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
     }
-
 
 }

@@ -1,4 +1,4 @@
-package org.example;
+package org.users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -15,9 +15,6 @@ public abstract class TelegramOperationalUser extends TelegramUser {
     private int accessAddedBy;
     @Column(name="accessDisabledBy")
     private int accessDisabledBy;
-
-    public TelegramOperationalUser() {
-    }
 
     public TelegramOperationalUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);

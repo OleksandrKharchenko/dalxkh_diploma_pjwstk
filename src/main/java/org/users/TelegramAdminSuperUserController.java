@@ -1,11 +1,8 @@
-package org.example;
+package org.users;
 
-import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-
-import java.util.List;
-import java.util.Objects;
+import org.main.HibernateSessionFactorySpawner;
 
 public abstract class TelegramAdminSuperUserController {
 

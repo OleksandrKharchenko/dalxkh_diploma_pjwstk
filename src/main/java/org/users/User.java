@@ -1,4 +1,4 @@
-package org.example;
+package org.users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -29,10 +29,6 @@ public abstract class User {
     private int idUser;
     @Column(name="email")
     private String email;
-
-    public User () {
-
-    }
 
     public User (String email) {
         this.email = email;
