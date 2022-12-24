@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue(value="TelegramAdminSuperContentUser")
-public class TelegramAdminContentUser extends TelegramOperationalUser implements TelegramAdminContentUserController{
+public class TelegramAdminContentUser extends TelegramOperationalUser {
 
     public TelegramAdminContentUser() {
 
@@ -16,22 +16,5 @@ public class TelegramAdminContentUser extends TelegramOperationalUser implements
         super(email, idTelegramUser, displayName);
     }
 
-    @Override
-    public String deleteWebItem(){
-
-        return "Item deleted.";
-    }
-
-    @Override
-    public String addWebItem(){
-
-        return "Item added.";
-    }
-
-    @Override
-    public String editWebItem() {
-
-        return "Item updated.";
-    }
 
 }

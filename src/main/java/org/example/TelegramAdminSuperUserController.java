@@ -11,34 +11,36 @@ public abstract class TelegramAdminSuperUserController {
 
     public static String addOperationalUser(TelegramUser telegramUser, TelegramAdminSuperUser sessionSuperUser, String accessType) {
 
-        Session addOperUserSession = HibernateSessionFactorySpawner.spawnSession();
-        System.out.println(sessionSuperUser.getAccessSuperKey());
         if (sessionSuperUser.getAccessSuperKey().equals("9x09admin")){
             if (accessType == "content") {
+                Session addOperUserSessionRem = HibernateSessionFactorySpawner.spawnSession();
                 TelegramAdminContentUser contentUser = new TelegramAdminContentUser(telegramUser.getEmail(), telegramUser.getIdTelegramUser(), telegramUser.getDisplayName());
                 contentUser.setAccessType("content");
                 contentUser.setOperational(true);
                 contentUser.setAccessAddedBy(sessionSuperUser.getIdTelegramUser());
-                addOperUserSession.beginTransaction();
-                addOperUserSession.remove(telegramUser);
-                addOperUserSession.persist(contentUser);
-                addOperUserSession.getTransaction().commit();
-                addOperUserSession.flush();
-                addOperUserSession.close();
+                addOperUserSessionRem.beginTransaction();
+                addOperUserSessionRem.remove(telegramUser);
+                addOperUserSessionRem.getTransaction().commit();
+                Session addOperUserSessionPersist = HibernateSessionFactorySpawner.spawnSession();
+                addOperUserSessionPersist.beginTransaction();
+                addOperUserSessionPersist.persist(contentUser);
+                addOperUserSessionPersist.getTransaction().commit();
                 return "Admin Content User created from:" + " Telegram id " + telegramUser.getIdTelegramUser() + " Telegram Display Name " + telegramUser.getDisplayName();
             }
             if (accessType == "super") {
                 String accessSuperKey = new String("9x09admin");
-                TelegramAdminSuperUser superUser = new TelegramAdminSuperUser(telegramUser.getEmail(), telegramUser.getIdTelegramUser(), telegramUser.getDisplayName(), accessSuperKey);
-                superUser.setAccessType("super");
-                superUser.setOperational(true);
-                superUser.setAccessAddedBy(sessionSuperUser.getIdTelegramUser());
-                addOperUserSession.beginTransaction();
-                addOperUserSession.remove(telegramUser);
-                addOperUserSession.persist(superUser);
-                addOperUserSession.getTransaction().commit();
-                addOperUserSession.flush();
-                addOperUserSession.close();
+                Session addOperUserSessionRem = HibernateSessionFactorySpawner.spawnSession();
+                TelegramAdminContentUser contentUser = new TelegramAdminContentUser(telegramUser.getEmail(), telegramUser.getIdTelegramUser(), telegramUser.getDisplayName());
+                contentUser.setAccessType("super");
+                contentUser.setOperational(true);
+                contentUser.setAccessAddedBy(sessionSuperUser.getIdTelegramUser());
+                addOperUserSessionRem.beginTransaction();
+                addOperUserSessionRem.remove(telegramUser);
+                addOperUserSessionRem.getTransaction().commit();
+                Session addOperUserSessionPersist = HibernateSessionFactorySpawner.spawnSession();
+                addOperUserSessionPersist.beginTransaction();
+                addOperUserSessionPersist.persist(contentUser);
+                addOperUserSessionPersist.getTransaction().commit();
                 return "Admin Super User created from:" + " Telegram id " + telegramUser.getIdTelegramUser() + " Telegram Display Name " + telegramUser.getDisplayName();
             }
             else {
@@ -51,17 +53,39 @@ public abstract class TelegramAdminSuperUserController {
 
 
     public static String disableOperationalUser(TelegramOperationalUser operationalUser, TelegramAdminSuperUser sessionSuperUser) {
-        if (operationalUser.isOperational()) {
-            operationalUser.setOperational(false);
-            operationalUser.setAccessType("none");
-            operationalUser.setAccessDisabledBy(sessionSuperUser.getIdTelegramUser());
-            return "Operational user disabled.";
+        if (sessionSuperUser.getAccessSuperKey().equals("9x09admin")) {
+            if (operationalUser.isOperational()) {
+                Session disableOperUserSession = HibernateSessionFactorySpawner.spawnSession();
+                operationalUser.setOperational(false);
+                operationalUser.setAccessType("none");
+                operationalUser.setAccessDisabledBy(sessionSuperUser.getIdTelegramUser());
+                disableOperUserSession.beginTransaction();
+                disableOperUserSession.saveOrUpdate(operationalUser);
+                disableOperUserSession.getTransaction().commit();
+                return "Operational user disabled.";
+            } else {
+                return "Operational user already disabled.";
             }
-        else {
-            return "User is not operational.";
         }
+        return "You don't have permission to disable Operational User. Wrong Access Super Key.";
     }
 
+    public static String banTelegramClient(TelegramClientUser telegramClientUser, TelegramAdminSuperUser sessionSuperUser){
+        if (sessionSuperUser.getAccessSuperKey().equals("9x09admin")) {
+            if (!telegramClientUser.isBanStatus()) {
+                Session banClientUserSession = HibernateSessionFactorySpawner.spawnSession();
+                telegramClientUser.setBanStatus(true);
+                telegramClientUser.setBannedBy(sessionSuperUser.getIdTelegramUser());
+                banClientUserSession.beginTransaction();
+                banClientUserSession.saveOrUpdate(telegramClientUser);
+                banClientUserSession.getTransaction().commit();
+                return "Client user banned.";
+            } else {
+                return "Client user already banned.";
+            }
+        }
+        return "You don't have permission to disable Operational User. Wrong Access Super Key.";
+    }
 
     public static TelegramAdminSuperUser initiateTelegramFirstSuperUser(String email, int idTelegramUser, String displayName){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
@@ -70,8 +94,6 @@ public abstract class TelegramAdminSuperUserController {
         startSuperUserSession.beginTransaction();
         startSuperUserSession.persist(superUser);
         startSuperUserSession.getTransaction().commit();
-        startSuperUserSession.flush();
-        startSuperUserSession.close();
         return superUser;
     }
     public static void initiateTelegramFirstSuperUser(TelegramAdminSuperUser superUser){
@@ -80,8 +102,6 @@ public abstract class TelegramAdminSuperUserController {
         startSuperUserSession.beginTransaction();
         startSuperUserSession.persist(superUser);
         startSuperUserSession.getTransaction().commit();
-        startSuperUserSession.flush();
-        startSuperUserSession.close();
     }
 
     public static TelegramAdminSuperUser getInitialSuperUser(){
@@ -92,4 +112,16 @@ public abstract class TelegramAdminSuperUserController {
         TelegramAdminSuperUser initialSuperUser = (TelegramAdminSuperUser) query.uniqueResult();
         return initialSuperUser;
     }
+
+    public static TelegramOperationalUser getTelegramOperUser(int idTelegramOperUser){
+        Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
+        Query query;
+        startSuperUserSession.beginTransaction();
+        query = startSuperUserSession.createQuery("from User where idTelegramUser= " + idTelegramOperUser + "and isOperational= true");
+        TelegramOperationalUser telegramOperUser = (TelegramOperationalUser) query.uniqueResult();
+        return telegramOperUser;
+    }
+
+
+
 }

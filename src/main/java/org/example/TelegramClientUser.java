@@ -15,6 +15,9 @@ public class TelegramClientUser extends TelegramUser {
     private int creditCard;
     @Column(name="banStatus")
     private boolean banStatus;
+    @Column(name="bannedBy")
+    private int bannedBy;
+
 
     public TelegramClientUser() {
     }
@@ -53,5 +56,13 @@ public class TelegramClientUser extends TelegramUser {
 
     public void setBanStatus(boolean banStatus) {
         this.banStatus = banStatus;
+    }
+
+    public int getBannedBy() {
+        return bannedBy;
+    }
+
+    public void setBannedBy(int bannedBy) {
+        this.bannedBy = bannedBy;
     }
 }

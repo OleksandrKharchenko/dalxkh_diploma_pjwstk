@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue(value="TelegramUser")
 public abstract class TelegramUser extends User {
-    @Column(name="idTelegramUser")
+    @Column(name="idTelegramUser", unique = true)
     private int idTelegramUser;
     @Column(name="displayName")
     private String displayName;

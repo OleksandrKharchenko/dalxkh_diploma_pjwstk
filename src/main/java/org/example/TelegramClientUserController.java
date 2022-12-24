@@ -11,19 +11,15 @@ public class TelegramClientUserController {
         startUserSession.beginTransaction();
         startUserSession.persist(clientUser);
         startUserSession.getTransaction().commit();
-        startUserSession.flush();
-        startUserSession.close();
     }
     public static void addTelegramClientUser(TelegramClientUser clientUser){
         Session startUserSession = HibernateSessionFactorySpawner.spawnSession();
         startUserSession.beginTransaction();
         startUserSession.persist(clientUser);
         startUserSession.getTransaction().commit();
-        startUserSession.flush();
-        startUserSession.close();
     }
 
-    public static TelegramClientUser getIClientUser(int idTelegramUser){
+    public static TelegramClientUser getTelegramClientUser(int idTelegramUser){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startSuperUserSession.beginTransaction();
