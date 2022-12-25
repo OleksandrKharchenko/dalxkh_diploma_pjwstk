@@ -1,21 +1,12 @@
 package org.webitems;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.orders.Order;
 
 
 @Entity
-@Table(name="WebItem")
+@Table(name="WebItems")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
         name="WebItemType",
@@ -31,6 +22,8 @@ public abstract class WebItem {
     private String name;
     @Column(name="addedBy")
     private int addedBy;
+    @OneToOne(targetEntity=Order.class, mappedBy="webItem", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private Order order;
 
     public WebItem() {
     }
@@ -62,5 +55,13 @@ public abstract class WebItem {
 
     public void setAddedBy(int addedBy) {
         this.addedBy = addedBy;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

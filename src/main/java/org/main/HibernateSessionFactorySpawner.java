@@ -3,6 +3,10 @@ package org.main;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.orders.Order;
+import org.payments.CreditCardPayment;
+import org.payments.CryptoPayment;
+import org.payments.Payment;
 import org.users.*;
 import org.webitems.*;
 
@@ -21,7 +25,11 @@ public class HibernateSessionFactorySpawner {
                 addAnnotatedClass(Web3CryptoItem.class).
                 addAnnotatedClass(Web2GameCode.class).
                 addAnnotatedClass(Web2GiftCard.class).
-                addAnnotatedClass(Web3NFT.class)
+                addAnnotatedClass(Web3NFT.class).
+                addAnnotatedClass(Order.class).
+                addAnnotatedClass(Payment.class).
+                addAnnotatedClass(CryptoPayment.class).
+                addAnnotatedClass(CreditCardPayment.class)
                 .buildSessionFactory();
         Session session = factory.getCurrentSession();
         return session;
@@ -40,7 +48,11 @@ public class HibernateSessionFactorySpawner {
                 addAnnotatedClass(Web3CryptoItem.class).
                 addAnnotatedClass(Web2GameCode.class).
                 addAnnotatedClass(Web2GiftCard.class).
-                addAnnotatedClass(Web3NFT.class)
+                addAnnotatedClass(Web3NFT.class).
+                addAnnotatedClass(Order.class).
+                addAnnotatedClass(Payment.class).
+                addAnnotatedClass(CryptoPayment.class).
+                addAnnotatedClass(CreditCardPayment.class)
                 .buildSessionFactory();
         Session session = factory.openSession();
     }

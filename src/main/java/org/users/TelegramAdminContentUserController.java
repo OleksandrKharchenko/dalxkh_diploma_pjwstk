@@ -16,15 +16,15 @@ public abstract class TelegramAdminContentUserController {
         startGetWeb2ItemsSession.beginTransaction();
         switch (typeOf){
             case "Web3NFT":
-                query = startGetWeb2ItemsSession.createQuery("from WebItem w where TYPE(w) = Web3NFT", Web3NFT.class);
+                query = startGetWeb2ItemsSession.createQuery("from WebItems w where TYPE(w) = Web3NFT", Web3NFT.class);
                 listWebItems = query.getResultList();
                 return listWebItems;
             case "Web2GameCode":
-                query = startGetWeb2ItemsSession.createQuery("from WebItem w where TYPE(w) = Web2GameCode", Web2GameCode.class);
+                query = startGetWeb2ItemsSession.createQuery("from WebItems w where TYPE(w) = Web2GameCode", Web2GameCode.class);
                 listWebItems = query.getResultList();
                 return listWebItems;
             case "Web2GiftCard":
-                query = startGetWeb2ItemsSession.createQuery("from WebItem w where TYPE(w) = Web2GiftCard", Web2GiftCard.class);
+                query = startGetWeb2ItemsSession.createQuery("from WebItems w where TYPE(w) = Web2GiftCard", Web2GiftCard.class);
                 listWebItems = query.getResultList();
                 return listWebItems;
             default:
@@ -36,7 +36,7 @@ public abstract class TelegramAdminContentUserController {
         Session startGetWeb2ItemsSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startGetWeb2ItemsSession.beginTransaction();
-        query = startGetWeb2ItemsSession.createQuery("from WebItem where idItem= :idItem", WebItem.class).setParameter("idItem", idItem);
+        query = startGetWeb2ItemsSession.createQuery("from WebItems where idItem= :idItem", WebItem.class).setParameter("idItem", idItem);
         WebItem webItem = (WebItem) query.getSingleResult();
         return webItem;
     }

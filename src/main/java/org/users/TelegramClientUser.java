@@ -1,8 +1,9 @@
 package org.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import org.orders.Order;
+
+import java.util.List;
 
 @Entity
 @DiscriminatorValue(value="TelegramClientUser")
@@ -17,6 +18,9 @@ public class TelegramClientUser extends TelegramUser {
     private boolean banStatus;
     @Column(name="bannedBy")
     private int bannedBy;
+    @OneToMany(targetEntity=Order.class, mappedBy="telegramClientUser", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private List<Order> orderList;
+
 
     public TelegramClientUser() {
     }
@@ -63,5 +67,13 @@ public class TelegramClientUser extends TelegramUser {
 
     public void setBannedBy(int bannedBy) {
         this.bannedBy = bannedBy;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 }

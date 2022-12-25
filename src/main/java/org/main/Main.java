@@ -7,7 +7,7 @@ import org.webitems.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-//        HibernateSessionFactorySpawner.spawnInitSession();
+        HibernateSessionFactorySpawner.spawnInitSession();
         String admEmail = "deepalexkh@gmail.com";
         int admIdTelegramUser = 592510188;
         String admDisplayName = "Alex Kharchenko";
@@ -31,11 +31,11 @@ public class Main {
 //
 //        Web3NFT nft0 = new Web3NFT("nft0_monkey", 5, "45x45424r32", "ETH", "ERC-1121", "45423423", "rare", null);
 //        TelegramAdminContentUserController.addWebItem(nft0, telegramOperationalUser);
-        for (WebItem w : TelegramAdminContentUserController.getWebItems("Web2GameCode"))
-        {
-            Web2GameCode wg = (Web2GameCode) w;
-            System.out.println(wg.getName());
-        }
+//        for (WebItem w : TelegramAdminContentUserController.getWebItems("Web2GameCode"))
+//        {
+//            Web2GameCode wg = (Web2GameCode) w;
+//            System.out.println(wg.getName());
+//        }
 
 //        System.out.println(TelegramAdminContentUserController.getWebItems(1).getName());
 //        WebItem gameCode0 = TelegramAdminContentUserController.getWebItems(1);
