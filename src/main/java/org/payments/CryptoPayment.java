@@ -16,8 +16,8 @@ public class CryptoPayment extends Payment{
     public CryptoPayment() {
     }
 
-    public CryptoPayment(int idPayment, Order order, int amount, String cryptoPaymentAddress, String blockchain) {
-        super(idPayment, order, amount);
+    public CryptoPayment(Order order, int amount, String cryptoPaymentAddress, String blockchain) {
+        super(order, amount);
         this.cryptoPaymentAddress = cryptoPaymentAddress;
         this.blockchain = blockchain;
     }

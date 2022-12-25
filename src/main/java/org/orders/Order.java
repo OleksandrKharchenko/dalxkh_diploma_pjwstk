@@ -1,8 +1,12 @@
 package org.orders;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.payments.Payment;
 import org.users.TelegramClientUser;
+import org.webitems.Web2Item;
+import org.webitems.Web3CryptoItem;
 import org.webitems.WebItem;
 
 import java.util.List;
@@ -16,10 +20,10 @@ public class Order {
     @Column(name="idOrder")
     private int idOrder;
     @ManyToOne
-    @JoinColumn(name="idUser")
+    @JoinColumn(name="idUser", nullable = false)
     private TelegramClientUser telegramClientUser;
     @OneToOne
-    @JoinColumn(name="idItem")
+    @JoinColumn(name="idItem", nullable = false)
     private WebItem webItem;
     @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="idPayment")
@@ -46,6 +50,20 @@ public class Order {
         this.emailClient = telegramClientUser.getEmail();
         this.usdEquivalentPrice = usdEquivalentPrice;
         this.cryptoEquivalentPrice = cryptoEquivalentPrice;
+    }
+
+    public Order(TelegramClientUser telegramClientUser, WebItem webItem) {
+        this.telegramClientUser = telegramClientUser;
+        this.webItem = webItem;
+        this.payment = null;
+        this.state = "initiated";
+        this.emailClient = telegramClientUser.getEmail();
+        if (webItem instanceof Web2Item) {
+            this.usdEquivalentPrice = (((Web2Item) webItem).getUsdPrice()) ;
+        }
+        if (webItem instanceof Web3CryptoItem) {
+            this.cryptoEquivalentPrice = (((Web3CryptoItem) webItem).getCryptoPrice()) ;
+        }
     }
 
     public TelegramClientUser getTelegramClientUser() {

@@ -1,13 +1,15 @@
 package org.main;
 
 
+import org.hibernate.Session;
+import org.orders.OrderController;
 import org.users.*;
 import org.webitems.Web2GameCode;
 import org.webitems.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        HibernateSessionFactorySpawner.spawnInitSession();
+//        HibernateSessionFactorySpawner.spawnInitSession();
         String admEmail = "deepalexkh@gmail.com";
         int admIdTelegramUser = 592510188;
         String admDisplayName = "Alex Kharchenko";
@@ -23,12 +25,23 @@ public class Main {
 //        System.out.println(initialSuperUser.getIdUser());
 //        TelegramClientUser telegramClientUser = TelegramClientUserController.getTelegramClientUser(546240188);
 //        System.out.println(telegramClientUser.getIdUser() + telegramClientUser.getIdUser());
+//
 //        TelegramAdminSuperUserController.addOperationalUser(telegramClientUser, initialSuperUser, "content");
-//
+
+//        TelegramClientUser telegramClientUser = TelegramClientUserController.getTelegramClientUser(546210188);
 //        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) TelegramAdminSuperUserController.getTelegramOperUser(546240188);
-//        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", null, "Metro Exodus");
-//        TelegramAdminContentUserController.addWebItem(gameCode0, telegramOperationalUser);
-//
+////        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", null, "Metro Exodus");
+////        TelegramAdminContentUserController.addWebItem(gameCode0, telegramOperationalUser);
+//        WebItem webItem = TelegramAdminContentUserController.getWebItems("Web2GameCode").get(0);
+//        OrderController.createOrder(webItem, telegramClientUser);
+
+        TelegramAdminSuperUser initialSuperUser = TelegramAdminSuperUserController.getInitialSuperUser();
+        System.out.println(initialSuperUser.getIdUser());
+        TelegramClientUser telegramClientUser = TelegramClientUserController.getTelegramClientUser(546210188);
+        System.out.println(telegramClientUser.getIdUser() + telegramClientUser.getIdUser());
+
+        TelegramAdminSuperUserController.addOperationalUser(telegramClientUser, initialSuperUser, "content");
+
 //        Web3NFT nft0 = new Web3NFT("nft0_monkey", 5, "45x45424r32", "ETH", "ERC-1121", "45423423", "rare", null);
 //        TelegramAdminContentUserController.addWebItem(nft0, telegramOperationalUser);
 //        for (WebItem w : TelegramAdminContentUserController.getWebItems("Web2GameCode"))

@@ -16,8 +16,8 @@ public class CreditCardPayment extends Payment{
 
     }
 
-    public CreditCardPayment(int idPayment, Order order, int amount, String payAPI) {
-        super(idPayment, order, amount);
+    public CreditCardPayment(Order order, int amount, String payAPI) {
+        super(order, amount);
         this.payAPI = payAPI;
     }
 }

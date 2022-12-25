@@ -26,8 +26,7 @@ public abstract class Payment {
     public Payment() {
     }
 
-    public Payment(int idPayment, Order order, int amount) {
-        this.idPayment = idPayment;
+    public Payment(Order order, int amount) {
         this.order = order;
         this.state = "not payed";
         this.amount = amount;

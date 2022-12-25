@@ -24,8 +24,9 @@ public class TelegramClientUserController {
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startSuperUserSession.beginTransaction();
-        query = startSuperUserSession.createQuery("from Users where idTelegramUser= :idTelegramUser", TelegramClientUser.class).setParameter("idTelegramUser", idTelegramUser);
-        TelegramClientUser telegramClientUser = (TelegramClientUser) query.getSingleResult();;
+        query = startSuperUserSession.createQuery("from User where idTelegramUser= :idTelegramUser").setParameter("idTelegramUser", idTelegramUser);
+        TelegramClientUser telegramClientUser = (TelegramClientUser) query.getSingleResult();
+        startSuperUserSession.close();
         return telegramClientUser;
     }
 }

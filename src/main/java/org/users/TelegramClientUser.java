@@ -1,6 +1,8 @@
 package org.users;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.orders.Order;
 
 import java.util.List;

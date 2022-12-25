@@ -10,22 +10,25 @@ import java.util.List;
 public abstract class TelegramAdminContentUserController {
 
     public static List<WebItem> getWebItems(String typeOf) {
-        Session startGetWeb2ItemsSession = HibernateSessionFactorySpawner.spawnSession();
+        Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
         Query query = null;
         List<WebItem> listWebItems = null;
-        startGetWeb2ItemsSession.beginTransaction();
+        startGetWebItemsSession.beginTransaction();
         switch (typeOf){
             case "Web3NFT":
-                query = startGetWeb2ItemsSession.createQuery("from WebItems w where TYPE(w) = Web3NFT", Web3NFT.class);
+                query = startGetWebItemsSession.createQuery("from WebItem w where TYPE(w) = Web3NFT", Web3NFT.class);
                 listWebItems = query.getResultList();
+                startGetWebItemsSession.close();
                 return listWebItems;
             case "Web2GameCode":
-                query = startGetWeb2ItemsSession.createQuery("from WebItems w where TYPE(w) = Web2GameCode", Web2GameCode.class);
+                query = startGetWebItemsSession.createQuery("from WebItem w where TYPE(w) = Web2GameCode", Web2GameCode.class);
                 listWebItems = query.getResultList();
+                startGetWebItemsSession.close();
                 return listWebItems;
             case "Web2GiftCard":
-                query = startGetWeb2ItemsSession.createQuery("from WebItems w where TYPE(w) = Web2GiftCard", Web2GiftCard.class);
+                query = startGetWebItemsSession.createQuery("from WebItem w where TYPE(w) = Web2GiftCard", Web2GiftCard.class);
                 listWebItems = query.getResultList();
+                startGetWebItemsSession.close();
                 return listWebItems;
             default:
                 throw new IllegalArgumentException("Invalid type: " + typeOf);
@@ -33,11 +36,12 @@ public abstract class TelegramAdminContentUserController {
     }
 
     public static WebItem getWebItems(int idItem) {
-        Session startGetWeb2ItemsSession = HibernateSessionFactorySpawner.spawnSession();
+        Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
-        startGetWeb2ItemsSession.beginTransaction();
-        query = startGetWeb2ItemsSession.createQuery("from WebItems where idItem= :idItem", WebItem.class).setParameter("idItem", idItem);
+        startGetWebItemsSession.beginTransaction();
+        query = startGetWebItemsSession.createQuery("from WebItem where idItem= :idItem", WebItem.class).setParameter("idItem", idItem);
         WebItem webItem = (WebItem) query.getSingleResult();
+        startGetWebItemsSession.close();
         return webItem;
     }
 
@@ -68,7 +72,7 @@ public abstract class TelegramAdminContentUserController {
         if (contentOperUser.isOperational()) {
             Session editWeb2ItemSession = HibernateSessionFactorySpawner.spawnSession();
             editWeb2ItemSession.beginTransaction();
-            editWeb2ItemSession.saveOrUpdate(webItem);
+            editWeb2ItemSession.merge(webItem);
             editWeb2ItemSession.getTransaction().commit();
             return webItem.getName() + " updated.";
         }
