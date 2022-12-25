@@ -16,6 +16,9 @@ public abstract class TelegramOperationalUser extends TelegramUser {
     @Column(name="accessDisabledBy")
     private int accessDisabledBy;
 
+    public TelegramOperationalUser() {
+    }
+
     public TelegramOperationalUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
         this.isOperational = false;

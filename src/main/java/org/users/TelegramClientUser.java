@@ -18,6 +18,9 @@ public class TelegramClientUser extends TelegramUser {
     @Column(name="bannedBy")
     private int bannedBy;
 
+    public TelegramClientUser() {
+    }
+
     public TelegramClientUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
     }

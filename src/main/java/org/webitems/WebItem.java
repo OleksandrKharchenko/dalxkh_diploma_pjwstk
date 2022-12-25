@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @Table(name="WebItem")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
-        name="WebItem_Type",
+        name="WebItemType",
         discriminatorType=DiscriminatorType.STRING
 )
 @DiscriminatorValue(value="WebItem")
@@ -29,10 +29,15 @@ public abstract class WebItem {
     private int idItem;
     @Column(name="name")
     private String name;
+    @Column(name="addedBy")
+    private int addedBy;
 
+    public WebItem() {
+    }
 
     public WebItem(String name) {
         this.name = name;
+        this.addedBy = 0;
     }
 
     public int getIdItem() {
@@ -51,4 +56,11 @@ public abstract class WebItem {
         this.name = name;
     }
 
+    public int getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(int addedBy) {
+        this.addedBy = addedBy;
+    }
 }

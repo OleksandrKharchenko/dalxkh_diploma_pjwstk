@@ -12,6 +12,9 @@ public abstract class TelegramUser extends User {
     @Column(name="displayName")
     private String displayName;
 
+    public TelegramUser() {
+    }
+
     public TelegramUser(String email, int idTelegramUser, String displayName) {
         super(email);
         this.idTelegramUser = idTelegramUser;

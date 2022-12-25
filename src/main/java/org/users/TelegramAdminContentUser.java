@@ -7,6 +7,9 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue(value="TelegramAdminSuperContentUser")
 public class TelegramAdminContentUser extends TelegramOperationalUser {
 
+    public TelegramAdminContentUser() {
+    }
+
     public TelegramAdminContentUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
     }

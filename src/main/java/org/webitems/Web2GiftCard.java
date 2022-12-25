@@ -13,6 +13,9 @@ public class Web2GiftCard extends Web2Item{
     @Column(name="valueUsd")
     private int valueUsd;
 
+    public Web2GiftCard() {
+    }
+
     public Web2GiftCard(String name, int usdPrice, long quantity, String redeemCode, String imgPath, String platformName, int valueUsd) {
         super(name, usdPrice, quantity, redeemCode, imgPath);
         this.platformName = platformName;

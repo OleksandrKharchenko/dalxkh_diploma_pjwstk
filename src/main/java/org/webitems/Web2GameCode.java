@@ -11,6 +11,9 @@ public class Web2GameCode extends Web2Item{
     @Column(name="gameName", unique = true)
     private String gameName;
 
+    public Web2GameCode() {
+    }
+
     public Web2GameCode(String name, int usdPrice, long quantity, String redeemCode, String imgPath, String gameName) {
         super(name, usdPrice, quantity, redeemCode, imgPath);
         this.gameName = gameName;

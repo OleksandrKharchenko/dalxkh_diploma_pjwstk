@@ -15,6 +15,9 @@ public class Web3NFT extends Web3CryptoItem{
     @Column(name="imgPath")
     private String imgPath;
 
+    public Web3NFT() {
+    }
+
     public Web3NFT(String name, int cryptoPrice, String contractAddress, String blockchain, String tokenStandard, String NFTTokenId, String quality, String imgPath) {
         super(name, cryptoPrice, contractAddress, blockchain, tokenStandard);
         this.NFTTokenId = NFTTokenId;

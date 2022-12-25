@@ -16,6 +16,9 @@ public abstract class Web3CryptoItem extends WebItem {
     @Column(name="tokenStandard")
     private String tokenStandard;
 
+    public Web3CryptoItem() {
+    }
+
     public Web3CryptoItem(String name, int cryptoPrice, String contractAddress, String blockchain, String tokenStandard) {
         super(name);
         this.cryptoPrice = cryptoPrice;

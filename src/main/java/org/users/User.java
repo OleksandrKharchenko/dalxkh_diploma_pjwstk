@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @Table(name="User")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
-        name="User_Type",
+        name="UserType",
         discriminatorType=DiscriminatorType.STRING
 )
 @DiscriminatorValue(value="User")
@@ -29,6 +29,9 @@ public abstract class User {
     private int idUser;
     @Column(name="email")
     private String email;
+
+    public User() {
+    }
 
     public User (String email) {
         this.email = email;

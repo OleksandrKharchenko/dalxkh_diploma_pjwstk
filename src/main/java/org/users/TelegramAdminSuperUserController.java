@@ -103,10 +103,11 @@ public abstract class TelegramAdminSuperUserController {
 
     public static TelegramAdminSuperUser getInitialSuperUser(){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
+        String initial = "initial";
         Query query;
         startSuperUserSession.beginTransaction();
-        query = startSuperUserSession.createQuery("from User where accessType= 'initial'");
-        TelegramAdminSuperUser initialSuperUser = (TelegramAdminSuperUser) query.uniqueResult();
+        query = startSuperUserSession.createQuery("from User where accessType= :initial", TelegramAdminSuperUser.class).setParameter("initial", initial);
+        TelegramAdminSuperUser initialSuperUser = (TelegramAdminSuperUser) query.getSingleResult();;
         return initialSuperUser;
     }
 
@@ -114,8 +115,10 @@ public abstract class TelegramAdminSuperUserController {
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startSuperUserSession.beginTransaction();
-        query = startSuperUserSession.createQuery("from User where idTelegramUser= " + idTelegramOperUser + "and isOperational= true");
-        TelegramOperationalUser telegramOperUser = (TelegramOperationalUser) query.uniqueResult();
+        query = startSuperUserSession.createQuery("from User where idTelegramUser= :idTelegramUser and isOperational= :isOperational", TelegramOperationalUser.class)
+                .setParameter("isOperational", true)
+                .setParameter("idTelegramUser", idTelegramOperUser);
+        TelegramOperationalUser telegramOperUser = (TelegramOperationalUser) query.getSingleResult();;
         return telegramOperUser;
     }
 

@@ -10,6 +10,9 @@ public class TelegramAdminSuperUser extends TelegramOperationalUser{
     @Column(name="accessSuperKey")
     private String accessSuperKey;
 
+    public TelegramAdminSuperUser() {
+    }
+
     public TelegramAdminSuperUser(String email, int idTelegramUser, String displayName, String accessSuperKey) {
         super(email, idTelegramUser, displayName);
         this.accessSuperKey = accessSuperKey;

@@ -13,10 +13,13 @@ public abstract class Web2Item extends WebItem{
     private boolean isAvailable;
     @Column(name="quantity")
     private long quantity;
-    @Column(name="redeemCode", unique = true)
+    @Column(name="redeemCode")
     private String redeemCode;
     @Column(name="imgPath")
     private String imgPath;
+
+    public Web2Item() {
+    }
 
     public Web2Item(String name, int usdPrice, long quantity, String redeemCode, String imgPath) {
         super(name);
