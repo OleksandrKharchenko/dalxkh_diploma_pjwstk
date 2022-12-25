@@ -1,4 +1,4 @@
 package org.payments;
 
-public class PaymentController {
+public abstract class PaymentController {
 }

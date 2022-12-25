@@ -24,6 +24,8 @@ public class Order {
     @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="idPayment")
     private Payment payment;
+    @OneToMany(targetEntity=ManageAdminContentOrder.class, mappedBy="order", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<ManageAdminContentOrder> contentOrders;
     @Column(name="state")
     private String state;
     @Column(name="emailClient")

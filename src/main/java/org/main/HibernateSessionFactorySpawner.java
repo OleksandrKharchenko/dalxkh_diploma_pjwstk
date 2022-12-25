@@ -3,6 +3,7 @@ package org.main;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.orders.ManageAdminContentOrder;
 import org.orders.Order;
 import org.payments.CreditCardPayment;
 import org.payments.CryptoPayment;
@@ -29,7 +30,8 @@ public class HibernateSessionFactorySpawner {
                 addAnnotatedClass(Order.class).
                 addAnnotatedClass(Payment.class).
                 addAnnotatedClass(CryptoPayment.class).
-                addAnnotatedClass(CreditCardPayment.class)
+                addAnnotatedClass(CreditCardPayment.class).
+                addAnnotatedClass(ManageAdminContentOrder.class)
                 .buildSessionFactory();
         Session session = factory.getCurrentSession();
         return session;
@@ -52,7 +54,8 @@ public class HibernateSessionFactorySpawner {
                 addAnnotatedClass(Order.class).
                 addAnnotatedClass(Payment.class).
                 addAnnotatedClass(CryptoPayment.class).
-                addAnnotatedClass(CreditCardPayment.class)
+                addAnnotatedClass(CreditCardPayment.class).
+                addAnnotatedClass(ManageAdminContentOrder.class)
                 .buildSessionFactory();
         Session session = factory.openSession();
     }
