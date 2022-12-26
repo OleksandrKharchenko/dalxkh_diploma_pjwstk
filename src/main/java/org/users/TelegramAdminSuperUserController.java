@@ -88,6 +88,7 @@ public abstract class TelegramAdminSuperUserController {
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         TelegramAdminSuperUser superUser = new TelegramAdminSuperUser(email, idTelegramUser, displayName, "9x09admin");
         superUser.setAccessType("initial");
+        superUser.setOperational(true);
         startSuperUserSession.beginTransaction();
         startSuperUserSession.persist(superUser);
         startSuperUserSession.getTransaction().commit();
@@ -96,6 +97,7 @@ public abstract class TelegramAdminSuperUserController {
     public static void initiateTelegramFirstSuperUser(TelegramAdminSuperUser superUser){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         superUser.setAccessType("initial");
+        superUser.setOperational(true);
         startSuperUserSession.beginTransaction();
         startSuperUserSession.persist(superUser);
         startSuperUserSession.getTransaction().commit();

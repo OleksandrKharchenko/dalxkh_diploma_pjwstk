@@ -11,13 +11,16 @@ import org.orders.Order;
 public class CreditCardPayment extends Payment{
     @Column(name="payAPI")
     private String payAPI;
+    @Column(name="amountInUSD")
+    private int amountInUSD;
 
     public CreditCardPayment() {
 
     }
 
-    public CreditCardPayment(Order order, int amount, String payAPI) {
-        super(order, amount);
+    public CreditCardPayment(Order order, String payAPI) {
+        super(order);
         this.payAPI = payAPI;
+        this.amountInUSD = order.getUsdEquivalentPrice();
     }
 }

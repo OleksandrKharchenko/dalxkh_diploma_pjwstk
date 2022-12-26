@@ -16,7 +16,7 @@ public abstract class Payment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="idPayment")
     private int idPayment;
-    @OneToOne(targetEntity=Order.class, mappedBy="payment", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne(targetEntity=Order.class, mappedBy="payment", cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional = false)
     private Order order;
     @Column(name="state")
     private String state;
@@ -26,10 +26,10 @@ public abstract class Payment {
     public Payment() {
     }
 
-    public Payment(Order order, int amount) {
+    public Payment(Order order) {
         this.order = order;
-        this.state = "not payed";
-        this.amount = amount;
+        this.state = "waiting for payment";
+        this.amount = order.getUsdEquivalentPrice();
     }
 
     public int getIdPayment() {

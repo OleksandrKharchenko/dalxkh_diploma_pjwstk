@@ -3,6 +3,7 @@ package org.payments;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import org.main.EnvVars;
 import org.orders.Order;
 
 @Entity
@@ -12,14 +13,29 @@ public class CryptoPayment extends Payment{
     private String cryptoPaymentAddress;
     @Column(name="blockchain")
     private String blockchain;
+    @Column(name="amountInCrypto")
+    private int amountInCrypto;
 
     public CryptoPayment() {
     }
 
-    public CryptoPayment(Order order, int amount, String cryptoPaymentAddress, String blockchain) {
-        super(order, amount);
+    public CryptoPayment(Order order, String blockchain) {
+        super(order);
+        if (blockchain.equals("ETH")){
+            this.cryptoPaymentAddress = EnvVars.DefaultCryptoPaymentAddress;
+        }
+        if (blockchain.equals("MATIC")){
+            this.cryptoPaymentAddress = EnvVars.DefaultCryptoPaymentAddress;
+        }
         this.cryptoPaymentAddress = cryptoPaymentAddress;
         this.blockchain = blockchain;
+        this.amountInCrypto = order.getCryptoEquivalentPrice();
+    }
+
+    public CryptoPayment(Order order) {
+        super(order);
+        this.cryptoPaymentAddress = EnvVars.DefaultCryptoPaymentAddress;
+        this.blockchain = EnvVars.DefaultBlockchain;
     }
 
     public String getCryptoPaymentAddress() {
@@ -37,4 +53,13 @@ public class CryptoPayment extends Payment{
     public void setBlockchain(String blockchain) {
         this.blockchain = blockchain;
     }
+
+    public int getAmountInCrypto() {
+        return amountInCrypto;
+    }
+
+    public void setAmountInCrypto(int amountInCrypto) {
+        this.amountInCrypto = amountInCrypto;
+    }
+
 }

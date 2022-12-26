@@ -9,6 +9,7 @@ import org.webitems.Web2Item;
 import org.webitems.Web3CryptoItem;
 import org.webitems.WebItem;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +39,8 @@ public class Order {
     private int usdEquivalentPrice;
     @Column(name="cryptoEquivalentPrice")
     private int cryptoEquivalentPrice;
+    @Column(name="timeStamp")
+    private Timestamp timeStamp;
 
     public Order() {
     }
@@ -50,6 +53,7 @@ public class Order {
         this.emailClient = telegramClientUser.getEmail();
         this.usdEquivalentPrice = usdEquivalentPrice;
         this.cryptoEquivalentPrice = cryptoEquivalentPrice;
+        this.timeStamp = new Timestamp(System.currentTimeMillis());
     }
 
     public Order(TelegramClientUser telegramClientUser, WebItem webItem) {
@@ -64,6 +68,7 @@ public class Order {
         if (webItem instanceof Web3CryptoItem) {
             this.cryptoEquivalentPrice = (((Web3CryptoItem) webItem).getCryptoPrice()) ;
         }
+        this.timeStamp = new Timestamp(System.currentTimeMillis());
     }
 
     public TelegramClientUser getTelegramClientUser() {
@@ -121,4 +126,29 @@ public class Order {
     public void setCryptoEquivalentPrice(int cryptoEquivalentPrice) {
         this.cryptoEquivalentPrice = cryptoEquivalentPrice;
     }
+
+    public Set<ManageAdminContentOrder> getContentOrders() {
+        return contentOrders;
+    }
+
+    public void setContentOrders(Set<ManageAdminContentOrder> contentOrders) {
+        this.contentOrders = contentOrders;
+    }
+
+    public Timestamp getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Timestamp timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void cancel() {
+        this.state = "canceled";
+    }
+
+    public void complete() {
+        this.state = "completed";
+    }
+
 }

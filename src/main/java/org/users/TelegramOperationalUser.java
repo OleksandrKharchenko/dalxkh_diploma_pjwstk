@@ -21,7 +21,7 @@ public abstract class TelegramOperationalUser extends TelegramUser {
 
     public TelegramOperationalUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
-        this.isOperational = false;
+        this.isOperational = true;
         this.accessType = "none";
         this.accessAddedBy = 0;
         this.accessDisabledBy = 0;

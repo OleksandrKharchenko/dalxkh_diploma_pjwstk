@@ -6,7 +6,7 @@ import org.orders.Order;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue(value="TelegramAdminSuperContentUser")
+@DiscriminatorValue(value="TelegramAdminContentUser")
 public class TelegramAdminContentUser extends TelegramOperationalUser {
     @OneToMany(targetEntity = ManageAdminContentOrder.class, mappedBy = "adminContentUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ManageAdminContentOrder> contentOrders;
