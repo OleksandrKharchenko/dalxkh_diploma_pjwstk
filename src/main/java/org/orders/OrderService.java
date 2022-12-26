@@ -3,16 +3,16 @@ package org.orders;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.main.HibernateSessionFactorySpawner;
-import org.users.TelegramAdminSuperUser;
+import org.payments.CryptoPayment;
 import org.users.TelegramClientUser;
-import org.webitems.Web2GameCode;
-import org.webitems.Web2GiftCard;
-import org.webitems.Web3NFT;
+import org.webitems.Web2Item;
+import org.webitems.Web3CryptoItem;
 import org.webitems.WebItem;
+import org.webitems.WebItemService;
 
 import java.util.List;
 
-public abstract class OrderController {
+public abstract class OrderService {
 
     public static String createOrder(WebItem webItem, TelegramClientUser telegramClientUser){
         if(!telegramClientUser.isBanStatus()){
@@ -53,5 +53,42 @@ public abstract class OrderController {
         listOrders = query.getResultList();
         startGetOrdersSession.close();
         return listOrders;
+    }
+
+    public static String cancelOrder(Order order){
+        order.setState("canceled");
+        updateOrder(order);
+        return "Order canceled.";
+    }
+
+
+    public static String sendOrder(Order order){
+        if (!order.getState().equals("canceled")){
+            System.out.println("HEEEERE");
+            System.out.println(order.getWebItem());
+            System.out.println(order.getPayment());
+            if (order.getPayment() != null && order.getPayment().isCompleted()) {
+                if (order.getWebItem() instanceof Web2Item){
+                    ((Web2Item) order.getWebItem()).setQuantity(((Web2Item) order.getWebItem()).getQuantity() - 1);
+                    WebItemService.updateWebItem(order.getWebItem());
+                    System.out.println("Your code:" + ((Web2Item) order.getWebItem()).getRedeemCode());
+                    order.setState("completed");
+                    updateOrder(order);
+                    return "Your code:" + ((Web2Item) order.getWebItem()).getRedeemCode();
+                }
+                if (order.getWebItem() instanceof Web3CryptoItem){
+                    WebItemService.deleteWebItem(order.getWebItem());
+                    WebItemService.updateWebItem(order.getWebItem());
+                    System.out.println("Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress());
+                    order.setState("completed");
+                    updateOrder(order);
+                    return "Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress();
+                }
+                System.out.println("Order doesn't send due to uncompleted payment");
+                return "Order doesn't send due to uncompleted payment";
+            }
+        }
+        System.out.println("Order doesn't send due to canceled order");
+        return "Order doesn't send due to canceled order";
     }
 }

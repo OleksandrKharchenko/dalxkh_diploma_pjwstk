@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.main.HibernateSessionFactorySpawner;
 
-public abstract class TelegramAdminSuperUserController {
+public abstract class TelegramAdminSuperUserService {
 
     public static String addOperationalUser(TelegramClientUser telegramUser, TelegramAdminSuperUser sessionSuperUser, String accessType) {
 

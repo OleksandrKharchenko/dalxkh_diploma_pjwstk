@@ -126,29 +126,13 @@ public class Order {
     public void setCryptoEquivalentPrice(int cryptoEquivalentPrice) {
         this.cryptoEquivalentPrice = cryptoEquivalentPrice;
     }
-
-    public Set<ManageAdminContentOrder> getContentOrders() {
-        return contentOrders;
-    }
-
-    public void setContentOrders(Set<ManageAdminContentOrder> contentOrders) {
-        this.contentOrders = contentOrders;
-    }
-
-    public Timestamp getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public void cancel() {
-        this.state = "canceled";
-    }
-
-    public void complete() {
-        this.state = "completed";
-    }
-
+//
+//    public void cancel() {
+//        this.state = "canceled";
+//    }
+//
+//    public void complete() {
+//        this.state = "completed";
+//    }
+//
 }

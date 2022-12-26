@@ -2,9 +2,6 @@ package org.orders;
 
 import jakarta.persistence.*;
 import org.users.*;
-import org.users.TelegramAdminContentUserController;
-
-import java.util.Set;
 
 @Entity
 public class ManageAdminContentOrder {

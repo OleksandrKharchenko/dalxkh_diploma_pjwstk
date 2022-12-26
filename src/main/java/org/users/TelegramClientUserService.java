@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.main.HibernateSessionFactorySpawner;
 
-public class TelegramClientUserController {
+public class TelegramClientUserService {
 
     public static void addTelegramClientUser(String email, int idTelegramUser, String displayName){
         Session startUserSession = HibernateSessionFactorySpawner.spawnSession();

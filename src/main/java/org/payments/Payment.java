@@ -20,8 +20,9 @@ public abstract class Payment {
     private Order order;
     @Column(name="state")
     private String state;
-    @Column(name="amount")
-    private int amount;
+    @Column(name="isCompleted")
+    private boolean isCompleted;
+
 
     public Payment() {
     }
@@ -29,7 +30,7 @@ public abstract class Payment {
     public Payment(Order order) {
         this.order = order;
         this.state = "waiting for payment";
-        this.amount = order.getUsdEquivalentPrice();
+        this.isCompleted = false;
     }
 
     public int getIdPayment() {
@@ -56,11 +57,11 @@ public abstract class Payment {
         this.state = state;
     }
 
-    public int getAmount() {
-        return amount;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

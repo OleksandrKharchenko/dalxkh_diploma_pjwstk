@@ -7,7 +7,7 @@ import org.webitems.*;
 
 import java.util.List;
 
-public abstract class TelegramAdminContentUserController {
+public abstract class TelegramAdminContentUserService {
 
     public static List<WebItem> getWebItems(String typeOf) {
         Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
