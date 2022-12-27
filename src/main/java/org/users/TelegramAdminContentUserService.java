@@ -2,6 +2,7 @@ package org.users;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.main.HibernateCommitsSpawner;
 import org.main.HibernateSessionFactorySpawner;
 import org.webitems.*;
 
@@ -47,10 +48,8 @@ public abstract class TelegramAdminContentUserService {
 
     public static String deleteWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
         if (contentOperUser.isOperational()) {
-            Session deleteWeb2ItemSession = HibernateSessionFactorySpawner.spawnSession();
-            deleteWeb2ItemSession.beginTransaction();
-            deleteWeb2ItemSession.remove(webItem);
-            deleteWeb2ItemSession.getTransaction().commit();
+            HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+            spawner.deleteCommit(webItem);
             return webItem.getName() + " deleted.";
         }
         return "ERROR: on delete item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
@@ -58,11 +57,9 @@ public abstract class TelegramAdminContentUserService {
 
     public static String addWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
         if (contentOperUser.isOperational()) {
-            Session addWeb2ItemSession = HibernateSessionFactorySpawner.spawnSession();
             webItem.setAddedBy(contentOperUser.getIdTelegramUser());
-            addWeb2ItemSession.beginTransaction();
-            addWeb2ItemSession.persist(webItem);
-            addWeb2ItemSession.getTransaction().commit();
+            HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+            spawner.createCommit(webItem);
             return webItem.getName() + " added.";
         }
         return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
@@ -70,10 +67,8 @@ public abstract class TelegramAdminContentUserService {
 
     public static String editWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser) {
         if (contentOperUser.isOperational()) {
-            Session editWeb2ItemSession = HibernateSessionFactorySpawner.spawnSession();
-            editWeb2ItemSession.beginTransaction();
-            editWeb2ItemSession.merge(webItem);
-            editWeb2ItemSession.getTransaction().commit();
+            HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+            spawner.updateCommit(webItem);
             return webItem.getName() + " updated.";
         }
         return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";

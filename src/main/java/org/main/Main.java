@@ -1,18 +1,15 @@
 package org.main;
 
 
-import org.main.*;
-import org.users.*;
 import org.orders.*;
 import org.payments.*;
-import org.webitems.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
 
 // *********************ENTITY GENERATE DB INITIATION**********************
-//        HibernateSessionFactorySpawner.spawnInitSession();
+        HibernateSessionFactorySpawner.spawnInitSession();
 // ************************************************************************
 
 // *********************SUPER USER INITIATION******************************
@@ -79,35 +76,17 @@ public class Main {
 
 //      ****************COMPLETED ORDER WITH PAYMENT***
 //      ****************PAYMENT STAGE******************
-        Order order = OrderService.getOrders(1);
-        PaymentService.createPayment(order, "crypto");
-
+//        Order order = OrderService.getOrders(1);
+//        PaymentOrderService.createPayment(order, "crypto");
+//      ***********************************************
 
 
 //      ****************ORDER STAGE******************
-//        Order order = OrderService.getOrders(1);
 //        OrderService.sendOrder(order);
 //      ***********************************************
 
 // ************************************************************************
 
-
-//        Web3NFT nft0 = new Web3NFT("nft0_monkey", 5, "45x45424r32", "ETH", "ERC-1121", "45423423", "rare", null);
-//        TelegramAdminContentUserService.addWebItem(nft0, telegramOperationalUser);
-//        for (WebItem w : TelegramAdminContentUserService.getWebItems("Web2GameCode"))
-//        {
-//            Web2GameCode wg = (Web2GameCode) w;
-//            System.out.println(wg.getName());
-//        }
-
-//        System.out.println(TelegramAdminContentUserService.getWebItems(1).getName());
-//        WebItem gameCode0 = TelegramAdminContentUserService.getWebItems(1);
-//        TelegramAdminContentUserService.deleteWebItem(gameCode0, telegramOperationalUser);
-
-//        TelegramAdminSuperUserService.disableOperationalUser(TelegramAdminSuperUserService.getTelegramOperUser(546240188), initialSuperUser);
-//
-//        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(546210188);
-//        TelegramAdminSuperUserService.banTelegramClient(telegramClientUser, initialSuperUser);
 
 
 

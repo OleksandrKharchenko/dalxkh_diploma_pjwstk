@@ -2,22 +2,19 @@ package org.users;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.main.HibernateCommitsSpawner;
 import org.main.HibernateSessionFactorySpawner;
 
 public class TelegramClientUserService {
 
     public static void addTelegramClientUser(String email, int idTelegramUser, String displayName){
-        Session startUserSession = HibernateSessionFactorySpawner.spawnSession();
         TelegramClientUser clientUser = new TelegramClientUser(email, idTelegramUser, displayName);
-        startUserSession.beginTransaction();
-        startUserSession.persist(clientUser);
-        startUserSession.getTransaction().commit();
+        HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+        spawner.createCommit(clientUser);
     }
     public static void addTelegramClientUser(TelegramClientUser clientUser){
-        Session startUserSession = HibernateSessionFactorySpawner.spawnSession();
-        startUserSession.beginTransaction();
-        startUserSession.persist(clientUser);
-        startUserSession.getTransaction().commit();
+        HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+        spawner.createCommit(clientUser);
     }
 
     public static TelegramClientUser getTelegramClientUser(int idTelegramUser){
