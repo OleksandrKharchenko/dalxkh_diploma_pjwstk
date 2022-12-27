@@ -97,7 +97,12 @@ public class Main {
 //        OrderService.sendOrder(order);
 //      ***********************************************
     OrderCryptoSenderService orderCryptoSenderService = new OrderCryptoSenderService();
-    orderCryptoSenderService.getWalletInfo();
+//    orderCryptoSenderService.getWalletInfo();
+        try {
+            orderCryptoSenderService.sendCryptoItem();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 // ************************************************************************
 
