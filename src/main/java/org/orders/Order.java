@@ -23,7 +23,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name="idUser", nullable = false)
     private TelegramClientUser telegramClientUser;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="idItem", nullable = false)
     private WebItem webItem;
     @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
@@ -126,13 +126,5 @@ public class Order {
     public void setCryptoEquivalentPrice(int cryptoEquivalentPrice) {
         this.cryptoEquivalentPrice = cryptoEquivalentPrice;
     }
-//
-//    public void cancel() {
-//        this.state = "canceled";
-//    }
-//
-//    public void complete() {
-//        this.state = "completed";
-//    }
-//
+
 }

@@ -16,8 +16,8 @@ public class Web2GiftCard extends Web2Item{
     public Web2GiftCard() {
     }
 
-    public Web2GiftCard(String name, int usdPrice, long quantity, String redeemCode, String imgPath, String platformName, int valueUsd) {
-        super(name, usdPrice, quantity, redeemCode, imgPath);
+    public Web2GiftCard(String name, long quantity, int usdPrice,  String redeemCode, String imgPath, String platformName, int valueUsd) {
+        super(name, quantity, usdPrice, redeemCode, imgPath);
         this.platformName = platformName;
         this.valueUsd = valueUsd;
     }

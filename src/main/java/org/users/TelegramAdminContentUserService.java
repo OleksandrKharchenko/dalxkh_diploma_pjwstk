@@ -36,16 +36,6 @@ public abstract class TelegramAdminContentUserService {
         }
     }
 
-    public static WebItem getWebItems(int idItem) {
-        Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
-        Query query;
-        startGetWebItemsSession.beginTransaction();
-        query = startGetWebItemsSession.createQuery("from WebItem where idItem= :idItem", WebItem.class).setParameter("idItem", idItem);
-        WebItem webItem = (WebItem) query.getSingleResult();
-        startGetWebItemsSession.close();
-        return webItem;
-    }
-
     public static String deleteWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
         if (contentOperUser.isOperational()) {
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();

@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue(value="Web3NFT")
 public class Web3NFT extends Web3CryptoItem{
     @Column(name="NFTTokenId", unique = true)
-    private String NFTTokenId;
+    private long NFTTokenId;
     @Column(name="quality")
     private String quality;
     @Column(name="imgPath")
@@ -18,18 +18,18 @@ public class Web3NFT extends Web3CryptoItem{
     public Web3NFT() {
     }
 
-    public Web3NFT(String name, int cryptoPrice, String contractAddress, String blockchain, String tokenStandard, String NFTTokenId, String quality, String imgPath) {
-        super(name, cryptoPrice, contractAddress, blockchain, tokenStandard);
+    public Web3NFT(String name, long quantity, int cryptoPrice, String contractAddress, String blockchain, String tokenStandard, long NFTTokenId, String quality, String imgPath) {
+        super(name, quantity, cryptoPrice, contractAddress, blockchain, tokenStandard);
         this.NFTTokenId = NFTTokenId;
         this.quality = quality;
         this.imgPath = imgPath;
     }
 
-    public String getNFTTokenId() {
+    public long getNFTTokenId() {
         return NFTTokenId;
     }
 
-    public void setNFTTokenId(String NFTTokenId) {
+    public void setNFTTokenId(long NFTTokenId) {
         this.NFTTokenId = NFTTokenId;
     }
 

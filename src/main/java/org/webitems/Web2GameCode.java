@@ -14,8 +14,8 @@ public class Web2GameCode extends Web2Item{
     public Web2GameCode() {
     }
 
-    public Web2GameCode(String name, int usdPrice, long quantity, String redeemCode, String imgPath, String gameName) {
-        super(name, usdPrice, quantity, redeemCode, imgPath);
+    public Web2GameCode(String name, long quantity, int usdPrice, String redeemCode, String imgPath, String gameName) {
+        super(name, quantity, usdPrice,  redeemCode, imgPath);
         this.gameName = gameName;
     }
 

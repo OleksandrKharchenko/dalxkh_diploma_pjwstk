@@ -11,8 +11,6 @@ public abstract class Web2Item extends WebItem{
     private int usdPrice;
     @Column(name="isAvailable")
     private boolean isAvailable;
-    @Column(name="quantity")
-    private long quantity;
     @Column(name="redeemCode")
     private String redeemCode;
     @Column(name="imgPath")
@@ -21,11 +19,10 @@ public abstract class Web2Item extends WebItem{
     public Web2Item() {
     }
 
-    public Web2Item(String name, int usdPrice, long quantity, String redeemCode, String imgPath) {
-        super(name);
+    public Web2Item(String name, long quantity, int usdPrice, String redeemCode, String imgPath) {
+        super(name, quantity);
         this.usdPrice = usdPrice;
         this.isAvailable = true;
-        this.quantity = quantity;
         this.redeemCode = redeemCode;
         this.imgPath = imgPath;
     }
@@ -44,14 +41,6 @@ public abstract class Web2Item extends WebItem{
 
     public void setAvailable(boolean available) {
         isAvailable = available;
-    }
-
-    public long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(long quantity) {
-        this.quantity = quantity;
     }
 
     public String getRedeemCode() {

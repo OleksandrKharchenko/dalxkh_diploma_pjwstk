@@ -4,6 +4,8 @@ package org.webitems;
 import jakarta.persistence.*;
 import org.orders.Order;
 
+import java.util.Set;
+
 
 @Entity
 @Table(name="WebItems")
@@ -22,14 +24,17 @@ public abstract class WebItem {
     private String name;
     @Column(name="addedBy")
     private int addedBy;
-    @OneToOne(targetEntity=Order.class, mappedBy="webItem", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    private Order order;
+    @OneToMany(targetEntity=Order.class, mappedBy="webItem", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<Order> order;
+    @Column(name="quantity")
+    private long quantity;
 
     public WebItem() {
     }
 
-    public WebItem(String name) {
+    public WebItem(String name, long quantity) {
         this.name = name;
+        this.quantity = quantity;
         this.addedBy = 0;
     }
 
@@ -57,11 +62,19 @@ public abstract class WebItem {
         this.addedBy = addedBy;
     }
 
-    public Order getOrder() {
+    public Set<Order> getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(Set<Order> order) {
         this.order = order;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
     }
 }
