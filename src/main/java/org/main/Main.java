@@ -6,12 +6,15 @@ import org.payments.*;
 import org.webitems.*;
 import org.users.*;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
+
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
 
 
 // *********************ENTITY GENERATE DB INITIATION**********************
-        HibernateSessionFactorySpawner.spawnInitSession();
+//        HibernateSessionFactorySpawner.spawnInitSession();
 // ************************************************************************
 
 // *********************SUPER USER INITIATION******************************
@@ -28,6 +31,8 @@ public class Main {
 //        TelegramClientUserService.addTelegramClientUser(user2);
 //        TelegramClientUser user3 = new TelegramClientUser("test3@test.com", 546250188, "Elon Client");
 //        TelegramClientUserService.addTelegramClientUser(user3);
+//        TelegramClientUser user4 = new TelegramClientUser("s15638@pjwstk.edu.pl", 546260188, "Oleksandr Kharchenko");
+//        TelegramClientUserService.addTelegramClientUser(user4);
 // ************************************************************************
 
 // *********************CONTENT USER CREATE********************************
@@ -65,36 +70,34 @@ public class Main {
 // ************************************************************************
 
 // *********************CREATING ORDER BY TELEGRAM CLIENT******************
-//        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(546250188);
-//        Order order = OrderService.getOrders(2);
-//        WebItem webItem = WebItemService.getWebItem(2);
+//        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(546260188);
+//        WebItem webItem = WebItemService.getWebItem(1);
 //        OrderService.createOrder(webItem, telegramClientUser);
 // ************************************************************************
 
 // *********************REALIZATION ORDER BY TELEGRAM CLIENT******************
+
+//      ****************COMPLETED ORDER WITH PAYMENT***
+//      ****************PAYMENT STAGE******************
+//        Order order = OrderService.getOrders(8);
+//        PaymentOrderService.createPayment(order, "card");
+//      ***********************************************
 
 //      ****************CANCELED ORDER*****************
 //        Order order = OrderService.getOrders(3);
 //        OrderService.cancelOrder(order);
 //      ***********************************************
 
-//      ****************COMPLETED ORDER WITH PAYMENT***
-//      ****************PAYMENT STAGE******************
-        Order order = OrderService.getOrders(7);
-//        PaymentOrderService.createPayment(order, "crypto");
-//      ***********************************************
-
-//      ****************PAYMENT CANCEL******************
-
-//      ***********************************************
 
 //      ****************PAYMENT COMPLETE***************
-        PaymentOrderService.completePayment(order.getPayment());
+//        PaymentOrderService.completePayment(order.getPayment());
 //      ***********************************************
 
 //      ****************ORDER STAGE******************
-        OrderService.sendOrder(order);
+//        OrderService.sendOrder(order);
 //      ***********************************************
+    OrderCryptoSenderService orderCryptoSenderService = new OrderCryptoSenderService();
+    orderCryptoSenderService.getWalletInfo();
 
 // ************************************************************************
 

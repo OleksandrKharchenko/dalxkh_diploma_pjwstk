@@ -68,11 +68,11 @@ public abstract class OrderService {
         if (!order.getState().equals("canceled")){
             if (order.getPayment() != null && order.getPayment().isCompleted()) {
                 if (order.getWebItem() instanceof Web2Item){
-                    System.out.println("Your code:" + ((Web2Item) order.getWebItem()).getRedeemCode());
                     order.setState("completed");
                     order.getWebItem().setQuantity(order.getWebItem().getQuantity() -1);
                     WebItemService.updateWebItem(order.getWebItem());
                     updateOrder(order);
+                    OrderEmailSenderService.sendMailTo(order.getEmailClient(), ((Web2Item) order.getWebItem()).getRedeemCode());
                     System.out.println("Your code: " + ((Web2Item) order.getWebItem()).getRedeemCode());
                     return "Your code: " + ((Web2Item) order.getWebItem()).getRedeemCode();
                 }
