@@ -23,13 +23,13 @@ public class Main {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
-        CryptoPaymentBalance balance = null;
-        try {
-            balance = new CryptoPaymentBalance();
-            balance.updateBalance();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        CryptoPaymentBalance balance = null;
+//        try {
+//            balance = new CryptoPaymentBalance();
+//            balance.updateBalance();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 // ************************************************************************
 
 // *********************SUPER USER INITIATION******************************
@@ -101,17 +101,17 @@ public class Main {
 //      ***********************************************
 
 //      ****************CANCELED ORDER*****************
-//        Order order = OrderService.getOrders(3);
+        Order order = OrderService.getOrders(3);
 //        OrderService.cancelOrder(order);
 //      ***********************************************
 
 
 //      ****************PAYMENT COMPLETE CRYPTO********
-//        try {
-//            PaymentOrderService.completePaymentCrypto(order.getPayment(), "0xc55763ed98222624769ca5c8a8d07fdd31204a6bc5724830a3fc712b362a8080");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            PaymentOrderService.completePaymentCrypto(order.getPayment(), "0x0d35734854daeac83c9c048055a440d36e2da526b3355888dce29397ad33d95f");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 //      ***********************************************
 
 //      ****************PAYMENT COMPLETE CARD**********

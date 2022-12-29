@@ -52,17 +52,23 @@ public class OrderCryptoReceiverSenderService {
             System.out.println(transactionReceipt.getStatus());
             if (transactionReceipt.getStatus().equals("0x1")) {
                 EthTransaction eTx = web3jClient.ethGetTransactionByHash(txHash).send();
-                BigInteger bigIntegerUnscaled = eTx.getTransaction().get().getValue();
-                double d = bigIntegerScaledToDouble(bigIntegerUnscaled);
-                System.out.println("d value: " + d + " amount value: " + amount);
-                if(d >= amount){
-                    System.out.println("OK");
-                    return "OK";
+                String checkReceiverAddress= eTx.getTransaction().get().getTo();
+                System.out.println(checkReceiverAddress);
+                if(checkReceiverAddress.equals(myWallet.toLowerCase())){
+                    BigInteger bigIntegerUnscaled = eTx.getTransaction().get().getValue();
+                    double d = bigIntegerScaledToDouble(bigIntegerUnscaled);
+                    System.out.println("d value: " + d + " amount value: " + amount);
+                    if(d >= amount){
+                        System.out.println("OK");
+                        return "OK";
+                    }
+                    System.out.println("amount sent is wrong");
+                    //TODO SEND AMOUNT BACK TO SENDER
+                    return "amount sent is wrong";
+                 }
+                System.out.println("Wrong receiver address, please, provide TX hash with 0x329DfA6ca4F1210231B66e6d78361D36aBF178EA as a receiver");
+                return "Wrong receiver address, please, provide TX hash with 0x329DfA6ca4F1210231B66e6d78361D36aBF178EA as a receiver";
                 }
-                System.out.println("amount sent is wrong");
-                //TODO SEND AMOUNT BACK TO SENDER
-                return "amount sent is wrong";
-            }
             return "Transaction " + txHash +" found but is not completed yet in blockchain... you can increase gas or wait... ";
         }catch (NoSuchElementException nsex){
             System.out.println("Eth tx not found");
