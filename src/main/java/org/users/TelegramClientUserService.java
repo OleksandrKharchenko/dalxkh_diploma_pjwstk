@@ -17,6 +17,11 @@ public class TelegramClientUserService {
         spawner.createCommit(clientUser);
     }
 
+    public static void updateTelegramClientUser(TelegramClientUser clientUser){
+        HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+        spawner.updateCommit(clientUser);
+    }
+
     public static TelegramClientUser getTelegramClientUser(int idTelegramUser){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;

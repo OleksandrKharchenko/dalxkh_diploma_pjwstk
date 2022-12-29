@@ -7,6 +7,7 @@ import org.orders.ManageAdminContentOrder;
 import org.orders.Order;
 import org.payments.CreditCardPayment;
 import org.payments.CryptoPayment;
+import org.payments.CryptoPaymentBalance;
 import org.payments.Payment;
 import org.users.*;
 import org.webitems.*;
@@ -31,7 +32,8 @@ public class HibernateSessionFactorySpawner {
                 addAnnotatedClass(Payment.class).
                 addAnnotatedClass(CryptoPayment.class).
                 addAnnotatedClass(CreditCardPayment.class).
-                addAnnotatedClass(ManageAdminContentOrder.class)
+                addAnnotatedClass(ManageAdminContentOrder.class).
+                addAnnotatedClass(CryptoPaymentBalance.class)
                 .buildSessionFactory();
         Session session = factory.getCurrentSession();
         return session;
@@ -55,7 +57,8 @@ public class HibernateSessionFactorySpawner {
                 addAnnotatedClass(Payment.class).
                 addAnnotatedClass(CryptoPayment.class).
                 addAnnotatedClass(CreditCardPayment.class).
-                addAnnotatedClass(ManageAdminContentOrder.class)
+                addAnnotatedClass(ManageAdminContentOrder.class).
+                addAnnotatedClass(CryptoPaymentBalance.class)
                 .buildSessionFactory();
         Session session = factory.openSession();
     }

@@ -38,9 +38,11 @@ public class Order {
     @Column(name="usdEquivalentPrice")
     private int usdEquivalentPrice;
     @Column(name="cryptoEquivalentPrice")
-    private int cryptoEquivalentPrice;
+    private double cryptoEquivalentPrice;
     @Column(name="timeStamp")
     private Timestamp timeStamp;
+    @Column(name="cryptoTxHashConfirmation")
+    private String cryptoTxHashConfirmation;
 
     public Order() {
     }
@@ -119,12 +121,19 @@ public class Order {
         this.usdEquivalentPrice = usdEquivalentPrice;
     }
 
-    public int getCryptoEquivalentPrice() {
+    public double getCryptoEquivalentPrice() {
         return cryptoEquivalentPrice;
     }
 
-    public void setCryptoEquivalentPrice(int cryptoEquivalentPrice) {
+    public void setCryptoEquivalentPrice(double cryptoEquivalentPrice) {
         this.cryptoEquivalentPrice = cryptoEquivalentPrice;
     }
 
+    public String getCryptoTxHashNFT() {
+        return cryptoTxHashConfirmation;
+    }
+
+    public void setCryptoTxHashNFT(String cryptoTxHash) {
+        this.cryptoTxHashConfirmation = cryptoTxHash;
+    }
 }

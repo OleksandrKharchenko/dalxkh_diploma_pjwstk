@@ -6,15 +6,30 @@ import org.payments.*;
 import org.webitems.*;
 import org.users.*;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
+    public static void main(String[] args) {
 
 
 // *********************ENTITY GENERATE DB INITIATION**********************
 //        HibernateSessionFactorySpawner.spawnInitSession();
+//        CryptoPaymentBalance balance = null;
+//        try {
+//            balance = new CryptoPaymentBalance();
+//            balance.createBalance();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+        CryptoPaymentBalance balance = null;
+        try {
+            balance = new CryptoPaymentBalance();
+            balance.updateBalance();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 // ************************************************************************
 
 // *********************SUPER USER INITIATION******************************
@@ -71,6 +86,8 @@ public class Main {
 
 // *********************CREATING ORDER BY TELEGRAM CLIENT******************
 //        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(546260188);
+//        telegramClientUser.setCyptoWalletAdress("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
+//        TelegramClientUserService.updateTelegramClientUser(telegramClientUser);
 //        WebItem webItem = WebItemService.getWebItem(1);
 //        OrderService.createOrder(webItem, telegramClientUser);
 // ************************************************************************
@@ -79,8 +96,8 @@ public class Main {
 
 //      ****************COMPLETED ORDER WITH PAYMENT***
 //      ****************PAYMENT STAGE******************
-//        Order order = OrderService.getOrders(8);
-//        PaymentOrderService.createPayment(order, "card");
+//        Order order = OrderService.getOrders(3);
+//        PaymentOrderService.createPayment(order, "crypto");
 //      ***********************************************
 
 //      ****************CANCELED ORDER*****************
@@ -89,24 +106,39 @@ public class Main {
 //      ***********************************************
 
 
-//      ****************PAYMENT COMPLETE***************
-//        PaymentOrderService.completePayment(order.getPayment());
+//      ****************PAYMENT COMPLETE CRYPTO********
+//        try {
+//            PaymentOrderService.completePaymentCrypto(order.getPayment(), "0xc55763ed98222624769ca5c8a8d07fdd31204a6bc5724830a3fc712b362a8080");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//      ***********************************************
+
+//      ****************PAYMENT COMPLETE CARD**********
+//            PaymentOrderService.completePaymentCard(order.getPayment());
 //      ***********************************************
 
 //      ****************ORDER STAGE******************
 //        OrderService.sendOrder(order);
 //      ***********************************************
-    OrderCryptoSenderService orderCryptoSenderService = new OrderCryptoSenderService();
-//    orderCryptoSenderService.getWalletInfo();
-        try {
-            orderCryptoSenderService.sendCryptoItem();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+
+//    OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
+//        orderCryptoSenderService.getWalletInfo();
+//        try {
+//            orderCryptoSenderService.sendCryptoItem("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
 // ************************************************************************
 
-
+//        try {
+//            OrderCryptoReceiverSenderService c = new OrderCryptoReceiverSenderService();
+//            c.verifyCryptoTxPayment(0.01,"0xc55763ed98222624769ca5c8a8d07fdd31204a6bc5724830a3fc712b362a8080");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
 
     }

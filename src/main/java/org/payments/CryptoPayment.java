@@ -14,7 +14,7 @@ public class CryptoPayment extends Payment{
     @Column(name="blockchain")
     private String blockchain;
     @Column(name="amountInCrypto")
-    private int amountInCrypto;
+    private double amountInCrypto;
 
     public CryptoPayment() {
     }
@@ -54,11 +54,11 @@ public class CryptoPayment extends Payment{
         this.blockchain = blockchain;
     }
 
-    public int getAmountInCrypto() {
+    public double getAmountInCrypto() {
         return amountInCrypto;
     }
 
-    public void setAmountInCrypto(int amountInCrypto) {
+    public void setAmountInCrypto(double amountInCrypto) {
         this.amountInCrypto = amountInCrypto;
     }
 

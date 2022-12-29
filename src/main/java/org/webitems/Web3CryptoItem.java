@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue(value="Web3CryptoItem")
 public abstract class Web3CryptoItem extends WebItem {
     @Column(name="cryptoPrice")
-    private int cryptoPrice;
+    private double cryptoPrice;
     @Column(name="contractAddress", unique = true)
     private String contractAddress;
     @Column(name="blockchain")
@@ -27,11 +27,11 @@ public abstract class Web3CryptoItem extends WebItem {
         this.tokenStandard = tokenStandard;
     }
 
-    public int getCryptoPrice() {
+    public double getCryptoPrice() {
         return cryptoPrice;
     }
 
-    public void setCryptoPrice(int cryptoPrice) {
+    public void setCryptoPrice(double cryptoPrice) {
         this.cryptoPrice = cryptoPrice;
     }
 

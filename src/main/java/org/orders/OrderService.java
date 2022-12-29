@@ -77,13 +77,18 @@ public abstract class OrderService {
                     return "Your code: " + ((Web2Item) order.getWebItem()).getRedeemCode();
                 }
                 if (order.getWebItem() instanceof Web3CryptoItem){
-                    System.out.println("Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress());
-                    order.setState("completed");
-                    order.getWebItem().setQuantity(order.getWebItem().getQuantity() -1);
-                    WebItemService.updateWebItem(order.getWebItem());
-                    updateOrder(order);
-                    System.out.println("Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress());
-                    return "Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress();
+                    OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
+                    try {
+                        String txHash = orderCryptoReceiverSenderService.sendCryptoItem(order.getTelegramClientUser().getCyptoWalletAdress());
+                        order.setCryptoTxHashNFT(txHash);
+                        order.setState("completed");
+                        order.getWebItem().setQuantity(order.getWebItem().getQuantity() -1);
+                        WebItemService.updateWebItem(order.getWebItem());
+                        updateOrder(order);
+                        System.out.println("Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress());
+                        return "Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress();
+                    } catch (Exception e) {
+                    }
                 }
 
             }
