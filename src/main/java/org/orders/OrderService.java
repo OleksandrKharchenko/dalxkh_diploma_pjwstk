@@ -60,7 +60,7 @@ public abstract class OrderService {
 
 
     public static String sendOrder(Order order){
-        if (!order.getState().equals("canceled")){
+        if (!order.getState().equals("canceled") || !order.getState().equals("completed")){
             if (order.getPayment() != null && order.getPayment().isCompleted()) {
                 if (order.getWebItem() instanceof Web2Item){
                     WebItemService webItemService = new WebItemService();
@@ -92,7 +92,7 @@ public abstract class OrderService {
             System.out.println("Order doesn't send due to uncompleted payment");
             return "Order doesn't send due to uncompleted payment";
         }
-        System.out.println("Order doesn't send due to canceled order");
-        return "Order doesn't send due to canceled order";
+        System.out.println("Order doesn't send due to canceled or completed order");
+        return "Order doesn't send due to canceled or completed order";
     }
 }

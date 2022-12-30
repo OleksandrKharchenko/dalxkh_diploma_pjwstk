@@ -11,10 +11,7 @@ import java.util.List;
 public class TelegramWebItemControllerHandler {
 
     public SendPhoto getWeb3NFTs(Message message, Web3NFT web3NFT) {
-
         WebItemService webItemService = new WebItemService();
-
-
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton buy = InlineKeyboardButton.builder()
                 .text("Buy").callbackData("buyNFT." + web3NFT.getIdItem())

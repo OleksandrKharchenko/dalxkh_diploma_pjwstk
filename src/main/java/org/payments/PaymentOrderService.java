@@ -7,7 +7,7 @@ import org.orders.OrderCryptoReceiverSenderService;
 import java.io.IOException;
 
 public abstract class PaymentOrderService {
-    public static void createPayment(Order order, String typeOfPayment){
+    public static Payment createPayment(Order order, String typeOfPayment){
         if(order.getPayment() == null){
             if (typeOfPayment.equals("crypto")){
                 Payment payment = new CryptoPayment(order, "ETH");
@@ -15,6 +15,7 @@ public abstract class PaymentOrderService {
                 order.setState(payment.getState());
                 HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
                 spawner.updateCommit(order);
+                return payment;
             }
             if (typeOfPayment.equals("card")){
                 Payment payment = new CreditCardPayment(order, "telegramPayAPI");
@@ -22,8 +23,10 @@ public abstract class PaymentOrderService {
                 order.setState(payment.getState());
                 HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
                 spawner.updateCommit(order);
+                return payment;
             }
         }
+        return null;
     }
 
     public static void completePaymentCrypto(Payment payment, String txHash) throws IOException {

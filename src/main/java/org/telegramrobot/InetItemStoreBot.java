@@ -1,8 +1,11 @@
 package org.telegramrobot;
 
+import okhttp3.OkHttpClient;
 import org.orders.Order;
+import org.orders.OrderCryptoReceiverSenderService;
 import org.orders.OrderService;
 import org.orders.TelegramOrderControllerHandler;
+import org.payments.TelegramPaymentControllerHandler;
 import org.telegram.telegrambots.bots.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
@@ -38,7 +41,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-
+            //OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
 
             if (update.getMessage().isCommand()) {
                 if (update.getMessage().getText().equals("/start")) {
@@ -76,9 +79,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                     sm.setChatId(update.getCallbackQuery().getMessage().getChatId());
                     execute(sm);
                 }
-                    System.out.println("HERE");
                 sm = telegramOrderControllerHandler.createOrderWithWeb3CryptoItem(update.getCallbackQuery(), telegramClientUser);
-                    System.out.println("HERE");
                 execute(sm);
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
@@ -86,6 +87,30 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             } else if (update.getCallbackQuery().getData().substring(0,6).equals("cancel")) {
                 TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
                 SendMessage sm = telegramOrderControllerHandler.cancelOrder(update.getCallbackQuery());
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getCallbackQuery().getData().substring(0,9).equals("cryptopay")){
+                TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
+                SendMessage sm = telegramPaymentControllerHandler.createPaymentForOrderWithCrypto(update.getCallbackQuery());
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getCallbackQuery().getData().substring(0,10).equals("confirmpay")){
+                TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
+                SendMessage sm = telegramPaymentControllerHandler.provideTxHash(update.getCallbackQuery());
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getCallbackQuery().getData().substring(0,8).equals("verifytx")) {
+                TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
+                SendMessage sm = telegramPaymentControllerHandler.verifyTxHash(update.getCallbackQuery());
                 try {
                     execute(sm);
                 } catch (TelegramApiException e) {

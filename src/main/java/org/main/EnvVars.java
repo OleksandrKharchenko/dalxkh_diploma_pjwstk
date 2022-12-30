@@ -2,7 +2,7 @@ package org.main;
 
 public interface EnvVars {
      String HibirnateConfigFile = "hibernate.cfg.xml";
-     String DefaultCryptoPaymentAddress = "0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096";
+     String DefaultCryptoPaymentAddress = "0x329DfA6ca4F1210231B66e6d78361D36aBF178EA";
      String DefaultBlockchain = "ETH";
 
 }
