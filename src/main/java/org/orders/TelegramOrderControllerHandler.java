@@ -18,23 +18,26 @@ public class TelegramOrderControllerHandler {
 
     public SendMessage createOrderWithWeb3CryptoItem(CallbackQuery message, TelegramClientUser telegramClientUser) {
         WebItemService webItemService = new WebItemService();
-        String orderPlaced = OrderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(7))), telegramClientUser);
+        Order order = OrderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(7))), telegramClientUser);
+        String orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
+                "</b> \nItem Name: <b>" + order.getWebItem().getName() + "</b> \nContract Address: <b>" + ((Web3NFT) order.getWebItem()).getContractAddress() + "</b> \nPrice ETH: <b>" + order.getCryptoEquivalentPrice() + " ETH</b>";
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton crypto = InlineKeyboardButton.builder()
-                .text("Pay with ETH").callbackData("crypto")
+                .text("Pay with ETH").callbackData("cryptopay." + order.getIdOrder())
+                .build();
+        InlineKeyboardButton cancel = InlineKeyboardButton.builder()
+                .text("Cancel").callbackData("cancel." + order.getIdOrder())
                 .build();
         InlineKeyboardMarkup keyboardMarkup;
-        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto))
+        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto)).keyboardRow(List.of(cancel))
                 .build();
         //****************************************************
-
         SendMessage sm = SendMessage.builder()
-                .text(orderPlaced)
+                .text(orderString)
                 .parseMode("HTML")
                 .chatId(message.getMessage().getChatId())
                 .replyMarkup(keyboardMarkup)
                 .build();
-
         return sm;
     }
 
@@ -63,5 +66,17 @@ public class TelegramOrderControllerHandler {
                 .build();
 
         return  sendMessage;
+    }
+
+    public SendMessage cancelOrder(CallbackQuery message) {
+        Order order = OrderService.getOrders(Integer.parseInt(message.getData().substring(7)));
+        OrderService.cancelOrder(order);
+        String cancelString = "Order Number: <b>"+ order.getIdOrder() + "</b> is canceled. Thank you.\nTo go to Main Menu write /start or choose from command list.";
+        SendMessage sm = SendMessage.builder()
+                .text(cancelString)
+                .parseMode("HTML")
+                .chatId(message.getMessage().getChatId())
+                .build();
+        return sm;
     }
 }

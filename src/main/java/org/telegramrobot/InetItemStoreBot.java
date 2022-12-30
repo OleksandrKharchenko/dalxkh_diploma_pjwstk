@@ -1,5 +1,7 @@
 package org.telegramrobot;
 
+import org.orders.Order;
+import org.orders.OrderService;
 import org.orders.TelegramOrderControllerHandler;
 import org.telegram.telegrambots.bots.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -69,11 +71,11 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 SendMessage sm = new SendMessage();
                 TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
                 TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
-//                if(telegramClientUser.isBanStatus()){
+                if(telegramClientUser.isBanStatus()){
                     sm.setText("You can't buy.\nReason: You are banned!");
                     sm.setChatId(update.getCallbackQuery().getMessage().getChatId());
-                    //execute(sm);
-//                }
+                    execute(sm);
+                }
                     System.out.println("HERE");
                 sm = telegramOrderControllerHandler.createOrderWithWeb3CryptoItem(update.getCallbackQuery(), telegramClientUser);
                     System.out.println("HERE");
@@ -81,6 +83,15 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
+            } else if (update.getCallbackQuery().getData().substring(0,6).equals("cancel")) {
+                TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
+                SendMessage sm = telegramOrderControllerHandler.cancelOrder(update.getCallbackQuery());
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
         }
     }
