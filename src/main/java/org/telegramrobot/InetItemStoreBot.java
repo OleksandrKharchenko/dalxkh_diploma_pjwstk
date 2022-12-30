@@ -1,14 +1,15 @@
 package org.telegramrobot;
 
+import org.orders.TelegramOrderControllerHandler;
 import org.telegram.telegrambots.bots.*;
-import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.media.InputMedia;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.users.TelegramUserHandler;
-import org.webitems.TelegramWebItemHandler;
+import org.users.TelegramClientUser;
+import org.users.TelegramClientUserService;
+import org.users.TelegramUserControllerHandler;
+import org.webitems.TelegramWebItemControllerHandler;
 import org.webitems.Web3NFT;
 import org.webitems.WebItem;
 import org.webitems.WebItemService;
@@ -39,8 +40,8 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
 
             if (update.getMessage().isCommand()) {
                 if (update.getMessage().getText().equals("/start")) {
-                    TelegramUserHandler telegramUserHandler = new TelegramUserHandler();
-                    SendMessage sm = telegramUserHandler.addUserStartFlow(update.getMessage());
+                    TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
+                    SendMessage sm = telegramUserControllerHandler.addUserStartFlow(update.getMessage());
                     try {
                         execute(sm);
                     } catch (TelegramApiException e) {
@@ -51,15 +52,32 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
         }
         if (update.hasCallbackQuery()) {
             if (update.getCallbackQuery().getData().equals("NFT")) {
-                TelegramWebItemHandler telegramWebItemHandler = new TelegramWebItemHandler();
+                TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
                 WebItemService webItemService = new WebItemService();
                 List<WebItem> web3NFTs = webItemService.getWebItems("Web3NFT");
                 SendPhoto sp;
                 try {
                 for (WebItem w: web3NFTs) {
-                    sp = telegramWebItemHandler.getWeb3NFTs(update.getCallbackQuery().getMessage(), (Web3NFT) w);
+                    sp = telegramWebItemControllerHandler.getWeb3NFTs(update.getCallbackQuery().getMessage(), (Web3NFT) w);
                     execute(sp);
                 }
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getCallbackQuery().getData().substring(0,6).equals("buyNFT")) {
+                try {
+                SendMessage sm = new SendMessage();
+                TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
+                TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
+//                if(telegramClientUser.isBanStatus()){
+                    sm.setText("You can't buy.\nReason: You are banned!");
+                    sm.setChatId(update.getCallbackQuery().getMessage().getChatId());
+                    //execute(sm);
+//                }
+                    System.out.println("HERE");
+                sm = telegramOrderControllerHandler.createOrderWithWeb3CryptoItem(update.getCallbackQuery(), telegramClientUser);
+                    System.out.println("HERE");
+                execute(sm);
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }

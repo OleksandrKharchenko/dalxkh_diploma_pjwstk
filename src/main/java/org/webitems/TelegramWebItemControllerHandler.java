@@ -4,12 +4,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.List;
 
-public class TelegramWebItemHandler {
+public class TelegramWebItemControllerHandler {
 
     public SendPhoto getWeb3NFTs(Message message, Web3NFT web3NFT) {
 
@@ -18,7 +17,7 @@ public class TelegramWebItemHandler {
 
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton buy = InlineKeyboardButton.builder()
-                .text("Buy").callbackData("buy" + web3NFT.getContractAddress())
+                .text("Buy").callbackData("buyNFT." + web3NFT.getIdItem())
                 .build();
         InlineKeyboardButton ethscan = InlineKeyboardButton.builder()
                 .text("etherscan.io").callbackData("etherscan")
@@ -42,6 +41,7 @@ public class TelegramWebItemHandler {
                 .chatId(message.getChatId())
                 .replyMarkup(keyboardMarkup)
                 .build();
+
         return  sendPhoto;
     }
 

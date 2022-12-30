@@ -122,10 +122,10 @@ public class Main {
 //        OrderService.sendOrder(order);
 //      ***********************************************
 
-        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) TelegramAdminSuperUserService.getTelegramOperUser(546240188);
-        Web3NFT nft1 = new Web3NFT("ukraine2022_nft", 100, 0.03, "0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957", "ETH", "ERC-721", 39, "epic", "https://i.seadn.io/gae/Vjbl-6yiwT3XzSwk7q4yffAfgPv1jwV8EMs5EGR8TYyFVDl9SXEHFAXz7sVQYV72J1DfXeo9MHIvYXSwCPP0v_lkHU8hHQ8254KS?auto=format&w=1000");
-        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
-        System.out.println(TelegramClientUserService.verifyIfExists(510188));
+//        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) TelegramAdminSuperUserService.getTelegramOperUser(546240188);
+//        Web3NFT nft1 = new Web3NFT("kyivwar_nft", 10, 0.06, "0x495f947276749Ce646f68AC8c248420045cb7b5e", "ETH", "ERC-1155", 41, "epic", "https://i.seadn.io/gae/MtHJs6bVi2W66uN0Q2ylWkcU3qUd--FgMlS99iLD8ppDqBaTZ5VEeXiNgCpPPSOKaE64h--QJaVRKR2USa5xrmEvyL9mzVdD-gfr?auto=format&w=1000");
+//        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
+//        System.out.println(TelegramClientUserService.verifyIfExists(510188));
 
 //    OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
 //        orderCryptoSenderService.getWalletInfo();

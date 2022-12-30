@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegramrobot.MessageFlowGenerator;
 
-public class TelegramUserHandler {
+public class TelegramUserControllerHandler {
 
     public SendMessage addUserStartFlow(Message message){
         if(!TelegramClientUserService.verifyIfExists(Math.toIntExact(message.getFrom().getId()))){

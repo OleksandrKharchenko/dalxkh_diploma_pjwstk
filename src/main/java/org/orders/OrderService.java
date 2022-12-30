@@ -7,10 +7,7 @@ import org.main.HibernateSessionFactorySpawner;
 import org.payments.CryptoPayment;
 import org.payments.PaymentOrderService;
 import org.users.TelegramClientUser;
-import org.webitems.Web2Item;
-import org.webitems.Web3CryptoItem;
-import org.webitems.WebItem;
-import org.webitems.WebItemService;
+import org.webitems.*;
 
 import java.util.List;
 
@@ -21,8 +18,12 @@ public abstract class OrderService {
             Order order = new Order(telegramClientUser, webItem);
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
             spawner.createCommit(order);
-            System.out.println("Order for client: " + telegramClientUser.getDisplayName() + " " + telegramClientUser.getIdTelegramUser() + " created");
-            return "Order for client: " + telegramClientUser.getDisplayName() + " " + telegramClientUser.getIdTelegramUser() + " created";
+            if(order.getWebItem() instanceof Web3NFT){
+                return "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
+                        "</b> \nItem Name: <b>" + order.getWebItem().getName() + "</b> \nContract Address: <b>" + ((Web3NFT) order.getWebItem()).getContractAddress() + "</b> \nPrice ETH: <b>" + order.getCryptoEquivalentPrice() + " ETH</b>";
+            }
+            return "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
+                    "</b> \nItem Name: <b>" + order.getWebItem().getName() +"</b> \nPrice ETH: <b>" + order.getCryptoEquivalentPrice() + " ETH</b>";
         }
         System.out.println("User " + telegramClientUser.getDisplayName() + " can't create order. REASON: Banned");
         return "User " + telegramClientUser.getDisplayName() + " can't create order. REASON: Banned";

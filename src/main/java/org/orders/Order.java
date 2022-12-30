@@ -136,4 +136,12 @@ public class Order {
     public void setCryptoTxHashNFT(String cryptoTxHash) {
         this.cryptoTxHashConfirmation = cryptoTxHash;
     }
+
+    public int getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(int idOrder) {
+        this.idOrder = idOrder;
+    }
 }
