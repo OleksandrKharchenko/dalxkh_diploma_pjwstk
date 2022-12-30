@@ -1,4 +1,4 @@
-package org.telegrambots;
+package org.telegramrobot;
 
 public interface EnvTelegramBotsVars {
     final String BOTUSERNAME = "InetIstore_bot";

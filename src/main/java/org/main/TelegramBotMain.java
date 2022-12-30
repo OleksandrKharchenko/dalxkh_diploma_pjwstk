@@ -3,7 +3,7 @@ package org.main;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import org.telegrambots.InetItemStoreBot;
+import org.telegramrobot.InetItemStoreBot;
 
 
 public class TelegramBotMain {

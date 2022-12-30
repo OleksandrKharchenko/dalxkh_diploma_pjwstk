@@ -18,7 +18,7 @@ public class Web3NFT extends Web3CryptoItem{
     public Web3NFT() {
     }
 
-    public Web3NFT(String name, long quantity, int cryptoPrice, String contractAddress, String blockchain, String tokenStandard, long NFTTokenId, String quality, String imgPath) {
+    public Web3NFT(String name, long quantity, double cryptoPrice, String contractAddress, String blockchain, String tokenStandard, long NFTTokenId, String quality, String imgPath) {
         super(name, quantity, cryptoPrice, contractAddress, blockchain, tokenStandard);
         this.NFTTokenId = NFTTokenId;
         this.quality = quality;

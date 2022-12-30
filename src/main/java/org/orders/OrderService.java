@@ -68,9 +68,10 @@ public abstract class OrderService {
         if (!order.getState().equals("canceled")){
             if (order.getPayment() != null && order.getPayment().isCompleted()) {
                 if (order.getWebItem() instanceof Web2Item){
+                    WebItemService webItemService = new WebItemService();
                     order.setState("completed");
                     order.getWebItem().setQuantity(order.getWebItem().getQuantity() -1);
-                    WebItemService.updateWebItem(order.getWebItem());
+                    webItemService.updateWebItem(order.getWebItem());
                     updateOrder(order);
                     OrderEmailSenderService.sendMailTo(order.getEmailClient(), ((Web2Item) order.getWebItem()).getRedeemCode());
                     System.out.println("Your code: " + ((Web2Item) order.getWebItem()).getRedeemCode());
@@ -79,11 +80,12 @@ public abstract class OrderService {
                 if (order.getWebItem() instanceof Web3CryptoItem){
                     OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
                     try {
+                        WebItemService webItemService = new WebItemService();
                         String txHash = orderCryptoReceiverSenderService.sendCryptoItem(order.getTelegramClientUser().getCyptoWalletAdress());
                         order.setCryptoTxHashNFT(txHash);
                         order.setState("completed");
                         order.getWebItem().setQuantity(order.getWebItem().getQuantity() -1);
-                        WebItemService.updateWebItem(order.getWebItem());
+                        webItemService.updateWebItem(order.getWebItem());
                         updateOrder(order);
                         System.out.println("Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress());
                         return "Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress();

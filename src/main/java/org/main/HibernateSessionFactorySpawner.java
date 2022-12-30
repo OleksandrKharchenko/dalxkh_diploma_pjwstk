@@ -46,11 +46,4 @@ public class HibernateSessionFactorySpawner {
         return session;
     }
 
-    public static Session spawnIniSession(){
-        session = buildSessionFactory().openSession();
-        session.beginTransaction();
-        session.getTransaction().commit();
-        session.close();
-        return session;
-    }
 }

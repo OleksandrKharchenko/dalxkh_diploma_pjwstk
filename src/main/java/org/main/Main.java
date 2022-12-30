@@ -15,7 +15,7 @@ public class Main {
 
 
 // *********************ENTITY GENERATE DB INITIATION**********************
-//        HibernateSessionFactorySpawner.spawnIniSession();
+//        HibernateSessionFactorySpawner.spawnSession();
 //        CryptoPaymentBalance balance = null;
 //        try {
 //            balance = new CryptoPaymentBalance();
@@ -34,7 +34,7 @@ public class Main {
 
 // *********************SUPER USER INITIATION******************************
 //        String admEmail = "deepalexkh@gmail.com";
-//        int admIdTelegramUser = 592510188;
+//        int admIdTelegramUser = 512510188;
 //        String admDisplayName = "Alex Kharchenko";
 //        TelegramAdminSuperUserService.initiateTelegramFirstSuperUser(admEmail, admIdTelegramUser, admDisplayName);
 // ************************************************************************
@@ -122,6 +122,9 @@ public class Main {
 //        OrderService.sendOrder(order);
 //      ***********************************************
 
+        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) TelegramAdminSuperUserService.getTelegramOperUser(546240188);
+        Web3NFT nft1 = new Web3NFT("ukraine2022_nft", 100, 0.03, "0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957", "ETH", "ERC-721", 39, "epic", "https://i.seadn.io/gae/Vjbl-6yiwT3XzSwk7q4yffAfgPv1jwV8EMs5EGR8TYyFVDl9SXEHFAXz7sVQYV72J1DfXeo9MHIvYXSwCPP0v_lkHU8hHQ8254KS?auto=format&w=1000");
+        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
         System.out.println(TelegramClientUserService.verifyIfExists(510188));
 
 //    OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();

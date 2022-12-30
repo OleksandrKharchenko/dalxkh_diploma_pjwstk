@@ -19,7 +19,7 @@ public abstract class Web3CryptoItem extends WebItem {
     public Web3CryptoItem() {
     }
 
-    public Web3CryptoItem(String name, long quantity, int cryptoPrice, String contractAddress, String blockchain, String tokenStandard) {
+    public Web3CryptoItem(String name, long quantity, double cryptoPrice, String contractAddress, String blockchain, String tokenStandard) {
         super(name, quantity);
         this.cryptoPrice = cryptoPrice;
         this.contractAddress = contractAddress;

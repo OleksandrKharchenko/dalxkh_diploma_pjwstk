@@ -8,19 +8,19 @@ import org.users.TelegramAdminContentUser;
 
 import java.util.List;
 
-public abstract class WebItemService {
+public class WebItemService {
 
-    public static void updateWebItem(WebItem webItem) {
+    public void updateWebItem(WebItem webItem) {
         HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
         spawner.updateCommit(webItem);
         }
 
-    public static void deleteWebItem(WebItem webItem) {
+    public void deleteWebItem(WebItem webItem) {
         HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
         spawner.deleteCommit(webItem);
     }
 
-    public static WebItem getWebItem(int idItem) {
+    public WebItem getWebItem(int idItem) {
         Session startGetWebItemSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startGetWebItemSession.beginTransaction();
@@ -30,7 +30,7 @@ public abstract class WebItemService {
         return webItem;
     }
 
-    public static List<WebItem> getWebItems(String typeOf) {
+    public List<WebItem> getWebItems(String typeOf) {
         Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
         Query query = null;
         List<WebItem> listWebItems = null;

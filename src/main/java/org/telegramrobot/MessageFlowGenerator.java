@@ -1,4 +1,4 @@
-package org.telegrambots;
+package org.telegramrobot;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -12,11 +12,9 @@ public class MessageFlowGenerator {
         InlineKeyboardButton nft = InlineKeyboardButton.builder()
                 .text("NFT's").callbackData("NFT")
                 .build();
-
         InlineKeyboardButton gameCodes = InlineKeyboardButton.builder()
                 .text("Game Codes").callbackData("GmC")
                 .build();
-
         InlineKeyboardButton giftCards = InlineKeyboardButton.builder()
                 .text("Gift Cards").callbackData("GfC")
                 .build();
