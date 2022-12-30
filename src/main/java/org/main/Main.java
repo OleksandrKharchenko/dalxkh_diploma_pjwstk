@@ -15,7 +15,7 @@ public class Main {
 
 
 // *********************ENTITY GENERATE DB INITIATION**********************
-//        HibernateSessionFactorySpawner.spawnInitSession();
+//        HibernateSessionFactorySpawner.spawnIniSession();
 //        CryptoPaymentBalance balance = null;
 //        try {
 //            balance = new CryptoPaymentBalance();
@@ -101,17 +101,17 @@ public class Main {
 //      ***********************************************
 
 //      ****************CANCELED ORDER*****************
-        Order order = OrderService.getOrders(3);
+//        Order order = OrderService.getOrders(3);
 //        OrderService.cancelOrder(order);
 //      ***********************************************
 
 
 //      ****************PAYMENT COMPLETE CRYPTO********
-        try {
-            PaymentOrderService.completePaymentCrypto(order.getPayment(), "0x0d35734854daeac83c9c048055a440d36e2da526b3355888dce29397ad33d95f");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            PaymentOrderService.completePaymentCrypto(order.getPayment(), "0x0d35734854daeac83c9c048055a440d36e2da526b3355888dce29397ad33d95f");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 //      ***********************************************
 
 //      ****************PAYMENT COMPLETE CARD**********
@@ -122,6 +122,7 @@ public class Main {
 //        OrderService.sendOrder(order);
 //      ***********************************************
 
+        System.out.println(TelegramClientUserService.verifyIfExists(510188));
 
 //    OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
 //        orderCryptoSenderService.getWalletInfo();
@@ -130,6 +131,7 @@ public class Main {
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
+
 
 // ************************************************************************
 

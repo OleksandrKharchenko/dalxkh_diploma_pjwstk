@@ -15,6 +15,11 @@ public abstract class TelegramUser extends User {
     public TelegramUser() {
     }
 
+    public TelegramUser(int idTelegramUser, String displayName) {
+        super();
+        this.idTelegramUser = idTelegramUser;
+        this.displayName = displayName;
+    }
     public TelegramUser(String email, int idTelegramUser, String displayName) {
         super(email);
         this.idTelegramUser = idTelegramUser;

@@ -5,24 +5,27 @@ import org.hibernate.Session;
 public class HibernateCommitsSpawner {
 
     public void createCommit(Object o) {
-        Session startCreateSession = HibernateSessionFactorySpawner.spawnSession();
-        startCreateSession.beginTransaction();
-        startCreateSession.persist(o);
-        startCreateSession.getTransaction().commit();
+        Session session = HibernateSessionFactorySpawner.spawnSession();
+        session.beginTransaction();
+        session.persist(o);
+        session.getTransaction().commit();
+        session.close();
     }
 
     public void updateCommit(Object o) {
-        Session startCreateSession = HibernateSessionFactorySpawner.spawnSession();
-        startCreateSession.beginTransaction();
-        startCreateSession.merge(o);
-        startCreateSession.getTransaction().commit();
+        Session session = HibernateSessionFactorySpawner.spawnSession();
+        session.beginTransaction();
+        session.merge(o);
+        session.getTransaction().commit();
+        session.close();
     }
 
     public void deleteCommit(Object o) {
-        Session startCreateSession = HibernateSessionFactorySpawner.spawnSession();
-        startCreateSession.beginTransaction();
-        startCreateSession.remove(o);
-        startCreateSession.getTransaction().commit();
+        Session session = HibernateSessionFactorySpawner.spawnSession();
+        session.beginTransaction();
+        session.remove(o);
+        session.getTransaction().commit();
+        session.close();
     }
 
 }

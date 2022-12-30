@@ -13,10 +13,13 @@
         <property name="connection.password">4756</property>
 
         <!-- JDBC connection pool settings ... using built-in test pool -->
-        <property name="connection.pool_size">10</property>
+        <property name="connection.pool_size">100</property>
 
         <!-- Select our SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Disable the second-level cache -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 
         <!-- Echo the SQL to stdout -->
         <property name="show_sql">true</property>
@@ -24,7 +27,26 @@
 		<!-- Set the current session context -->
 		<property name="current_session_context_class">thread</property>
 		
-<!--        <property name="hibernate.hbm2ddl.auto">create</property>-->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <mapping class="*"/>
+        <mapping class="org.users.TelegramUser"/>
+        <mapping class="org.users.TelegramOperationalUser"/>
+        <mapping class="org.users.TelegramAdminContentUser"/>
+        <mapping class="org.users.TelegramAdminSuperUser"/>
+        <mapping class="org.users.TelegramClientUser"/>
+        <mapping class="org.webitems.WebItem"/>
+        <mapping class="org.webitems.Web2Item"/>
+        <mapping class="org.webitems.Web3CryptoItem"/>
+        <mapping class="org.webitems.Web2GameCode"/>
+        <mapping class="org.webitems.Web2GiftCard"/>
+        <mapping class="org.webitems.Web3NFT"/>
+        <mapping class="org.orders.Order"/>
+        <mapping class="org.payments.Payment"/>
+        <mapping class="org.payments.CryptoPayment"/>
+        <mapping class="org.payments.CreditCardPayment"/>
+        <mapping class="org.orders.ManageAdminContentOrd"/>
+        <mapping class="org.payments.CryptoPaymentBalance"/>
 
     </session-factory>
 

@@ -27,9 +27,14 @@ public class TelegramClientUser extends TelegramUser {
     public TelegramClientUser() {
     }
 
+    public TelegramClientUser(int idTelegramUser, String displayName) {
+        super(idTelegramUser, displayName);
+    }
+
     public TelegramClientUser(String email, int idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
     }
+
 
     public int getDiscount() {
         return discount;

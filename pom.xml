@@ -29,7 +29,11 @@
         <artifactId>core</artifactId>
         <version>4.8.4</version>
     </dependency>
-        
+    <dependency>
+        <groupId>org.telegram</groupId>
+        <artifactId>telegrambots</artifactId>
+        <version>6.3.0</version>
+    </dependency>
     </dependencies>
 
     <properties>
