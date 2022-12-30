@@ -72,7 +72,7 @@ public class OrderCryptoReceiverSenderService {
             return "Transaction " + txHash +" found but is not completed yet in blockchain... you can increase gas or wait... ";
         }catch (NoSuchElementException nsex){
             System.out.println("Eth tx not found");
-            return "Eth tx not found";
+            return "Eth tx not found " + txHash;
         }
     }
 

@@ -41,7 +41,6 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            //OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
 
             if (update.getMessage().isCommand()) {
                 if (update.getMessage().getText().equals("/start")) {
@@ -110,7 +109,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 }
             } else if (update.getCallbackQuery().getData().substring(0,8).equals("verifytx")) {
                 TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
-                SendMessage sm = telegramPaymentControllerHandler.verifyTxHash(update.getCallbackQuery());
+                SendMessage sm = telegramPaymentControllerHandler.verifyTxHash(update);
                 try {
                     execute(sm);
                 } catch (TelegramApiException e) {

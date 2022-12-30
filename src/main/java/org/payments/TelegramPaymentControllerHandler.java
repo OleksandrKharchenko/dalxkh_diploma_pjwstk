@@ -6,6 +6,7 @@ import org.orders.OrderService;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.users.TelegramClientUser;
@@ -65,8 +66,10 @@ public class TelegramPaymentControllerHandler {
         return sm;
     }
 
-    public SendMessage verifyTxHash(CallbackQuery message) {
-        int idOrder = Integer.parseInt(message.getData().substring(9));
+    public SendMessage verifyTxHash(Update message) {
+        int idOrder = Integer.parseInt(message.getCallbackQuery().getData().substring(9));
+
+
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton crypto = InlineKeyboardButton.builder()
                 .text("Verify").callbackData("confirmverifytx." + idOrder)
@@ -76,19 +79,18 @@ public class TelegramPaymentControllerHandler {
                 .build();
         //****************************************************
         OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
-        try {
-            String verifyTxHashResult = orderCryptoReceiverSenderService.verifyCryptoTxPayment(OrderService.getOrders(idOrder).
-                    getCryptoEquivalentPrice(), message.getMessage().getText());
-            SendMessage sm = SendMessage.builder()
-                    .text(verifyTxHashResult)
-                    .parseMode("HTML")
-                    .chatId(message.getMessage().getChatId())
-                    .replyMarkup(keyboardMarkup)
-                    .build();
-            return sm;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println("*******");
+        System.out.println();
+        System.out.println("*******");
+        // String verifyTxHashResult = orderCryptoReceiverSenderService.verifyCryptoTxPayment(OrderService.getOrders(idOrder).
+        //         getCryptoEquivalentPrice(), message.getMessage().getText());
+        SendMessage sm = SendMessage.builder()
+                .text("test mode enabled")
+                .parseMode("HTML")
+                .chatId(message.getMessage().getChatId())
+ //               .replyMarkup(keyboardMarkup)
+                .build();
+        return sm;
     }
 
 
