@@ -59,11 +59,12 @@ public class TelegramPaymentControllerHandler {
     }
 
     public SendMessage verifyTxHash(Update message) {
-        int idOrder = Integer.parseInt(message.getMessage().getReplyToMessage().getText().substring(166));
+        System.out.println(message.getMessage().getReplyToMessage().getText().length());
+        int idOrder = Integer.parseInt(message.getMessage().getReplyToMessage().getText().substring(167).trim());
         System.out.println(idOrder);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Processing...⚙️");
-        System.out.println("0xc1f530e9d9175ff6e9da811192dd0d0cb6593ffd185fdcc18f8ceaa8686a4107");
+        CryptoPayment cryptoPayment = (CryptoPayment) OrderService.getOrders(idOrder).getPayment();
         SendMessage sm;
         //*************KEYBOARD DEFINITION1********************
         InlineKeyboardButton claim = InlineKeyboardButton.builder()
@@ -74,29 +75,32 @@ public class TelegramPaymentControllerHandler {
                 .build();
         //****************************************************
         //*************KEYBOARD DEFINITION2********************
-        InlineKeyboardButton tryagain = InlineKeyboardButton.builder()
+        InlineKeyboardButton tryAgain = InlineKeyboardButton.builder()
                 .text("Try again").callbackData("confirmpay." + idOrder)
                 .build();
         InlineKeyboardMarkup keyboardMarkup1;
-        keyboardMarkup1 = InlineKeyboardMarkup.builder().keyboardRow(List.of(tryagain))
+        keyboardMarkup1 = InlineKeyboardMarkup.builder().keyboardRow(List.of(tryAgain))
                 .build();
         //****************************************************
         OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
         String verifyTxHashResult = "something went wrong, try again.";
         try {
             verifyTxHashResult = orderCryptoReceiverSenderService.verifyCryptoTxPayment(OrderService.getOrders(idOrder).
-                     getCryptoEquivalentPrice(), message.getMessage().getText()) + "✅";
+                     getCryptoEquivalentPrice(), message.getMessage().getText());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         stringBuilder.append("\n"+verifyTxHashResult);
         if(verifyTxHashResult.equals("OK")){
+            String ok = "✅";
+            stringBuilder.append(ok);
             sm = SendMessage.builder()
                     .text(stringBuilder.toString())
                     .parseMode("HTML")
                     .chatId(message.getMessage().getChatId())
                     .replyMarkup(keyboardMarkup)
                     .build();
+            PaymentOrderService.completePaymentCard(cryptoPayment);
             return sm;
         }
         sm = SendMessage.builder()
