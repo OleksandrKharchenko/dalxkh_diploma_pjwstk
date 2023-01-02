@@ -48,20 +48,11 @@ public class TelegramPaymentControllerHandler {
 
     public SendMessage provideTxHash(CallbackQuery message) {
         int idOrder = Integer.parseInt(message.getData().substring(11));
-        //*************KEYBOARD DEFINITION********************
-        InlineKeyboardButton confirm = InlineKeyboardButton.builder()
-                .text("Verify").callbackData("verifytx." + idOrder)
-                .build();
-        InlineKeyboardMarkup keyboardMarkup;
-        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(confirm))
-                .build();
-        //****************************************************
-        String provideTxHash = "Got it.\nPlease, write your <b>txHash</b> below and click Verify.\nTxhash should looks like: 0x27477b5876e063650e2927916039aacf1c3c3b7c830415d0a084fc53ef6a9e6a";
+        String provideTxHash = "Checking... \nPlease, write your <b>txHash</b> below and send message.\nTxhash should looks like: 0x27477b5876e063650e2927916039aacf1c3c3b7c830415d0a084fc53ef6a9e6a";
         SendMessage sm = SendMessage.builder()
                 .text(provideTxHash)
                 .parseMode("HTML")
                 .chatId(message.getMessage().getChatId())
-                .replyMarkup(keyboardMarkup)
                 .build();
         return sm;
     }
@@ -71,12 +62,12 @@ public class TelegramPaymentControllerHandler {
 
 
         //*************KEYBOARD DEFINITION********************
-        InlineKeyboardButton crypto = InlineKeyboardButton.builder()
-                .text("Verify").callbackData("confirmverifytx." + idOrder)
-                .build();
-        InlineKeyboardMarkup keyboardMarkup;
-        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto))
-                .build();
+//        InlineKeyboardButton crypto = InlineKeyboardButton.builder()
+//                .text("Verify").callbackData("confirmverifytx." + idOrder)
+//                .build();
+//        InlineKeyboardMarkup keyboardMarkup;
+//        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto))
+//                .build();
         //****************************************************
         OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
         System.out.println("*******");

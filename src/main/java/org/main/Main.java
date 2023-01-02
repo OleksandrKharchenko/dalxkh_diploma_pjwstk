@@ -13,7 +13,6 @@ import java.util.concurrent.TimeoutException;
 public class Main {
     public static void main(String[] args) {
 
-        OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
 // *********************ENTITY GENERATE DB INITIATION**********************
 //        HibernateSessionFactorySpawner.spawnSession();
 //        CryptoPaymentBalance balance = null;

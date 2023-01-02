@@ -42,6 +42,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
 
+        //COMMANDS
             if (update.getMessage().isCommand()) {
                 if (update.getMessage().getText().equals("/start")) {
                     TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
@@ -51,9 +52,26 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                     } catch (TelegramApiException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (update.getMessage().getText().equals("/set_up_my_email_address")) {
+                    TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
+                    SendMessage sm = telegramUserControllerHandler.prepareUpdateEmailAddress(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (update.getMessage().getText().equals("/set_up_my_crypto_address")) {
+                    TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
+                    SendMessage sm = telegramUserControllerHandler.prepareUpdateCryptoAddress(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
+        //CALLBACK QUERIES
         if (update.hasCallbackQuery()) {
             if (update.getCallbackQuery().getData().equals("NFT")) {
                 TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
@@ -118,8 +136,29 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
 
             }
         }
-    }
+        //REPLIES
+        if (update.getMessage().isReply()) {
+            if (update.getMessage().getReplyToMessage().getText().equals("/set_up_my_email_address")) {
+                TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
+                SendMessage sm = telegramUserControllerHandler.setEmailAddress(update);
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getMessage().getReplyToMessage().getText().equals("/set_up_my_crypto_address")) {
+                TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
+                SendMessage sm = telegramUserControllerHandler.setCryptoAddress(update);
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getMessage().getReplyToMessage().getText().contains("0x27477b5876e063650e2927916039aacf1c3c3b7c830415d0a084fc53ef6a9e6a")){
 
+            }
+        }
+    }
 
 
     @Override

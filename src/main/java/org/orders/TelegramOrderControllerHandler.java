@@ -17,6 +17,16 @@ import java.util.List;
 public class TelegramOrderControllerHandler {
 
     public SendMessage createOrderWithWeb3CryptoItem(CallbackQuery message, TelegramClientUser telegramClientUser) {
+        SendMessage sm;
+        String cryptoWarning = "In order to buy nft token, you need to update your crypto address firstly. Click \uD83D\uDC49 /set_up_my_crypto_address";
+        if (telegramClientUser.getCyptoWalletAdress() == null){
+            sm = SendMessage.builder()
+                    .text(cryptoWarning)
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .build();
+            return sm;
+        }
         WebItemService webItemService = new WebItemService();
         Order order = OrderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(7))), telegramClientUser);
         String orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
@@ -32,7 +42,7 @@ public class TelegramOrderControllerHandler {
         keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto)).keyboardRow(List.of(cancel))
                 .build();
         //****************************************************
-        SendMessage sm = SendMessage.builder()
+        sm = SendMessage.builder()
                 .text(orderString)
                 .parseMode("HTML")
                 .chatId(message.getMessage().getChatId())
