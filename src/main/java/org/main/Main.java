@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 // *********************ENTITY GENERATE DB INITIATION**********************
 //        HibernateSessionFactorySpawner.spawnSession();
@@ -126,13 +126,13 @@ public class Main {
 //        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
 //        System.out.println(TelegramClientUserService.verifyIfExists(510188));
 
-//    OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
-//        orderCryptoSenderService.getWalletInfo();
-//        try {
-//            orderCryptoSenderService.sendCryptoItem("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
+        orderCryptoSenderService.getWalletInfo();
+        try {
+            orderCryptoSenderService.sendCryptoItem("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 
 // ************************************************************************

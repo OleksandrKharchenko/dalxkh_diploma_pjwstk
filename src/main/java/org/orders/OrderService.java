@@ -82,8 +82,7 @@ public abstract class OrderService {
                         order.getWebItem().setQuantity(order.getWebItem().getQuantity() -1);
                         webItemService.updateWebItem(order.getWebItem());
                         updateOrder(order);
-                        System.out.println("Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress());
-                        return "Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress();
+                        return "Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress() + "\nTxHash: " + order.getCryptoTxHashNFT();
                     } catch (Exception e) {
                     }
                 }

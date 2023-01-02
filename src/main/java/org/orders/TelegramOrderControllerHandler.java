@@ -89,4 +89,15 @@ public class TelegramOrderControllerHandler {
                 .build();
         return sm;
     }
+
+    public SendMessage sendOrder(CallbackQuery message) {
+        Order order = OrderService.getOrders(Integer.parseInt(message.getData().substring(9)));
+        String sendString = OrderService.sendOrder(order);
+        SendMessage sm = SendMessage.builder()
+                .text(sendString)
+                .parseMode("HTML")
+                .chatId(message.getMessage().getChatId())
+                .build();
+        return sm;
+    }
 }

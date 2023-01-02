@@ -79,29 +79,29 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 List<WebItem> web3NFTs = webItemService.getWebItems("Web3NFT");
                 SendPhoto sp;
                 try {
-                for (WebItem w: web3NFTs) {
-                    sp = telegramWebItemControllerHandler.getWeb3NFTs(update.getCallbackQuery().getMessage(), (Web3NFT) w);
-                    execute(sp);
-                }
+                    for (WebItem w : web3NFTs) {
+                        sp = telegramWebItemControllerHandler.getWeb3NFTs(update.getCallbackQuery().getMessage(), (Web3NFT) w);
+                        execute(sp);
+                    }
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (update.getCallbackQuery().getData().substring(0,6).equals("buyNFT")) {
+            } else if (update.getCallbackQuery().getData().substring(0, 6).equals("buyNFT")) {
                 try {
-                SendMessage sm = new SendMessage();
-                TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
-                TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
-                if(telegramClientUser.isBanStatus()){
-                    sm.setText("You can't buy.\nReason: You are banned!");
-                    sm.setChatId(update.getCallbackQuery().getMessage().getChatId());
+                    SendMessage sm = new SendMessage();
+                    TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
+                    TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
+                    if (telegramClientUser.isBanStatus()) {
+                        sm.setText("You can't buy.\nReason: You are banned!");
+                        sm.setChatId(update.getCallbackQuery().getMessage().getChatId());
+                        execute(sm);
+                    }
+                    sm = telegramOrderControllerHandler.createOrderWithWeb3CryptoItem(update.getCallbackQuery(), telegramClientUser);
                     execute(sm);
-                }
-                sm = telegramOrderControllerHandler.createOrderWithWeb3CryptoItem(update.getCallbackQuery(), telegramClientUser);
-                execute(sm);
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (update.getCallbackQuery().getData().substring(0,6).equals("cancel")) {
+            } else if (update.getCallbackQuery().getData().substring(0, 6).equals("cancel")) {
                 TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
                 SendMessage sm = telegramOrderControllerHandler.cancelOrder(update.getCallbackQuery());
                 try {
@@ -109,7 +109,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (update.getCallbackQuery().getData().substring(0,9).equals("cryptopay")){
+            } else if (update.getCallbackQuery().getData().substring(0, 9).equals("cryptopay")) {
                 TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
                 SendMessage sm = telegramPaymentControllerHandler.createPaymentForOrderWithCrypto(update.getCallbackQuery());
                 try {
@@ -117,7 +117,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (update.getCallbackQuery().getData().substring(0,10).equals("confirmpay")){
+            } else if (update.getCallbackQuery().getData().substring(0, 10).equals("confirmpay")) {
                 TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
                 SendMessage sm = telegramPaymentControllerHandler.provideTxHash(update.getCallbackQuery());
                 try {
@@ -125,7 +125,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (update.getCallbackQuery().getData().substring(0,8).equals("verifytx")) {
+            } else if (update.getCallbackQuery().getData().substring(0, 8).equals("verifytx")) {
                 TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
                 SendMessage sm = telegramPaymentControllerHandler.verifyTxHash(update);
                 try {
@@ -134,6 +134,14 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                     throw new RuntimeException(e);
                 }
 
+            } else if (update.getCallbackQuery().getData().substring(0, 8).equals("claimnft")) {
+                TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
+                SendMessage sm = telegramOrderControllerHandler.sendOrder(update.getCallbackQuery());
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         //REPLIES
