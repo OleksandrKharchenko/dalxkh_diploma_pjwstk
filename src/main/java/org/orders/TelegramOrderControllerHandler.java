@@ -18,7 +18,7 @@ public class TelegramOrderControllerHandler {
 
     public SendMessage createOrderWithWeb3CryptoItem(CallbackQuery message, TelegramClientUser telegramClientUser) {
         SendMessage sm;
-        String cryptoWarning = "In order to buy nft token, you need to update your crypto address firstly. Click \uD83D\uDC49 /set_up_my_crypto_address";
+        String cryptoWarning = "Before buying NFT, you need to update your crypto address. Click \uD83D\uDC49 /set_up_my_crypto_address";
         if (telegramClientUser.getCyptoWalletAdress() == null){
             sm = SendMessage.builder()
                     .text(cryptoWarning)
@@ -29,8 +29,8 @@ public class TelegramOrderControllerHandler {
         }
         WebItemService webItemService = new WebItemService();
         Order order = OrderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(7))), telegramClientUser);
-        String orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
-                "</b> \nItem Name: <b>" + order.getWebItem().getName() + "</b> \nContract Address: <b>" + ((Web3NFT) order.getWebItem()).getContractAddress() + "</b> \nPrice ETH: <b>" + order.getCryptoEquivalentPrice() + " ETH</b>";
+        String orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nClient crypto address: <b>" + telegramClientUser.getCyptoWalletAdress() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
+                "</b> \nItem Name: <b>" + order.getWebItem().getName() + "</b> \nContract Address: <b>" + ((Web3NFT) order.getWebItem()).getContractAddress() + "</b> \nToken ID: <b>" + ((Web3NFT) order.getWebItem()).getNFTTokenId() +  "</b> \nPrice ETH: <b>" + order.getCryptoEquivalentPrice() + " ETH</b>";
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton crypto = InlineKeyboardButton.builder()
                 .text("Pay with ETH").callbackData("cryptopay." + order.getIdOrder())

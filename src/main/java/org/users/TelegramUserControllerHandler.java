@@ -39,7 +39,7 @@ public class TelegramUserControllerHandler {
         telegramClientUser.setCyptoWalletAdress(update.getMessage().getText().trim());
         TelegramClientUserService.updateTelegramClientUser(telegramClientUser);
         sm = SendMessage.builder()
-                .text("Crypto address: <b>" + update.getMessage().getText().trim() + "</b> successfully set up. You can buy NFT.")
+                .text("Crypto address: <b>" + update.getMessage().getText().trim() + "</b> successfully set up. You can buy NFT now.")
                 .parseMode("HTML")
                 .chatId(update.getMessage().getChatId())
                 .build();
@@ -48,7 +48,7 @@ public class TelegramUserControllerHandler {
 
     public SendMessage prepareUpdateCryptoAddress(Update update){
         SendMessage sm = SendMessage.builder()
-                .text("To update your crypto address in our database, please, reply with your crypto address to message above \uD83D\uDC46")
+                .text("In order to update your crypto address in our database, please, reply with your crypto address to message above \uD83D\uDC46")
                 .parseMode("HTML")
                 .chatId(update.getMessage().getChatId())
                 .build();
@@ -61,7 +61,7 @@ public class TelegramUserControllerHandler {
         telegramClientUser.setEmail(update.getMessage().getText().trim());
         TelegramClientUserService.updateTelegramClientUser(telegramClientUser);
         sm = SendMessage.builder()
-                .text("Email address: <b>" + update.getMessage().getText().trim() + "</b> successfully set up. You can buy Game Codes and Gift Cards.")
+                .text("Email address: <b>" + update.getMessage().getText().trim() + "</b> successfully set up. You can buy Game Codes and Gift Cards now.")
                 .parseMode("HTML")
                 .chatId(update.getMessage().getChatId())
                 .build();
@@ -70,7 +70,7 @@ public class TelegramUserControllerHandler {
 
     public SendMessage prepareUpdateEmailAddress(Update update){
         SendMessage sm = SendMessage.builder()
-                .text("To update your email address in our database, please, reply with your email address to message above \uD83D\uDC46")
+                .text("In order to update your email address in our database, please, reply with your email address to message above \uD83D\uDC46")
                 .parseMode("HTML")
                 .chatId(update.getMessage().getChatId())
                 .build();

@@ -79,7 +79,7 @@ public class Main {
 //        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) TelegramAdminSuperUserService.getTelegramOperUser(546240188);
 //        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", null, "Metro Exodus");
 //        TelegramAdminContentUserService.addWebItem(gameCode0, telegramOperationalUser);
-//        Web3NFT nft1 = new Web3NFT("christmas_nft", 100, 5, "0xd2fF891F5556c623F36a3F22B0E4815a3e36dc23", "ETH", "ERC-721", 38, "rare", "https://i.seadn.io/gcs/files/9b3993367af853569e8174efead8e6a4.png?auto=format&w=1000");
+//        Web3NFT nft1 = new Web3NFT("christmas_nft", 100, 0.01, "0xd2fF891F5556c623F36a3F22B0E4815a3e36dc23", "ETH", "ERC-721", 38, "rare", "https://i.seadn.io/gcs/files/9b3993367af853569e8174efead8e6a4.png?auto=format&w=1000");
 //        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
 // ************************************************************************
 

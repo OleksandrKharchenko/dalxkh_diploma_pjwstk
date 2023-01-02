@@ -29,11 +29,8 @@ public abstract class PaymentOrderService {
         return null;
     }
 
-    public static void completePaymentCrypto(Payment payment, String txHash) throws IOException {
+    public static void completePaymentCrypto(Payment payment){
         //LOGIC FOR CRYPTO
-        OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
-        if(orderCryptoReceiverSenderService.verifyCryptoTxPayment(payment.getOrder().getCryptoEquivalentPrice(), txHash)
-                .equals("OK")){
             payment.setCompleted(true);
             payment.setState("completed");
             payment.getOrder().setState("payment completed");
@@ -41,7 +38,7 @@ public abstract class PaymentOrderService {
             spawner.updateCommit(payment);
             spawner.updateCommit(payment.getOrder());
         }
-    }
+
 
     public static void completePaymentCard(Payment payment) {
         //LOGIC FOR CREDIT CARD

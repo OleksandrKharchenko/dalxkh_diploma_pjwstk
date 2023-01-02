@@ -64,7 +64,7 @@ public class OrderCryptoReceiverSenderService {
                     }
                     System.out.println("amount sent is wrong");
                     //TODO SEND AMOUNT BACK TO SENDER
-                    return "amount sent is wrong";
+                    return "Amount sent is wrong";
                  }
                 System.out.println("Wrong receiver address, please, provide TX hash with 0x329DfA6ca4F1210231B66e6d78361D36aBF178EA as a receiver");
                 return "Wrong receiver address, please, provide TX hash with 0x329DfA6ca4F1210231B66e6d78361D36aBF178EA as a receiver";

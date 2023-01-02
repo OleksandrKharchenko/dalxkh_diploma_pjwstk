@@ -48,7 +48,8 @@ public class TelegramPaymentControllerHandler {
 
     public SendMessage provideTxHash(CallbackQuery message) {
         int idOrder = Integer.parseInt(message.getData().substring(11));
-        String provideTxHash = "Checking... \nPlease, write your <b>txHash</b> below and send message.\nTxhash should looks like: 0x27477b5876e063650e2927916039aacf1c3c3b7c830415d0a084fc53ef6a9e6a";
+        String provideTxHash = "Checking...⚙️ \nPlease, reply this message with your <b>TxHash</b>.\nTxHash should looks like: <b>0x27477b5876e063650e2927916039aacf1c3c3b7c830415d0a084fc53ef6a9e6a</b> " +
+                "\nOrder number: <b>" + idOrder +"</b>";
         SendMessage sm = SendMessage.builder()
                 .text(provideTxHash)
                 .parseMode("HTML")
@@ -58,32 +59,53 @@ public class TelegramPaymentControllerHandler {
     }
 
     public SendMessage verifyTxHash(Update message) {
-        int idOrder = Integer.parseInt(message.getCallbackQuery().getData().substring(9));
-
-
-        //*************KEYBOARD DEFINITION********************
-//        InlineKeyboardButton crypto = InlineKeyboardButton.builder()
-//                .text("Verify").callbackData("confirmverifytx." + idOrder)
-//                .build();
-//        InlineKeyboardMarkup keyboardMarkup;
-//        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto))
-//                .build();
+        int idOrder = Integer.parseInt(message.getMessage().getReplyToMessage().getText().substring(166));
+        System.out.println(idOrder);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Processing...⚙️");
+        System.out.println("0xc1f530e9d9175ff6e9da811192dd0d0cb6593ffd185fdcc18f8ceaa8686a4107");
+        SendMessage sm;
+        //*************KEYBOARD DEFINITION1********************
+        InlineKeyboardButton claim = InlineKeyboardButton.builder()
+                .text("Claim NFT").callbackData("claimnft." + idOrder)
+                .build();
+        InlineKeyboardMarkup keyboardMarkup;
+        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(claim))
+                .build();
+        //****************************************************
+        //*************KEYBOARD DEFINITION2********************
+        InlineKeyboardButton tryagain = InlineKeyboardButton.builder()
+                .text("Try again").callbackData("confirmpay." + idOrder)
+                .build();
+        InlineKeyboardMarkup keyboardMarkup1;
+        keyboardMarkup1 = InlineKeyboardMarkup.builder().keyboardRow(List.of(tryagain))
+                .build();
         //****************************************************
         OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
-        System.out.println("*******");
-        System.out.println();
-        System.out.println("*******");
-        // String verifyTxHashResult = orderCryptoReceiverSenderService.verifyCryptoTxPayment(OrderService.getOrders(idOrder).
-        //         getCryptoEquivalentPrice(), message.getMessage().getText());
-        SendMessage sm = SendMessage.builder()
-                .text("test mode enabled")
+        String verifyTxHashResult = "something went wrong, try again.";
+        try {
+            verifyTxHashResult = orderCryptoReceiverSenderService.verifyCryptoTxPayment(OrderService.getOrders(idOrder).
+                     getCryptoEquivalentPrice(), message.getMessage().getText()) + "✅";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stringBuilder.append("\n"+verifyTxHashResult);
+        if(verifyTxHashResult.equals("OK")){
+            sm = SendMessage.builder()
+                    .text(stringBuilder.toString())
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .replyMarkup(keyboardMarkup)
+                    .build();
+            return sm;
+        }
+        sm = SendMessage.builder()
+                .text(stringBuilder.toString())
                 .parseMode("HTML")
                 .chatId(message.getMessage().getChatId())
- //               .replyMarkup(keyboardMarkup)
+                .replyMarkup(keyboardMarkup1)
                 .build();
         return sm;
     }
 
-
-    //"⚙"️
 }

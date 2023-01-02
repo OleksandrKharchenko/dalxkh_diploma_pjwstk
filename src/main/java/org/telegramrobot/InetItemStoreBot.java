@@ -155,7 +155,14 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                     throw new RuntimeException(e);
                 }
             } else if (update.getMessage().getReplyToMessage().getText().contains("0x27477b5876e063650e2927916039aacf1c3c3b7c830415d0a084fc53ef6a9e6a")){
-
+                TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
+                SendMessage sm;
+                sm = telegramPaymentControllerHandler.verifyTxHash(update);
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
