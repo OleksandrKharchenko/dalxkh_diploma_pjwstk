@@ -4,20 +4,26 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.orders.Order;
 import org.orders.OrderCryptoReceiverSenderService;
 import org.orders.OrderService;
+import org.telegram.telegrambots.meta.api.methods.invoices.SendInvoice;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.payments.LabeledPrice;
+import org.telegram.telegrambots.meta.api.objects.payments.SuccessfulPayment;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegramrobot.EnvTelegramBotsVars;
 import org.users.TelegramClientUser;
+import org.webitems.Web2Item;
 import org.webitems.Web3NFT;
 import org.webitems.WebItemService;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TelegramPaymentControllerHandler {
@@ -48,6 +54,46 @@ public class TelegramPaymentControllerHandler {
                 .replyMarkup(keyboardMarkup)
                 .build();
         return sm;
+    }
+
+
+    public SendInvoice createPaymentForOrderWithFiat(CallbackQuery message) {
+        Order order = OrderService.getOrders(Integer.parseInt(message.getData().substring(8)));
+        CreditCardPayment cp = (CreditCardPayment) PaymentOrderService.createPayment(order, "fiat");
+        Web2Item web2Item = (Web2Item) order.getWebItem();
+
+        //*************KEYBOARD DEFINITION********************
+//        InlineKeyboardButton crypto = InlineKeyboardButton.builder()
+//                .text("Confirm").callbackData("confirmpay." + order.getIdOrder())
+//                .build();
+//        InlineKeyboardButton cancel = InlineKeyboardButton.builder()
+//                .text("Cancel").callbackData("cancel." + order.getIdOrder())
+//                .build();
+//        InlineKeyboardMarkup keyboardMarkup;
+//        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto))
+//                .keyboardRow(List.of(cancel))
+//                .build();
+        //****************************************************
+        LabeledPrice labeledPrice = LabeledPrice.builder()
+                .label("Fiat Payment for order: " + order.getIdOrder())
+                .amount(order.getUsdEquivalentPrice()*100)
+                .build();
+
+        //SuccessfulPayment successfulPayment;
+        SendInvoice si = SendInvoice.builder()
+                .title(order.getWebItem().getName())
+                .providerToken(EnvTelegramBotsVars.PROVIDERTOKEN)
+                .chatId(message.getMessage().getChatId())
+                .photoUrl(web2Item.getImgPath())
+                .photoHeight(300)
+                .photoWidth(300)
+                .description("Pay for order: " + order.getIdOrder() + " with credit card via UnlimintPay")
+                .payload("order: " + order.getIdOrder())
+                .currency("USD")
+                .price(labeledPrice)
+                .startParameter("startParam")
+                .build();
+        return si;
     }
 
     public SendMessage provideTxHash(CallbackQuery message) {

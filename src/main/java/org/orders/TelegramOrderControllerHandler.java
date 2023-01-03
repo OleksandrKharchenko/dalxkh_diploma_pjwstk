@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.users.TelegramClientUser;
 import org.users.TelegramClientUserService;
+import org.webitems.Web2GameCode;
 import org.webitems.Web3NFT;
 import org.webitems.WebItemService;
 
@@ -53,29 +54,39 @@ public class TelegramOrderControllerHandler {
 
 
 
-    public SendMessage createOrderWithWeb2Item(Message message) {
-
-
-
-
-
+    public SendMessage createOrderWithWeb2Item(CallbackQuery message, TelegramClientUser telegramClientUser) {
+        SendMessage sm;
+        String cryptoWarning = "Before buying Game Codes, you need to update your email address. Click \uD83D\uDC49 /set_up_my_email_address";
+        if (telegramClientUser.getEmail() == null){
+            sm = SendMessage.builder()
+                    .text(cryptoWarning)
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .build();
+            return sm;
+        }
+        WebItemService webItemService = new WebItemService();
+        Order order = OrderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(6))), telegramClientUser);
+        String orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nClient email address: <b>" + telegramClientUser.getEmail() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
+                "</b> \nItem Name: <b>" + order.getWebItem().getName() + "</b> \nGame: <b>" + ((Web2GameCode) order.getWebItem()).getGameName() + "</b> \nPrice USD: <b>" + order.getUsdEquivalentPrice() + " USD</b>";
         //*************KEYBOARD DEFINITION********************
-        InlineKeyboardButton crypto = InlineKeyboardButton.builder()
-                .text("Crypto payment").callbackData("crypto")
+        InlineKeyboardButton fiat = InlineKeyboardButton.builder()
+                .text("Pay with Fiat").callbackData("fiatpay." + order.getIdOrder())
+                .build();
+        InlineKeyboardButton cancel = InlineKeyboardButton.builder()
+                .text("Cancel").callbackData("cancel." + order.getIdOrder())
                 .build();
         InlineKeyboardMarkup keyboardMarkup;
-        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto))
+        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(fiat)).keyboardRow(List.of(cancel))
                 .build();
         //****************************************************
-
-        SendMessage sendMessage = SendMessage.builder()
-                .text("sdasd")
+        sm = SendMessage.builder()
+                .text(orderString)
                 .parseMode("HTML")
-                .chatId(message.getChatId())
+                .chatId(message.getMessage().getChatId())
                 .replyMarkup(keyboardMarkup)
                 .build();
-
-        return  sendMessage;
+        return sm;
     }
 
     public SendMessage cancelOrder(CallbackQuery message) {

@@ -7,6 +7,8 @@ import org.orders.OrderService;
 import org.orders.TelegramOrderControllerHandler;
 import org.payments.TelegramPaymentControllerHandler;
 import org.telegram.telegrambots.bots.*;
+import org.telegram.telegrambots.meta.api.methods.AnswerPreCheckoutQuery;
+import org.telegram.telegrambots.meta.api.methods.invoices.SendInvoice;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -37,8 +39,21 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        if (update.hasPreCheckoutQuery()){
+            System.out.println("HEERE");
+            AnswerPreCheckoutQuery answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
+                    .preCheckoutQueryId(update.getPreCheckoutQuery().getId())
+                    .ok(true)
+                    .build();
+            System.out.println("TEST: OK");
+            try {
+                execute(answerPreCheckoutQuery);
+            } catch (TelegramApiException e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
+            }
+        }
         if (update.hasMessage() && update.getMessage().hasText()) {
-
         //COMMANDS
             if (update.getMessage().isCommand()) {
                 if (update.getMessage().getText().equals("/start")) {
@@ -96,18 +111,22 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-            }
-
-
-
-
-
-
-
-
-
-
-            else if (update.getCallbackQuery().getData().substring(0, 6).equals("buyNFT")) {
+            } else if (update.getCallbackQuery().getData().substring(0, 5).equals("buyGC")) {
+                try {
+                    SendMessage sm = new SendMessage();
+                    TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
+                    TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
+                    if (telegramClientUser.isBanStatus()) {
+                        sm.setText("You can't buy.\nReason: You are banned!");
+                        sm.setChatId(update.getCallbackQuery().getMessage().getChatId());
+                        execute(sm);
+                    }
+                    sm = telegramOrderControllerHandler.createOrderWithWeb2Item(update.getCallbackQuery(), telegramClientUser);
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getCallbackQuery().getData().substring(0, 6).equals("buyNFT")) {
                 try {
                     SendMessage sm = new SendMessage();
                     TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
@@ -136,6 +155,17 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 try {
                     execute(sm);
                 } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (update.getCallbackQuery().getData().substring(0, 7).equals("fiatpay")) {
+                System.out.println("TEEST");
+                TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
+                SendInvoice si = telegramPaymentControllerHandler.createPaymentForOrderWithFiat(update.getCallbackQuery());
+                try {
+
+                    execute(si);
+                } catch (TelegramApiException e) {
+                    System.out.println(e);
                     throw new RuntimeException(e);
                 }
             } else if (update.getCallbackQuery().getData().substring(0, 10).equals("confirmpay")) {

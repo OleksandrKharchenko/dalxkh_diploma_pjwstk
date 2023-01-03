@@ -19,8 +19,8 @@ public abstract class PaymentOrderService {
                 spawner.updateCommit(order);
                 return payment;
             }
-            if (typeOfPayment.equals("card")){
-                Payment payment = new CreditCardPayment(order, "telegramPayAPI");
+            if (typeOfPayment.equals("fiat")){
+                Payment payment = new CreditCardPayment(order, "PayAPI");
                 order.setPayment(payment);
                 order.setState(payment.getState());
                 HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
