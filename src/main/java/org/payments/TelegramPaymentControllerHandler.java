@@ -1,5 +1,6 @@
 package org.payments;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.orders.Order;
 import org.orders.OrderCryptoReceiverSenderService;
 import org.orders.OrderService;
@@ -9,11 +10,14 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.users.TelegramClientUser;
 import org.webitems.Web3NFT;
 import org.webitems.WebItemService;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class TelegramPaymentControllerHandler {
@@ -100,7 +104,19 @@ public class TelegramPaymentControllerHandler {
                     .chatId(message.getMessage().getChatId())
                     .replyMarkup(keyboardMarkup)
                     .build();
-            PaymentOrderService.completePaymentCard(cryptoPayment);
+            try {
+                PaymentOrderService.completePaymentCrypto(cryptoPayment, message.getMessage().getText());
+            } catch (Exception e) {
+                String uniqueTxHashWarn = "\nBut, txHash was already used for another order, please, try again with unique txHash";
+                stringBuilder.append(uniqueTxHashWarn);
+                sm = SendMessage.builder()
+                        .text(stringBuilder.toString())
+                        .parseMode("HTML")
+                        .chatId(message.getMessage().getChatId())
+                        .replyMarkup(keyboardMarkup1)
+                        .build();
+                return sm;
+            }
             return sm;
         }
         sm = SendMessage.builder()

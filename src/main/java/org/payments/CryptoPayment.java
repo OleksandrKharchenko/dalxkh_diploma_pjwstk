@@ -15,6 +15,8 @@ public class CryptoPayment extends Payment{
     private String blockchain;
     @Column(name="amountInCrypto")
     private double amountInCrypto;
+    @Column(name="txHashVerified", unique = true)
+    private String txHashVerified;
 
     public CryptoPayment() {
     }
@@ -24,11 +26,8 @@ public class CryptoPayment extends Payment{
         if (blockchain.equals("ETH")){
             this.cryptoPaymentAddress = EnvVars.DefaultCryptoPaymentAddress;
         }
-        if (blockchain.equals("MATIC")){
-            this.cryptoPaymentAddress = EnvVars.DefaultCryptoPaymentAddress;
-        }
         this.cryptoPaymentAddress = cryptoPaymentAddress;
-        this.blockchain = blockchain;
+        this.blockchain = EnvVars.DefaultBlockchain;
         this.amountInCrypto = order.getCryptoEquivalentPrice();
     }
 
@@ -62,4 +61,11 @@ public class CryptoPayment extends Payment{
         this.amountInCrypto = amountInCrypto;
     }
 
+    public String getTxHashVerified() {
+        return txHashVerified;
+    }
+
+    public void setTxHashVerified(String txHashVerified) {
+        this.txHashVerified = txHashVerified;
+    }
 }

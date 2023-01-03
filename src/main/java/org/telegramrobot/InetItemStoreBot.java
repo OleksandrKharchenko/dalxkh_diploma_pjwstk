@@ -14,10 +14,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.users.TelegramClientUser;
 import org.users.TelegramClientUserService;
 import org.users.TelegramUserControllerHandler;
-import org.webitems.TelegramWebItemControllerHandler;
-import org.webitems.Web3NFT;
-import org.webitems.WebItem;
-import org.webitems.WebItemService;
+import org.webitems.*;
 
 import java.util.List;
 
@@ -86,7 +83,31 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (update.getCallbackQuery().getData().substring(0, 6).equals("buyNFT")) {
+            } else if (update.getCallbackQuery().getData().equals("GmC")) {
+                TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
+                WebItemService webItemService = new WebItemService();
+                List<WebItem> web2GameCodes = webItemService.getWebItems("Web2GameCode");
+                SendPhoto sp;
+                try {
+                    for (WebItem w : web2GameCodes) {
+                        sp = telegramWebItemControllerHandler.getWeb2GameCodes(update.getCallbackQuery().getMessage(), (Web2GameCode) w);
+                        execute(sp);
+                    }
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+            else if (update.getCallbackQuery().getData().substring(0, 6).equals("buyNFT")) {
                 try {
                     SendMessage sm = new SendMessage();
                     TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
@@ -133,7 +154,6 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-
             } else if (update.getCallbackQuery().getData().substring(0, 8).equals("claimnft")) {
                 TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
                 SendMessage sm = telegramOrderControllerHandler.sendOrder(update.getCallbackQuery());

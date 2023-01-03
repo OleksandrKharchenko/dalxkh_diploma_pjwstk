@@ -1,10 +1,12 @@
 package org.payments;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.main.HibernateCommitsSpawner;
 import org.orders.Order;
 import org.orders.OrderCryptoReceiverSenderService;
 
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public abstract class PaymentOrderService {
     public static Payment createPayment(Order order, String typeOfPayment){
@@ -29,10 +31,11 @@ public abstract class PaymentOrderService {
         return null;
     }
 
-    public static void completePaymentCrypto(Payment payment){
+    public static void completePaymentCrypto(Payment payment, String txHash) throws Exception {
         //LOGIC FOR CRYPTO
             payment.setCompleted(true);
             payment.setState("completed");
+            ((CryptoPayment) payment).setTxHashVerified(txHash);
             payment.getOrder().setState("payment completed");
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
             spawner.updateCommit(payment);

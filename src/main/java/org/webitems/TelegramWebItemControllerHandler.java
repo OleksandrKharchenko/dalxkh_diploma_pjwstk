@@ -11,7 +11,6 @@ import java.util.List;
 public class TelegramWebItemControllerHandler {
 
     public SendPhoto getWeb3NFTs(Message message, Web3NFT web3NFT) {
-        WebItemService webItemService = new WebItemService();
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton buy = InlineKeyboardButton.builder()
                 .text("Buy").callbackData("buyNFT." + web3NFT.getIdItem())
@@ -42,5 +41,33 @@ public class TelegramWebItemControllerHandler {
         return  sendPhoto;
     }
 
+    public SendPhoto getWeb2GameCodes(Message message, Web2GameCode gameCode) {
+        //*************KEYBOARD DEFINITION********************
+        InlineKeyboardButton buy = InlineKeyboardButton.builder()
+                .text("Buy").callbackData("buyGC." + gameCode.getIdItem())
+                .build();
+        InlineKeyboardMarkup keyboardMarkup;
+        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(buy))
+                .build();
+        //****************************************************
+
+        SendPhoto sendPhoto = SendPhoto.builder().caption("Name: "
+                        + gameCode.getName()
+                        + "\nGame: <b>"
+                        + gameCode.getGameName()
+                        + " </b>"
+                        + "\nPrice: <b>"
+                        + gameCode.getUsdPrice()
+                        + " USD </b>"
+                        + "\nQuantity: <b>"
+                        + gameCode.getQuantity()
+                        + " </b>")
+                .photo(new InputFile(gameCode.getImgPath()))
+                .parseMode("HTML")
+                .chatId(message.getChatId())
+                .replyMarkup(keyboardMarkup)
+                .build();
+        return  sendPhoto;
+    }
 
 }
