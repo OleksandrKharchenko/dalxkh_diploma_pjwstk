@@ -39,13 +39,12 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        //CHECKOUTS
         if (update.hasPreCheckoutQuery()){
-            System.out.println("HEERE");
             AnswerPreCheckoutQuery answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
                     .preCheckoutQueryId(update.getPreCheckoutQuery().getId())
                     .ok(true)
                     .build();
-            System.out.println("TEST: OK");
             try {
                 execute(answerPreCheckoutQuery);
             } catch (TelegramApiException e) {
@@ -53,8 +52,15 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 throw new RuntimeException(e);
             }
         }
+        //PAYMENTS
+        if (update.hasMessage() && update.getMessage().getSuccessfulPayment() != null){
+            System.out.println("THIS EXPRESION WORKING");
+        }
+
         if (update.hasMessage() && update.getMessage().hasText()) {
         //COMMANDS
+
+
             if (update.getMessage().isCommand()) {
                 if (update.getMessage().getText().equals("/start")) {
                     TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
