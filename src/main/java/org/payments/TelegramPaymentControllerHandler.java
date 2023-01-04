@@ -11,6 +11,8 @@ import org.telegram.telegrambots.meta.api.objects.payments.LabeledPrice;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegramrobot.EnvTelegramBotsVars;
+import org.webitems.Web2GameCode;
+import org.webitems.Web2GiftCard;
 import org.webitems.Web2Item;
 
 import java.io.IOException;
@@ -59,15 +61,31 @@ public class TelegramPaymentControllerHandler {
                 .label("Order: " + order.getIdOrder())
                 .amount(order.getUsdEquivalentPrice()*100)
                 .build();
-        //SuccessfulPayment successfulPayment;
-        SendInvoice si = SendInvoice.builder()
+        SendInvoice si;
+        if(order.getWebItem() instanceof Web2GameCode){
+             si = SendInvoice.builder()
+                    .title("Order: " + order.getIdOrder())
+                    .providerToken(EnvTelegramBotsVars.PROVIDERTOKEN)
+                    .chatId(message.getMessage().getChatId())
+                    .photoUrl(web2Item.getImgPath())
+                    .photoHeight(300)
+                    .photoWidth(800)
+                    .description(((Web2GameCode) order.getWebItem()).getPlatform() + " : " + ((Web2GameCode) order.getWebItem()).getGameName())
+                            .payload("order: " + order.getIdOrder())
+                            .currency("USD")
+                            .price(labeledPrice)
+                            .startParameter("startParam")
+                            .build();
+            return si;
+        }
+         si = SendInvoice.builder()
                 .title("Order: " + order.getIdOrder())
                 .providerToken(EnvTelegramBotsVars.PROVIDERTOKEN)
                 .chatId(message.getMessage().getChatId())
                 .photoUrl(web2Item.getImgPath())
                 .photoHeight(300)
                 .photoWidth(800)
-                .description(order.getWebItem().getName())
+                .description(((Web2GiftCard) order.getWebItem()).getPlatform() + " : " + ((Web2GiftCard) order.getWebItem()).getValueUsd() + " USD")
                 .payload("order: " + order.getIdOrder())
                 .currency("USD")
                 .price(labeledPrice)
@@ -161,5 +179,6 @@ public class TelegramPaymentControllerHandler {
                 .build();
         return sm;
     }
+
 
 }

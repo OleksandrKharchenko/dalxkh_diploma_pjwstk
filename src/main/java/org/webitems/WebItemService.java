@@ -55,4 +55,15 @@ public class WebItemService {
                 throw new IllegalArgumentException("Invalid type: " + typeOf);
         }
     }
+    public boolean isAvailable(int idItem) {
+        Session startGetWebItemSession = HibernateSessionFactorySpawner.spawnSession();
+        Query query;
+        startGetWebItemSession.beginTransaction();
+        query = startGetWebItemSession.createQuery("from WebItem where idItem= :idItem", WebItem.class).setParameter("idItem", idItem);
+        WebItem webItem = (WebItem) query.getSingleResult();
+        if (webItem.getQuantity() == 0) {
+            return false;
+        }
+        return true;
+    }
 }

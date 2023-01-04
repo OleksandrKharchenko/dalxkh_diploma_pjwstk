@@ -43,10 +43,20 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
         //PRECHECKOUTS
         if (update.hasPreCheckoutQuery()){
             System.out.println("CHECKOUT DETECTED");
-            AnswerPreCheckoutQuery answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
-                    .preCheckoutQueryId(update.getPreCheckoutQuery().getId())
-                    .ok(true)
-                    .build();
+            TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
+            AnswerPreCheckoutQuery answerPreCheckoutQuery;
+            if (telegramOrderControllerHandler.orderIsCanceled(update)){
+                answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
+                        .preCheckoutQueryId(update.getPreCheckoutQuery().getId())
+                        .ok(false)
+                        .errorMessage("Sorry, order is canceled.")
+                        .build();
+            } else {
+                answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
+                        .preCheckoutQueryId(update.getPreCheckoutQuery().getId())
+                        .ok(true)
+                        .build();
+            }
             try {
                 execute(answerPreCheckoutQuery);
             } catch (TelegramApiException e) {
