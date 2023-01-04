@@ -1,15 +1,10 @@
 package org.payments;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.main.HibernateCommitsSpawner;
 import org.orders.Order;
-import org.orders.OrderCryptoReceiverSenderService;
 
-import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
-
-public abstract class PaymentOrderService {
-    public static Payment createPayment(Order order, String typeOfPayment){
+public class PaymentOrderService {
+    public Payment createPayment(Order order, String typeOfPayment){
         if(order.getPayment() == null){
             if (typeOfPayment.equals("crypto")){
                 Payment payment = new CryptoPayment(order, "ETH");
@@ -20,7 +15,7 @@ public abstract class PaymentOrderService {
                 return payment;
             }
             if (typeOfPayment.equals("fiat")){
-                Payment payment = new CreditCardPayment(order, "PayAPI");
+                Payment payment = new FiatPayment(order, "PayAPI");
                 order.setPayment(payment);
                 order.setState(payment.getState());
                 HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
@@ -31,7 +26,7 @@ public abstract class PaymentOrderService {
         return null;
     }
 
-    public static void completePaymentCrypto(Payment payment, String txHash) throws Exception {
+    public void completePaymentCrypto(Payment payment, String txHash) throws Exception {
         //LOGIC FOR CRYPTO
             payment.setCompleted(true);
             payment.setState("completed");
@@ -43,7 +38,7 @@ public abstract class PaymentOrderService {
         }
 
 
-    public static void completePaymentCard(Payment payment) {
+    public void completePaymentFiat(Payment payment) {
         //LOGIC FOR CREDIT CARD
             payment.setCompleted(true);
             payment.setState("completed");
@@ -53,7 +48,7 @@ public abstract class PaymentOrderService {
             spawner.updateCommit(payment.getOrder());
         }
 
-    public static void cancelPayment(Order order){
+    public void cancelPayment(Order order){
         if(order.getPayment() != null){
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
             order.getPayment().setState("canceled");

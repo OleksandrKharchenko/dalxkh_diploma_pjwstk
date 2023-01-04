@@ -8,8 +8,9 @@ import org.telegramrobot.MessageFlowGenerator;
 public class TelegramUserControllerHandler {
 
     public SendMessage addUserStartFlow(Message message){
-        if(!TelegramClientUserService.verifyIfExists(Math.toIntExact(message.getFrom().getId()))){
-            TelegramClientUserService.addTelegramClientUser(Math.toIntExact(message.getFrom().getId()),
+        TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+        if(!telegramClientUserService.verifyIfExists(Math.toIntExact(message.getFrom().getId()))){
+            telegramClientUserService.addTelegramClientUser(Math.toIntExact(message.getFrom().getId()),
                     message.getFrom().getFirstName());
         }
         MessageFlowGenerator messageFlowGenerator = new MessageFlowGenerator();
@@ -18,7 +19,8 @@ public class TelegramUserControllerHandler {
     }
 
     public boolean verifyCryptoAddress(Update update){
-        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
         if (telegramClientUser.getCyptoWalletAdress() != null){
            return true;
         }
@@ -26,7 +28,8 @@ public class TelegramUserControllerHandler {
     }
 
     public boolean verifyEmailAddress(Update update){
-        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
         if (telegramClientUser.getEmail() != null){
             return true;
         }
@@ -34,10 +37,11 @@ public class TelegramUserControllerHandler {
     }
 
     public SendMessage setCryptoAddress(Update update){
-        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
         SendMessage sm;
         telegramClientUser.setCyptoWalletAdress(update.getMessage().getText().trim());
-        TelegramClientUserService.updateTelegramClientUser(telegramClientUser);
+        telegramClientUserService.updateTelegramClientUser(telegramClientUser);
         sm = SendMessage.builder()
                 .text("Crypto address: <b>" + update.getMessage().getText().trim() + "</b> successfully set up. You can buy NFT now.")
                 .parseMode("HTML")
@@ -56,10 +60,11 @@ public class TelegramUserControllerHandler {
     }
 
     public SendMessage setEmailAddress(Update update){
-        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
         SendMessage sm;
         telegramClientUser.setEmail(update.getMessage().getText().trim());
-        TelegramClientUserService.updateTelegramClientUser(telegramClientUser);
+        telegramClientUserService.updateTelegramClientUser(telegramClientUser);
         sm = SendMessage.builder()
                 .text("Email address: <b>" + update.getMessage().getText().trim() + "</b> successfully set up. You can buy Game Codes and Gift Cards now.")
                 .parseMode("HTML")

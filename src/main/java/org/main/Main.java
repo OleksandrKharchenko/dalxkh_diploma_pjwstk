@@ -12,9 +12,10 @@ import java.util.concurrent.TimeoutException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+//    OrderEmailSenderService.sendMailTo("deepalexkh@gmail.com", "dsadsad");
 
 // *********************ENTITY GENERATE DB INITIATION**********************
-//        HibernateSessionFactorySpawner.spawnSession();
+        HibernateSessionFactorySpawner.spawnSession();
 //        CryptoPaymentBalance balance = null;
 //        try {
 //            balance = new CryptoPaymentBalance();
@@ -76,12 +77,14 @@ public class Main {
 // ************************************************************************
 
 // *********************ADDING WEBITEM BY CONTENT ADMIN********************
-        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) TelegramAdminSuperUserService.getTelegramOperUser(546240188);
-        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", "https://items.gog.com/metro_exodus/Metro_Exodus_PC_Enhanced_Logo_black.png", "Metro Exodus");
-        Web2GameCode gameCode1 = new Web2GameCode("gameCode_TheWitcher3", 50, 150, "OX23JY87ETRKD7", "https://items.gog.com/the_witcher_3_wild_hunt/witcher_3_complete_edition_banner_en.png", "Witcher 3");
+//        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) TelegramAdminSuperUserService.getTelegramOperUser(546240188);
+//        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", "https://items.gog.com/metro_exodus/Metro_Exodus_PC_Enhanced_Logo_black.png", "Origin");
+//        Web2GameCode gameCode1 = new Web2GameCode("gameCode_TheWitcher3", 50, 150, "OX23JY87ETRKD7", "https://items.gog.com/the_witcher_3_wild_hunt/witcher_3_complete_edition_banner_en.png", "GOG");
+//        Web2GameCode gameCode2 = new Web2GameCode("Elden Ring", 50, 250, "OX23JK8UAT8TD1", "https://geekflare.com/wp-content/uploads/2022/07/Elden-Ring-Merch.png", "Steam");
 
-        TelegramAdminContentUserService.addWebItem(gameCode0, telegramOperationalUser);
-        TelegramAdminContentUserService.addWebItem(gameCode1, telegramOperationalUser);
+//        TelegramAdminContentUserService.addWebItem(gameCode0, telegramOperationalUser);
+//        TelegramAdminContentUserService.addWebItem(gameCode1, telegramOperationalUser);
+//        TelegramAdminContentUserService.addWebItem(gameCode2, telegramOperationalUser);
 //        Web3NFT nft1 = new Web3NFT("christmas_nft", 100, 0.01, "0xd2fF891F5556c623F36a3F22B0E4815a3e36dc23", "ETH", "ERC-721", 38, "rare", "https://i.seadn.io/gcs/files/9b3993367af853569e8174efead8e6a4.png?auto=format&w=1000");
 //        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
 // ************************************************************************

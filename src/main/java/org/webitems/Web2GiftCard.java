@@ -8,26 +8,15 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue(value="Web2GiftCard")
 public class Web2GiftCard extends Web2Item{
-    @Column(name="platformName")
-    private String platformName;
     @Column(name="valueUsd")
     private int valueUsd;
 
     public Web2GiftCard() {
     }
 
-    public Web2GiftCard(String name, long quantity, int usdPrice,  String redeemCode, String imgPath, String platformName, int valueUsd) {
-        super(name, quantity, usdPrice, redeemCode, imgPath);
-        this.platformName = platformName;
+    public Web2GiftCard(String name, long quantity, int usdPrice,  String redeemCode, String imgPath, String platform, int valueUsd) {
+        super(name, quantity, usdPrice, redeemCode, imgPath, platform);
         this.valueUsd = valueUsd;
-    }
-
-    public String getPlatformName() {
-        return platformName;
-    }
-
-    public void setPlatformName(String platformName) {
-        this.platformName = platformName;
     }
 
     public int getValueUsd() {

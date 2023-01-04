@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.invoices.SendInvoice;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.payments.SuccessfulPayment;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.users.TelegramClientUser;
 import org.users.TelegramClientUserService;
@@ -39,8 +40,9 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        //CHECKOUTS
+        //PRECHECKOUTS
         if (update.hasPreCheckoutQuery()){
+            System.out.println("CHECKOUT DETECTED");
             AnswerPreCheckoutQuery answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
                     .preCheckoutQueryId(update.getPreCheckoutQuery().getId())
                     .ok(true)
@@ -54,13 +56,20 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
         }
         //PAYMENTS
         if (update.hasMessage() && update.getMessage().getSuccessfulPayment() != null){
-            System.out.println("THIS EXPRESION WORKING");
+            System.out.println("PAYMENTS DETECTED");
+            TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
+            TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
+            telegramPaymentControllerHandler.completeFiatPayment(update);
+            SendMessage sm = telegramOrderControllerHandler.sendOrder(update);
+            try {
+                execute(sm);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         if (update.hasMessage() && update.getMessage().hasText()) {
         //COMMANDS
-
-
             if (update.getMessage().isCommand()) {
                 if (update.getMessage().getText().equals("/start")) {
                     TelegramUserControllerHandler telegramUserControllerHandler = new TelegramUserControllerHandler();
@@ -120,7 +129,8 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             } else if (update.getCallbackQuery().getData().substring(0, 5).equals("buyGC")) {
                 try {
                     SendMessage sm = new SendMessage();
-                    TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
+                    TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+                    TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
                     TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
                     if (telegramClientUser.isBanStatus()) {
                         sm.setText("You can't buy.\nReason: You are banned!");
@@ -135,7 +145,8 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             } else if (update.getCallbackQuery().getData().substring(0, 6).equals("buyNFT")) {
                 try {
                     SendMessage sm = new SendMessage();
-                    TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
+                    TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+                    TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
                     TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
                     if (telegramClientUser.isBanStatus()) {
                         sm.setText("You can't buy.\nReason: You are banned!");
@@ -192,7 +203,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 }
             } else if (update.getCallbackQuery().getData().substring(0, 8).equals("claimnft")) {
                 TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
-                SendMessage sm = telegramOrderControllerHandler.sendOrder(update.getCallbackQuery());
+                SendMessage sm = telegramOrderControllerHandler.sendOrder(update);
                 try {
                     execute(sm);
                 } catch (TelegramApiException e) {
@@ -230,7 +241,6 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             }
         }
     }
-
 
     @Override
     public void onUpdatesReceived(List<Update> updates) {

@@ -8,9 +8,9 @@ import org.webitems.*;
 
 import java.util.List;
 
-public abstract class TelegramAdminContentUserService {
+public class TelegramAdminContentUserService {
 
-    public static List<WebItem> getWebItems(String typeOf) {
+    public List<WebItem> getWebItems(String typeOf) {
         Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
         Query query = null;
         List<WebItem> listWebItems = null;
@@ -36,7 +36,7 @@ public abstract class TelegramAdminContentUserService {
         }
     }
 
-    public static String deleteWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
+    public String deleteWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
         if (contentOperUser.isOperational()) {
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
             spawner.deleteCommit(webItem);
@@ -45,7 +45,7 @@ public abstract class TelegramAdminContentUserService {
         return "ERROR: on delete item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
     }
 
-    public static String addWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
+    public String addWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
         if (contentOperUser.isOperational()) {
             webItem.setAddedBy(contentOperUser.getIdTelegramUser());
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
@@ -55,7 +55,7 @@ public abstract class TelegramAdminContentUserService {
         return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
     }
 
-    public static String editWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser) {
+    public String editWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser) {
         if (contentOperUser.isOperational()) {
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
             spawner.updateCommit(webItem);
@@ -64,7 +64,7 @@ public abstract class TelegramAdminContentUserService {
         return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
     }
 
-    public static String getAllOrders() {
+    public String getAllOrders() {
 
         return "---.";
     }

@@ -11,9 +11,9 @@ import org.webitems.*;
 
 import java.util.List;
 
-public abstract class OrderService {
+public class OrderService {
 
-    public static Order createOrder(WebItem webItem, TelegramClientUser telegramClientUser){
+    public Order createOrder(WebItem webItem, TelegramClientUser telegramClientUser){
         if(!telegramClientUser.isBanStatus()){
             Order order = new Order(telegramClientUser, webItem);
             HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
@@ -23,14 +23,14 @@ public abstract class OrderService {
         return null;
     }
 
-    public static String updateOrder(Order order){
+    public String updateOrder(Order order){
         HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
         spawner.updateCommit(order);
         System.out.println("Order updated");
         return "Order updated";
     }
 
-    public static Order getOrders(int idOrder) {
+    public Order getOrders(int idOrder) {
         Session startGetOrdersSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startGetOrdersSession.beginTransaction();
@@ -40,7 +40,7 @@ public abstract class OrderService {
         return order;
     }
 
-    public static List<Order> getOrders() {
+    public List<Order> getOrders() {
         Session startGetOrdersSession = HibernateSessionFactorySpawner.spawnSession();
         Query query = null;
         List<Order> listOrders = null;
@@ -51,15 +51,16 @@ public abstract class OrderService {
         return listOrders;
     }
 
-    public static String cancelOrder(Order order){
+    public String cancelOrder(Order order){
+        PaymentOrderService paymentOrderService = new PaymentOrderService();
         order.setState("canceled");
-        PaymentOrderService.cancelPayment(order);
+        paymentOrderService.cancelPayment(order);
         updateOrder(order);
         return "Order canceled.";
     }
 
 
-    public static String sendOrder(Order order){
+    public  String sendOrder(Order order){
         if (!order.getState().equals("canceled") && !order.getState().equals("completed")){
             if (order.getPayment() != null && order.getPayment().isCompleted()) {
                 if (order.getWebItem() instanceof Web2Item){
@@ -70,7 +71,7 @@ public abstract class OrderService {
                     updateOrder(order);
                     OrderEmailSenderService.sendMailTo(order.getEmailClient(), ((Web2Item) order.getWebItem()).getRedeemCode());
                     System.out.println("Your code: " + ((Web2Item) order.getWebItem()).getRedeemCode());
-                    return "Your code: " + ((Web2Item) order.getWebItem()).getRedeemCode();
+                    return "Your code: <b>" + ((Web2Item) order.getWebItem()).getRedeemCode() + "</b>\nAlso, redeem code has been sent to your email address: <b>" + order.getEmailClient() + "</b>";
                 }
                 if (order.getWebItem() instanceof Web3CryptoItem){
                     OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();

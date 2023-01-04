@@ -9,22 +9,22 @@ import jakarta.persistence.Entity;
 public abstract class Web2Item extends WebItem{
     @Column(name="usdPrice")
     private int usdPrice;
-    @Column(name="isAvailable")
-    private boolean isAvailable;
     @Column(name="redeemCode")
     private String redeemCode;
     @Column(name="imgPath")
     private String imgPath;
+    @Column(name="platform")
+    private String platform;
 
     public Web2Item() {
     }
 
-    public Web2Item(String name, long quantity, int usdPrice, String redeemCode, String imgPath) {
+    public Web2Item(String name, long quantity, int usdPrice, String redeemCode, String imgPath, String platform) {
         super(name, quantity);
         this.usdPrice = usdPrice;
-        this.isAvailable = true;
         this.redeemCode = redeemCode;
         this.imgPath = imgPath;
+        this.platform = platform;
     }
 
     public int getUsdPrice() {
@@ -33,14 +33,6 @@ public abstract class Web2Item extends WebItem{
 
     public void setUsdPrice(int usdPrice) {
         this.usdPrice = usdPrice;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
     }
 
     public String getRedeemCode() {
@@ -57,5 +49,13 @@ public abstract class Web2Item extends WebItem{
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 }

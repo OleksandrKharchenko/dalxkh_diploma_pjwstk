@@ -37,7 +37,7 @@ public class OrderEmailSenderService {
 
         protected PasswordAuthentication getPasswordAuthentication() {
 
-            return new PasswordAuthentication("deepalexkh@gmail.com", "vrmufkeaovjdgund");
+            return new PasswordAuthentication("deepalexkh@gmail.com", "phsabuykqrrqxnos");
 
         }
 

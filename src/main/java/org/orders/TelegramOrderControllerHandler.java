@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.users.TelegramClientUser;
@@ -18,6 +19,7 @@ import java.util.List;
 public class TelegramOrderControllerHandler {
 
     public SendMessage createOrderWithWeb3CryptoItem(CallbackQuery message, TelegramClientUser telegramClientUser) {
+        OrderService orderService = new OrderService();
         SendMessage sm;
         String cryptoWarning = "Before buying NFT, you need to update your crypto address. Click \uD83D\uDC49 /set_up_my_crypto_address";
         if (telegramClientUser.getCyptoWalletAdress() == null){
@@ -29,7 +31,7 @@ public class TelegramOrderControllerHandler {
             return sm;
         }
         WebItemService webItemService = new WebItemService();
-        Order order = OrderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(7))), telegramClientUser);
+        Order order = orderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(7))), telegramClientUser);
         String orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nClient crypto address: <b>" + telegramClientUser.getCyptoWalletAdress() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
                 "</b> \nItem Name: <b>" + order.getWebItem().getName() + "</b> \nContract Address: <b>" + ((Web3NFT) order.getWebItem()).getContractAddress() + "</b> \nToken ID: <b>" + ((Web3NFT) order.getWebItem()).getNFTTokenId() +  "</b> \nPrice ETH: <b>" + order.getCryptoEquivalentPrice() + " ETH</b>";
         //*************KEYBOARD DEFINITION********************
@@ -55,6 +57,7 @@ public class TelegramOrderControllerHandler {
 
 
     public SendMessage createOrderWithWeb2Item(CallbackQuery message, TelegramClientUser telegramClientUser) {
+        OrderService orderService = new OrderService();
         SendMessage sm;
         String cryptoWarning = "Before buying Game Codes, you need to update your email address. Click \uD83D\uDC49 /set_up_my_email_address";
         if (telegramClientUser.getEmail() == null){
@@ -66,7 +69,7 @@ public class TelegramOrderControllerHandler {
             return sm;
         }
         WebItemService webItemService = new WebItemService();
-        Order order = OrderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(6))), telegramClientUser);
+        Order order = orderService.createOrder(webItemService.getWebItem(Integer.parseInt(message.getData().substring(6))), telegramClientUser);
         String orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nClient email address: <b>" + telegramClientUser.getEmail() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
                 "</b> \nItem Name: <b>" + order.getWebItem().getName() + "</b> \nGame: <b>" + ((Web2GameCode) order.getWebItem()).getGameName() + "</b> \nPrice USD: <b>" + order.getUsdEquivalentPrice() + " USD</b>";
         //*************KEYBOARD DEFINITION********************
@@ -90,8 +93,9 @@ public class TelegramOrderControllerHandler {
     }
 
     public SendMessage cancelOrder(CallbackQuery message) {
-        Order order = OrderService.getOrders(Integer.parseInt(message.getData().substring(7)));
-        OrderService.cancelOrder(order);
+        OrderService orderService = new OrderService();
+        Order order = orderService.getOrders(Integer.parseInt(message.getData().substring(7)));
+        orderService.cancelOrder(order);
         String cancelString = "Order Number: <b>"+ order.getIdOrder() + "</b> is canceled. Thank you.\nTo go to Main Menu write /start or choose from command list.";
         SendMessage sm = SendMessage.builder()
                 .text(cancelString)
@@ -101,9 +105,15 @@ public class TelegramOrderControllerHandler {
         return sm;
     }
 
-    public SendMessage sendOrder(CallbackQuery message) {
-        Order order = OrderService.getOrders(Integer.parseInt(message.getData().substring(9)));
-        String sendString = OrderService.sendOrder(order);
+    public SendMessage sendOrder(Update message) {
+        OrderService orderService = new OrderService();
+        Order order;
+        if (message.getMessage().getSuccessfulPayment() != null) {
+            order = orderService.getOrders(Integer.parseInt(message.getMessage().getSuccessfulPayment().getInvoicePayload().substring(7)));
+        } else {
+            order = orderService.getOrders(Integer.parseInt(message.getCallbackQuery().getData().substring(9)));
+        }
+        String sendString = orderService.sendOrder(order);
         SendMessage sm = SendMessage.builder()
                 .text(sendString)
                 .parseMode("HTML")

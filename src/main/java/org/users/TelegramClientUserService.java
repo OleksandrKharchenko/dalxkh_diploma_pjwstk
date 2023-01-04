@@ -8,22 +8,22 @@ import org.main.HibernateSessionFactorySpawner;
 
 public class TelegramClientUserService {
 
-    public static void addTelegramClientUser(int idTelegramUser, String displayName){
+    public void addTelegramClientUser(int idTelegramUser, String displayName){
         TelegramClientUser clientUser = new TelegramClientUser(idTelegramUser, displayName);
         HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
         spawner.createCommit(clientUser);
     }
-    public static void addTelegramClientUser(TelegramClientUser clientUser){
+    public void addTelegramClientUser(TelegramClientUser clientUser){
         HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
         spawner.createCommit(clientUser);
     }
 
-    public static void updateTelegramClientUser(TelegramClientUser clientUser){
+    public void updateTelegramClientUser(TelegramClientUser clientUser){
         HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
         spawner.updateCommit(clientUser);
     }
 
-    public static TelegramClientUser getTelegramClientUser(int idTelegramUser){
+    public TelegramClientUser getTelegramClientUser(int idTelegramUser){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startSuperUserSession.beginTransaction();
@@ -33,7 +33,7 @@ public class TelegramClientUserService {
         return telegramClientUser;
     }
 
-    public static boolean verifyIfExists(int idTelegramUser){
+    public boolean verifyIfExists(int idTelegramUser){
         Session session = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         session.beginTransaction();

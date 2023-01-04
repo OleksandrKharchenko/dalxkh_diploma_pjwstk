@@ -1,35 +1,27 @@
 package org.payments;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.orders.Order;
 import org.orders.OrderCryptoReceiverSenderService;
 import org.orders.OrderService;
 import org.telegram.telegrambots.meta.api.methods.invoices.SendInvoice;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.payments.LabeledPrice;
-import org.telegram.telegrambots.meta.api.objects.payments.SuccessfulPayment;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegramrobot.EnvTelegramBotsVars;
-import org.users.TelegramClientUser;
 import org.webitems.Web2Item;
-import org.webitems.Web3NFT;
-import org.webitems.WebItemService;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TelegramPaymentControllerHandler {
     public SendMessage createPaymentForOrderWithCrypto(CallbackQuery message) {
-        Order order = OrderService.getOrders(Integer.parseInt(message.getData().substring(10)));
-        CryptoPayment p = (CryptoPayment) PaymentOrderService.createPayment(order, "crypto");
+        PaymentOrderService paymentOrderService = new PaymentOrderService();
+        OrderService orderService = new OrderService();
+        Order order = orderService.getOrders(Integer.parseInt(message.getData().substring(10)));
+        CryptoPayment p = (CryptoPayment) paymentOrderService.createPayment(order, "crypto");
 
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton crypto = InlineKeyboardButton.builder()
@@ -58,36 +50,24 @@ public class TelegramPaymentControllerHandler {
 
 
     public SendInvoice createPaymentForOrderWithFiat(CallbackQuery message) {
-        Order order = OrderService.getOrders(Integer.parseInt(message.getData().substring(8)));
-        CreditCardPayment cp = (CreditCardPayment) PaymentOrderService.createPayment(order, "fiat");
+        PaymentOrderService paymentOrderService = new PaymentOrderService();
+        OrderService orderService = new OrderService();
+        Order order = orderService.getOrders(Integer.parseInt(message.getData().substring(8)));
+        FiatPayment cp = (FiatPayment) paymentOrderService.createPayment(order, "fiat");
         Web2Item web2Item = (Web2Item) order.getWebItem();
-
-        //*************KEYBOARD DEFINITION********************
-//        InlineKeyboardButton crypto = InlineKeyboardButton.builder()
-//                .text("Confirm").callbackData("confirmpay." + order.getIdOrder())
-//                .build();
-//        InlineKeyboardButton cancel = InlineKeyboardButton.builder()
-//                .text("Cancel").callbackData("cancel." + order.getIdOrder())
-//                .build();
-//        InlineKeyboardMarkup keyboardMarkup;
-//        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(crypto))
-//                .keyboardRow(List.of(cancel))
-//                .build();
-        //****************************************************
         LabeledPrice labeledPrice = LabeledPrice.builder()
-                .label("Fiat Payment for order: " + order.getIdOrder())
+                .label("Order: " + order.getIdOrder())
                 .amount(order.getUsdEquivalentPrice()*100)
                 .build();
-
         //SuccessfulPayment successfulPayment;
         SendInvoice si = SendInvoice.builder()
-                .title(order.getWebItem().getName())
+                .title("Order: " + order.getIdOrder())
                 .providerToken(EnvTelegramBotsVars.PROVIDERTOKEN)
                 .chatId(message.getMessage().getChatId())
                 .photoUrl(web2Item.getImgPath())
                 .photoHeight(300)
-                .photoWidth(300)
-                .description("Pay for order: " + order.getIdOrder() + " with credit card via UnlimintPay")
+                .photoWidth(800)
+                .description(order.getWebItem().getName())
                 .payload("order: " + order.getIdOrder())
                 .currency("USD")
                 .price(labeledPrice)
@@ -108,13 +88,21 @@ public class TelegramPaymentControllerHandler {
         return sm;
     }
 
+    public void completeFiatPayment(Update message){
+        OrderService orderService = new OrderService();
+        PaymentOrderService paymentOrderService = new PaymentOrderService();
+        Order order = orderService.getOrders(Integer.parseInt(message.getMessage().getSuccessfulPayment().getInvoicePayload().substring(7)));
+        paymentOrderService.completePaymentFiat(order.getPayment());
+    }
+
     public SendMessage verifyTxHash(Update message) {
-        System.out.println(message.getMessage().getReplyToMessage().getText().length());
+        PaymentOrderService paymentOrderService = new PaymentOrderService();
+        OrderService orderService = new OrderService();
         int idOrder = Integer.parseInt(message.getMessage().getReplyToMessage().getText().substring(167).trim());
         System.out.println(idOrder);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Processing...⚙️");
-        CryptoPayment cryptoPayment = (CryptoPayment) OrderService.getOrders(idOrder).getPayment();
+        CryptoPayment cryptoPayment = (CryptoPayment) orderService.getOrders(idOrder).getPayment();
         SendMessage sm;
         //*************KEYBOARD DEFINITION1********************
         InlineKeyboardButton claim = InlineKeyboardButton.builder()
@@ -135,7 +123,7 @@ public class TelegramPaymentControllerHandler {
         OrderCryptoReceiverSenderService orderCryptoReceiverSenderService = new OrderCryptoReceiverSenderService();
         String verifyTxHashResult = "something went wrong, try again.";
         try {
-            verifyTxHashResult = orderCryptoReceiverSenderService.verifyCryptoTxPayment(OrderService.getOrders(idOrder).
+            verifyTxHashResult = orderCryptoReceiverSenderService.verifyCryptoTxPayment(orderService.getOrders(idOrder).
                      getCryptoEquivalentPrice(), message.getMessage().getText());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -151,7 +139,7 @@ public class TelegramPaymentControllerHandler {
                     .replyMarkup(keyboardMarkup)
                     .build();
             try {
-                PaymentOrderService.completePaymentCrypto(cryptoPayment, message.getMessage().getText());
+                paymentOrderService.completePaymentCrypto(cryptoPayment, message.getMessage().getText());
             } catch (Exception e) {
                 String uniqueTxHashWarn = "\nBut, txHash was already used for another order, please, try again with unique txHash";
                 stringBuilder.append(uniqueTxHashWarn);

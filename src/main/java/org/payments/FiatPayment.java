@@ -7,18 +7,18 @@ import org.orders.Order;
 
 
 @Entity
-@DiscriminatorValue(value="CreditCardPayment")
-public class CreditCardPayment extends Payment{
+@DiscriminatorValue(value="FiatPayment")
+public class FiatPayment extends Payment{
     @Column(name="payAPI")
     private String payAPI;
     @Column(name="amountInUSD")
     private int amountInUSD;
 
-    public CreditCardPayment() {
+    public FiatPayment() {
 
     }
 
-    public CreditCardPayment(Order order, String payAPI) {
+    public FiatPayment(Order order, String payAPI) {
         super(order);
         this.payAPI = payAPI;
         this.amountInUSD = order.getUsdEquivalentPrice();

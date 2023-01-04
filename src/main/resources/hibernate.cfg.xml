@@ -27,7 +27,7 @@
 		<!-- Set the current session context -->
 		<property name="current_session_context_class">thread</property>
 		
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
 
         <mapping class="*"/>
         <mapping class="org.users.TelegramUser"/>
@@ -44,7 +44,7 @@
         <mapping class="org.orders.Order"/>
         <mapping class="org.payments.Payment"/>
         <mapping class="org.payments.CryptoPayment"/>
-        <mapping class="org.payments.CreditCardPayment"/>
+        <mapping class="org.payments.FiatPayment"/>
         <mapping class="org.orders.ManageAdminContentOrd"/>
         <mapping class="org.payments.CryptoPaymentBalance"/>
 

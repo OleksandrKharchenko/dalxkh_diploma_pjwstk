@@ -51,10 +51,10 @@ public class TelegramWebItemControllerHandler {
                 .build();
         //****************************************************
 
-        SendPhoto sendPhoto = SendPhoto.builder().caption("Name: "
-                        + gameCode.getName()
-                        + "\nGame: <b>"
+        SendPhoto sendPhoto = SendPhoto.builder().caption("Name: <b>"
                         + gameCode.getGameName()
+                        + "</b>\nPlatform: <b>"
+                        + gameCode.getPlatform()
                         + " </b>"
                         + "\nPrice: <b>"
                         + gameCode.getUsdPrice()

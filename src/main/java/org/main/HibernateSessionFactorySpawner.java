@@ -33,7 +33,7 @@ public class HibernateSessionFactorySpawner {
                 addAnnotatedClass(Order.class).
                 addAnnotatedClass(Payment.class).
                 addAnnotatedClass(CryptoPayment.class).
-                addAnnotatedClass(CreditCardPayment.class).
+                addAnnotatedClass(FiatPayment.class).
                 addAnnotatedClass(ManageAdminContentOrder.class).
                 addAnnotatedClass(CryptoPaymentBalance.class);
         ServiceRegistry serviceRegistryObj = new StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build();
