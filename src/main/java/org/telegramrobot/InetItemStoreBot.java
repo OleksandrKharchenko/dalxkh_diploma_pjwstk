@@ -123,6 +123,19 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
+            } else if (update.getCallbackQuery().getData().equals("GfC")) {
+                TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
+                WebItemService webItemService = new WebItemService();
+                List<WebItem> web2GiftCard = webItemService.getWebItems("Web2GiftCard");
+                SendPhoto sp;
+                try {
+                    for (WebItem w : web2GiftCard) {
+                        sp = telegramWebItemControllerHandler.getWeb2GiftCards(update.getCallbackQuery().getMessage(), (Web2GiftCard) w);
+                        execute(sp);
+                    }
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
             } else if (update.getCallbackQuery().getData().equals("GmC")) {
                 TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
                 WebItemService webItemService = new WebItemService();

@@ -84,7 +84,7 @@ public class TelegramPaymentControllerHandler {
                 .chatId(message.getMessage().getChatId())
                 .photoUrl(web2Item.getImgPath())
                 .photoHeight(300)
-                .photoWidth(800)
+                .photoWidth(500)
                 .description(((Web2GiftCard) order.getWebItem()).getPlatform() + " : " + ((Web2GiftCard) order.getWebItem()).getValueUsd() + " USD")
                 .payload("order: " + order.getIdOrder())
                 .currency("USD")

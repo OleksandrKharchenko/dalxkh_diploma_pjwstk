@@ -70,4 +70,33 @@ public class TelegramWebItemControllerHandler {
         return  sendPhoto;
     }
 
+    public SendPhoto getWeb2GiftCards(Message message, Web2GiftCard giftCard) {
+        //*************KEYBOARD DEFINITION********************
+        InlineKeyboardButton buy = InlineKeyboardButton.builder()
+                .text("Buy").callbackData("buyGC." + giftCard.getIdItem())
+                .build();
+        InlineKeyboardMarkup keyboardMarkup;
+        keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(buy))
+                .build();
+        //****************************************************
+        SendPhoto sendPhoto = SendPhoto.builder().caption("Value: <b>"
+                        + giftCard.getValueUsd()
+                        + " USD </b>"
+                        + "\nPlatform: <b>"
+                        + giftCard.getPlatform()
+                        + " </b>"
+                        + "\nPrice: <b>"
+                        + giftCard.getUsdPrice()
+                        + " USD </b>"
+                        + "\nQuantity: <b>"
+                        + giftCard.getQuantity()
+                        + " </b>")
+                .photo(new InputFile(giftCard.getImgPath()))
+                .parseMode("HTML")
+                .chatId(message.getChatId())
+                .replyMarkup(keyboardMarkup)
+                .build();
+        return  sendPhoto;
+    }
+
 }

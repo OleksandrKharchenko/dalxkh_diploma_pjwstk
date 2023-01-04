@@ -96,7 +96,6 @@ public class TelegramOrderControllerHandler {
         } else {
             orderString = "Order Number: <b>"+ order.getIdOrder() + "</b> \nClient: <b>" + telegramClientUser.getDisplayName() + "</b> \nClient email address: <b>" + telegramClientUser.getEmail() + "</b> \nTelegram ID: <b>" + telegramClientUser.getIdTelegramUser() +
                     "</b> \nPlatform: <b>" + ((Web2GiftCard) order.getWebItem()).getPlatform() + "</b> \nValue: <b>" + ((Web2GiftCard) order.getWebItem()).getValueUsd() + " USD</b> \nPrice USD: <b>" + order.getUsdEquivalentPrice() + " USD</b>";
-
         }
         //*************KEYBOARD DEFINITION********************
         InlineKeyboardButton fiat = InlineKeyboardButton.builder()
