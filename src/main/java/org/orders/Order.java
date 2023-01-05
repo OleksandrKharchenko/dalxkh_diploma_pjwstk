@@ -144,4 +144,20 @@ public class Order {
     public void setIdOrder(int idOrder) {
         this.idOrder = idOrder;
     }
+
+    public Timestamp getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Timestamp timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getCryptoTxHashConfirmation() {
+        return cryptoTxHashConfirmation;
+    }
+
+    public void setCryptoTxHashConfirmation(String cryptoTxHashConfirmation) {
+        this.cryptoTxHashConfirmation = cryptoTxHashConfirmation;
+    }
 }

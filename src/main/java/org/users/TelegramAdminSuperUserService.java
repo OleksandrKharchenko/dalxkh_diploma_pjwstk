@@ -152,6 +152,20 @@ public class TelegramAdminSuperUserService {
         return false;
     }
 
+    public boolean isSuperUser(long idTelegramOperUser){
+        Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
+        Query query;
+        startSuperUserSession.beginTransaction();
+        query = startSuperUserSession.createQuery("from User where idTelegramUser= :idTelegramUser", TelegramUser.class)
+                .setParameter("idTelegramUser", idTelegramOperUser);
+        if (query.getSingleResult() instanceof TelegramAdminSuperUser){
+            startSuperUserSession.close();
+            return true;
+        }
+        startSuperUserSession.close();
+        return false;
+    }
+
     public List<TelegramClientUser> getTelegramClientUsers(){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;

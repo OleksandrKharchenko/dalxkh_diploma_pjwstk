@@ -52,8 +52,20 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                             throw new RuntimeException(e);
                         }
                     } else if (update.getMessage().getText().equals("/ban_users")) {
-                        List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getTelegramClientBanUsers(update);
-                        for (SendMessage sm : sendMessageList) {
+                        if (telegramOperationalUserControllerHandler.isSuperUser(update.getMessage().getFrom().getId())){
+                            List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getTelegramClientBanUsers(update);
+                            for (SendMessage sm : sendMessageList) {
+                                try {
+                                    execute(sm);
+                                } catch (TelegramApiException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        } else {
+                            SendMessage sm = SendMessage.builder()
+                                    .text("You are not Super User. Access to /ban_users module disabled.")
+                                    .chatId(update.getMessage().getChatId())
+                                    .build();
                             try {
                                 execute(sm);
                             } catch (TelegramApiException e) {
@@ -61,6 +73,7 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                             }
                         }
                     } else if (update.getMessage().getText().equals("/unban_users")) {
+                        if (telegramOperationalUserControllerHandler.isSuperUser(update.getMessage().getFrom().getId())){
                         List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getTelegramClientUnBanUsers(update);
                         for (SendMessage sm : sendMessageList) {
                             try {
@@ -69,7 +82,19 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                                 throw new RuntimeException(e);
                             }
                         }
+                        } else {
+                            SendMessage sm = SendMessage.builder()
+                                    .text("You are not Super User. Access to /ban_users module disabled.")
+                                    .chatId(update.getMessage().getChatId())
+                                    .build();
+                            try {
+                                execute(sm);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     } else if (update.getMessage().getText().equals("/promote_user")) {
+                        if (telegramOperationalUserControllerHandler.isSuperUser(update.getMessage().getFrom().getId())){
                         List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getTelegramClientPromoteUser(update);
                         for (SendMessage sm : sendMessageList) {
                             try {
@@ -78,8 +103,48 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                                 throw new RuntimeException(e);
                             }
                         }
+                        } else {
+                            SendMessage sm = SendMessage.builder()
+                                    .text("You are not Super User. Access to /ban_users module disabled.")
+                                    .chatId(update.getMessage().getChatId())
+                                    .build();
+                            try {
+                                execute(sm);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     } else if (update.getMessage().getText().equals("/dissolve_opsuser")) {
+                        if (telegramOperationalUserControllerHandler.isSuperUser(update.getMessage().getFrom().getId())){
                         List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getTelegramDissolveOperUser(update);
+                        for (SendMessage sm : sendMessageList) {
+                            try {
+                                execute(sm);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        } else {
+                            SendMessage sm = SendMessage.builder()
+                                    .text("You are not Super User. Access to /ban_users module disabled.")
+                                    .chatId(update.getMessage().getChatId())
+                                    .build();
+                            try {
+                                execute(sm);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    } else if (update.getMessage().getText().equals("/whoami")) {
+
+                        SendMessage sm = telegramOperationalUserControllerHandler.whoami(update);
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (update.getMessage().getText().equals("/get_orders")) {
+                        List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "completed");
                         for (SendMessage sm : sendMessageList) {
                             try {
                                 execute(sm);

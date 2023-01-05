@@ -11,16 +11,15 @@ public interface EnvTelegramBotsVars {
     final String TELEGRAMTOKENAPIADMIN = "5856221681:AAFPNoZLsyOi7z9pqm2btJA7Pn0tJR_IXnY";
     final String STARTDESCRIPTIONADMIN = "Welcome to InetItemStore Admin bot, here you can manage your store." +
             "\n" +
-            "\n" +
             "/ban_users - Ban user \n" +
             "/unban_users - Unban user \n" +
             "/promote_user - Promote to Operational User \n" +
             "/dissolve_opsuse - Dissolve Operational User \n" +
             "/whoami - What type of Ops User are you \n" +
+            "/get_orders - Get list of orders by state \n" +
+            "/del_order - Remove Order from Store \n" +
             "/add_item - Add Item to Store \n" +
             "/del_item - Remove Item from Store \n" +
-            "/get_webitems - Get list of webitems by type \n" +
-            "/del_order - Remove Order from Store \n" +
-            "/get_orders - Get list of orders by type \n";
+            "/get_webitems - Get list of webitems by type \n";
 
 }

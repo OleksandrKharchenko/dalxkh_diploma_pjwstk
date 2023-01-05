@@ -45,7 +45,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             SendMessage adminMessage;
             if (update.hasMessage()) {
                 adminMessage = SendMessage.builder()
-                        .text("YOU ARE AN OPS USER, PLEASE, USE https://t.me/inetitemstore_adminbot TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
+                        .text("YOU ARE AN OPS USER, PLEASE, USE https://t.me/inetitemstore_adminbot TO GET AND MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
                         .parseMode("HTML")
                         .chatId(update.getMessage().getChatId())
                         .build();
@@ -57,7 +57,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 }
             }
             adminMessage = SendMessage.builder()
-                    .text("YOU ARE AN OPS USER, PLEASE, USE https://t.me/inetitemstore_adminbot TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
+                    .text("YOU ARE AN OPS USER, PLEASE, USE https://t.me/inetitemstore_adminbot TO GET AND MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
                     .parseMode("HTML")
                     .chatId(update.getCallbackQuery().getMessage().getChatId())
                     .build();

@@ -4,8 +4,10 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.main.HibernateCommitsSpawner;
 import org.main.HibernateSessionFactorySpawner;
+import org.orders.Order;
 import org.webitems.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TelegramAdminContentUserService {
@@ -64,8 +66,14 @@ public class TelegramAdminContentUserService {
         return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
     }
 
-    public String getAllOrders() {
-
-        return "---.";
+    public List<Order> getOrders(){
+        Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
+        Query query;
+        startSuperUserSession.beginTransaction();
+        query = startSuperUserSession.createQuery("from Order", Order.class);
+        List<Order> orderList = query.getResultList();
+        startSuperUserSession.close();
+        return orderList;
     }
+
 }
