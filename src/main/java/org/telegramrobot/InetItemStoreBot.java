@@ -14,9 +14,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.payments.SuccessfulPayment;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.users.TelegramClientUser;
-import org.users.TelegramClientUserService;
-import org.users.TelegramUserControllerHandler;
+import org.users.*;
 import org.webitems.*;
 
 import java.util.List;
@@ -40,6 +38,35 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        //OPS USER CHECKER
+        TelegramOperationalUserControllerHandler telegramOperationalUserControllerHandler = new TelegramOperationalUserControllerHandler();
+        if(update.hasMessage() && telegramOperationalUserControllerHandler.isOperational(update.getMessage().getFrom().getId())) {
+            SendMessage adminMessage;
+            if (update.hasMessage()) {
+                adminMessage = SendMessage.builder()
+                        .text("YOU ARE AN OPS USER, PLEASE USE ANOTHER BOT TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
+                        .parseMode("HTML")
+                        .chatId(update.getMessage().getChatId())
+                        .build();
+                try {
+                    execute(adminMessage);
+                    throw new RuntimeException();
+                } catch (TelegramApiException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            adminMessage = SendMessage.builder()
+                    .text("YOU ARE AN OPS USER, PLEASE USE ANOTHER BOT TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
+                    .parseMode("HTML")
+                    .chatId(update.getCallbackQuery().getMessage().getChatId())
+                    .build();
+            try {
+                execute(adminMessage);
+                throw new RuntimeException();
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        }
         //PRECHECKOUTS
         if (update.hasPreCheckoutQuery()){
             System.out.println("CHECKOUT DETECTED");
@@ -153,7 +180,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 try {
                     SendMessage sm = new SendMessage();
                     TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
-                    TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
+                    TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(update.getCallbackQuery().getFrom().getId());
                     TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
                     if (telegramClientUser.isBanStatus()) {
                         sm.setText("You can't buy.\nReason: You are banned!");
@@ -169,7 +196,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 try {
                     SendMessage sm = new SendMessage();
                     TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
-                    TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getCallbackQuery().getFrom().getId()));
+                    TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(update.getCallbackQuery().getFrom().getId());
                     TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
                     if (telegramClientUser.isBanStatus()) {
                         sm.setText("You can't buy.\nReason: You are banned!");

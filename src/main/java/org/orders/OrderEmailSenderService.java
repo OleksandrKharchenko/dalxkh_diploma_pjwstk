@@ -18,7 +18,7 @@ public class OrderEmailSenderService {
     String to = mailTo;
 
     // Sender's email ID needs to be mentioned
-    String from = "deepalexkh@gmail.com";
+    String from = "s15638@pjwstk.edu.pl";
 
     // Assuming you are sending email from through gmails smtp
     String host = "smtp.gmail.com";
@@ -37,7 +37,7 @@ public class OrderEmailSenderService {
 
         protected PasswordAuthentication getPasswordAuthentication() {
 
-            return new PasswordAuthentication("deepalexkh@gmail.com", "phsabuykqrrqxnos");
+            return new PasswordAuthentication("s15638@pjwstk.edu.pl", "curbqihdwaulqwzd");
 
         }
 

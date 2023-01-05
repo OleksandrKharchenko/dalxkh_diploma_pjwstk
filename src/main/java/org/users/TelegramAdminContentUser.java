@@ -15,7 +15,7 @@ public class TelegramAdminContentUser extends TelegramOperationalUser {
     public TelegramAdminContentUser() {
     }
 
-    public TelegramAdminContentUser(String email, int idTelegramUser, String displayName) {
+    public TelegramAdminContentUser(String email, long idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
     }
 

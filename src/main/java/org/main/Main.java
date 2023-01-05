@@ -1,6 +1,7 @@
 package org.main;
 
 
+import jakarta.persistence.NoResultException;
 import org.orders.*;
 import org.payments.*;
 import org.webitems.*;
@@ -57,7 +58,7 @@ public class Main {
 //        TelegramAdminSuperUserService telegramAdminSuperUserService1 = new TelegramAdminSuperUserService();
 //        TelegramAdminSuperUser initialSuperUser = telegramAdminSuperUserService1.getInitialSuperUser();
 //        System.out.println(initialSuperUser.getIdUser());
-//        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(546240188);
+//        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(592510188);
 //        System.out.println(telegramClientUser.getIdUser() + telegramClientUser.getIdUser());
 //        telegramAdminSuperUserService1.addOperationalUser(telegramClientUser, initialSuperUser, "content");// ************************************************************************
 // ************************************************************************
@@ -83,7 +84,7 @@ public class Main {
 // *********************ADDING WEBITEM BY CONTENT ADMIN********************
 //        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
 //        TelegramAdminContentUserService telegramAdminContentUserService = new TelegramAdminContentUserService();
-//        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) telegramAdminSuperUserService.getTelegramOperUser(546240188);
+//        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) telegramAdminSuperUserService.getTelegramOperUser(592510188);
 //        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", "https://items.gog.com/metro_exodus/Metro_Exodus_PC_Enhanced_Logo_black.png", "Origin", "Metro Exodus");
 //        Web2GameCode gameCode1 = new Web2GameCode("gameCode_TheWitcher3", 50, 150, "OX23JY87ETRKD7", "https://items.gog.com/the_witcher_3_wild_hunt/witcher_3_complete_edition_banner_en.png", "GOG", "The Witcher 3");
 //        Web2GameCode gameCode2 = new Web2GameCode("gameCode_EldenRing", 50, 250, "OX23JK8UAT8TD1", "https://geekflare.com/wp-content/uploads/2022/07/Elden-Ring-Merch.png", "Steam", "Elden Ring");
@@ -147,24 +148,31 @@ public class Main {
 //        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
 //        System.out.println(TelegramClientUserService.verifyIfExists(510188));
 
-        OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
-        orderCryptoSenderService.getWalletInfo();
-        try {
-            orderCryptoSenderService.sendCryptoItem("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
-        } catch (Exception e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
+//        OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
+//        orderCryptoSenderService.getWalletInfo();
+//        try {
+//            orderCryptoSenderService.sendCryptoItem("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            throw new RuntimeException(e);
+//        }
 
 
 // ************************************************************************
 
-        try {
-            OrderCryptoReceiverSenderService c = new OrderCryptoReceiverSenderService();
-            c.verifyCryptoTxPayment(0.01,"0xc55763ed98222624769ca5c8a8d07fdd31204a6bc5724830a3fc712b362a8080");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            OrderCryptoReceiverSenderService c = new OrderCryptoReceiverSenderService();
+//            c.verifyCryptoTxPayment(0.01,"0xc55763ed98222624769ca5c8a8d07fdd31204a6bc5724830a3fc712b362a8080");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
+//        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
+//        try {
+//            System.out.println(telegramAdminSuperUserService.isOperational(111111));
+//        } catch (NoResultException noResultException){
+//            System.out.println(false);
+//        }
 
 
     }

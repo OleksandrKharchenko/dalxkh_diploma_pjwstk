@@ -16,7 +16,7 @@ public abstract class Payment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="idPayment")
     private int idPayment;
-    @OneToOne(targetEntity=Order.class, mappedBy="payment", cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional = false)
+    @OneToOne(targetEntity=Order.class, mappedBy="payment", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private Order order;
     @Column(name="state")
     private String state;

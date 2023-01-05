@@ -9,8 +9,8 @@ public class TelegramUserControllerHandler {
 
     public SendMessage addUserStartFlow(Message message){
         TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
-        if(!telegramClientUserService.verifyIfExists(Math.toIntExact(message.getFrom().getId()))){
-            telegramClientUserService.addTelegramClientUser(Math.toIntExact(message.getFrom().getId()),
+        if(!telegramClientUserService.verifyIfExists(message.getFrom().getId())){
+            telegramClientUserService.addTelegramClientUser(message.getFrom().getId(),
                     message.getFrom().getFirstName());
         }
         MessageFlowGenerator messageFlowGenerator = new MessageFlowGenerator();
@@ -20,7 +20,7 @@ public class TelegramUserControllerHandler {
 
     public boolean verifyCryptoAddress(Update update){
         TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
-        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(update.getMessage().getFrom().getId());
         if (telegramClientUser.getCyptoWalletAdress() != null){
            return true;
         }
@@ -29,7 +29,7 @@ public class TelegramUserControllerHandler {
 
     public boolean verifyEmailAddress(Update update){
         TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
-        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(update.getMessage().getFrom().getId());
         if (telegramClientUser.getEmail() != null){
             return true;
         }
@@ -38,7 +38,7 @@ public class TelegramUserControllerHandler {
 
     public SendMessage setCryptoAddress(Update update){
         TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
-        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(update.getMessage().getFrom().getId());
         SendMessage sm;
         telegramClientUser.setCyptoWalletAdress(update.getMessage().getText().trim());
         telegramClientUserService.updateTelegramClientUser(telegramClientUser);
@@ -61,7 +61,7 @@ public class TelegramUserControllerHandler {
 
     public SendMessage setEmailAddress(Update update){
         TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
-        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(Math.toIntExact(update.getMessage().getFrom().getId()));
+        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(update.getMessage().getFrom().getId());
         SendMessage sm;
         telegramClientUser.setEmail(update.getMessage().getText().trim());
         telegramClientUserService.updateTelegramClientUser(telegramClientUser);

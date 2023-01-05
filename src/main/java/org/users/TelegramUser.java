@@ -8,29 +8,29 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue(value="TelegramUser")
 public abstract class TelegramUser extends User {
     @Column(name="idTelegramUser", unique = true)
-    private int idTelegramUser;
+    private long idTelegramUser;
     @Column(name="displayName")
     private String displayName;
 
     public TelegramUser() {
     }
 
-    public TelegramUser(int idTelegramUser, String displayName) {
+    public TelegramUser(long idTelegramUser, String displayName) {
         super();
         this.idTelegramUser = idTelegramUser;
         this.displayName = displayName;
     }
-    public TelegramUser(String email, int idTelegramUser, String displayName) {
+    public TelegramUser(String email, long idTelegramUser, String displayName) {
         super(email);
         this.idTelegramUser = idTelegramUser;
         this.displayName = displayName;
     }
 
-    public int getIdTelegramUser() {
+    public long getIdTelegramUser() {
         return idTelegramUser;
     }
 
-    public void setIdTelegramUser(int idTelegramUser) {
+    public void setIdTelegramUser(long idTelegramUser) {
         this.idTelegramUser = idTelegramUser;
     }
 

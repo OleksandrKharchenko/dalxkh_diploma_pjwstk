@@ -69,7 +69,7 @@ public class TelegramAdminSuperUserService {
         return "You don't have permission to disable Operational User. Wrong Access Super Key.";
     }
 
-    public TelegramAdminSuperUser initiateTelegramFirstSuperUser(String email, int idTelegramUser, String displayName){
+    public TelegramAdminSuperUser initiateTelegramFirstSuperUser(String email, long idTelegramUser, String displayName){
         TelegramAdminSuperUser superUser = new TelegramAdminSuperUser(email, idTelegramUser, displayName, "9x09admin");
         superUser.setAccessType("initial");
         superUser.setOperational(true);
@@ -96,7 +96,7 @@ public class TelegramAdminSuperUserService {
         return initialSuperUser;
     }
 
-    public TelegramOperationalUser getTelegramOperUser(int idTelegramOperUser){
+    public TelegramOperationalUser getTelegramOperUser(long idTelegramOperUser){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startSuperUserSession.beginTransaction();
@@ -108,4 +108,17 @@ public class TelegramAdminSuperUserService {
         return telegramOperUser;
     }
 
+    public boolean isOperational(long idTelegramOperUser){
+        Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
+        Query query;
+        startSuperUserSession.beginTransaction();
+        query = startSuperUserSession.createQuery("from User where idTelegramUser= :idTelegramUser", TelegramUser.class)
+                .setParameter("idTelegramUser", idTelegramOperUser);
+        if (query.getSingleResult() instanceof TelegramOperationalUser){
+            startSuperUserSession.close();
+            return true;
+        }
+        startSuperUserSession.close();
+        return false;
+    }
 }

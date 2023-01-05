@@ -8,7 +8,7 @@ import org.main.HibernateSessionFactorySpawner;
 
 public class TelegramClientUserService {
 
-    public void addTelegramClientUser(int idTelegramUser, String displayName){
+    public void addTelegramClientUser(long idTelegramUser, String displayName){
         TelegramClientUser clientUser = new TelegramClientUser(idTelegramUser, displayName);
         HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
         spawner.createCommit(clientUser);
@@ -23,7 +23,7 @@ public class TelegramClientUserService {
         spawner.updateCommit(clientUser);
     }
 
-    public TelegramClientUser getTelegramClientUser(int idTelegramUser){
+    public TelegramClientUser getTelegramClientUser(long idTelegramUser){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         startSuperUserSession.beginTransaction();
@@ -33,7 +33,7 @@ public class TelegramClientUserService {
         return telegramClientUser;
     }
 
-    public boolean verifyIfExists(int idTelegramUser){
+    public boolean verifyIfExists(long idTelegramUser){
         Session session = HibernateSessionFactorySpawner.spawnSession();
         Query query;
         session.beginTransaction();

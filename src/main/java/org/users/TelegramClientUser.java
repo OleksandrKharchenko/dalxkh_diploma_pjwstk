@@ -19,7 +19,7 @@ public class TelegramClientUser extends TelegramUser {
     @Column(name="banStatus")
     private boolean banStatus;
     @Column(name="bannedBy")
-    private int bannedBy;
+    private long bannedBy;
     @OneToMany(targetEntity=Order.class, mappedBy="telegramClientUser", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Order> orderList;
 
@@ -27,11 +27,11 @@ public class TelegramClientUser extends TelegramUser {
     public TelegramClientUser() {
     }
 
-    public TelegramClientUser(int idTelegramUser, String displayName) {
+    public TelegramClientUser(long idTelegramUser, String displayName) {
         super(idTelegramUser, displayName);
     }
 
-    public TelegramClientUser(String email, int idTelegramUser, String displayName) {
+    public TelegramClientUser(String email, long idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
     }
 
@@ -68,11 +68,11 @@ public class TelegramClientUser extends TelegramUser {
         this.banStatus = banStatus;
     }
 
-    public int getBannedBy() {
+    public long getBannedBy() {
         return bannedBy;
     }
 
-    public void setBannedBy(int bannedBy) {
+    public void setBannedBy(long bannedBy) {
         this.bannedBy = bannedBy;
     }
 

@@ -12,14 +12,14 @@ public abstract class TelegramOperationalUser extends TelegramUser {
     @Column(name="accessType")
     private String accessType;
     @Column(name="accessAddedBy")
-    private int accessAddedBy;
+    private long accessAddedBy;
     @Column(name="accessDisabledBy")
-    private int accessDisabledBy;
+    private long accessDisabledBy;
 
     public TelegramOperationalUser() {
     }
 
-    public TelegramOperationalUser(String email, int idTelegramUser, String displayName) {
+    public TelegramOperationalUser(String email, long idTelegramUser, String displayName) {
         super(email, idTelegramUser, displayName);
         this.isOperational = true;
         this.accessType = "none";
@@ -43,19 +43,19 @@ public abstract class TelegramOperationalUser extends TelegramUser {
         this.accessType = accessType;
     }
 
-    public int getAccessAddedBy() {
+    public long getAccessAddedBy() {
         return accessAddedBy;
     }
 
-    public void setAccessAddedBy(int accessAddedBy) {
+    public void setAccessAddedBy(long accessAddedBy) {
         this.accessAddedBy = accessAddedBy;
     }
 
-    public int getAccessDisabledBy() {
+    public long getAccessDisabledBy() {
         return accessDisabledBy;
     }
 
-    public void setAccessDisabledBy(int accessDisabledBy) {
+    public void setAccessDisabledBy(long accessDisabledBy) {
         this.accessDisabledBy = accessDisabledBy;
     }
 }

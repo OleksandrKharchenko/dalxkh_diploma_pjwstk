@@ -23,7 +23,7 @@ public abstract class WebItem {
     @Column(name="name")
     private String name;
     @Column(name="addedBy")
-    private int addedBy;
+    private long addedBy;
     @OneToMany(targetEntity=Order.class, mappedBy="webItem", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Order> order;
     @Column(name="quantity")
@@ -54,11 +54,11 @@ public abstract class WebItem {
         this.name = name;
     }
 
-    public int getAddedBy() {
+    public long getAddedBy() {
         return addedBy;
     }
 
-    public void setAddedBy(int addedBy) {
+    public void setAddedBy(long addedBy) {
         this.addedBy = addedBy;
     }
 
