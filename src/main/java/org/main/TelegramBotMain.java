@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import org.telegramrobot.InetItemStoreBot;
+import org.telegramrobot.InetItemStoreBotAdmin;
 
 
 public class TelegramBotMain {
@@ -13,6 +14,7 @@ public class TelegramBotMain {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new InetItemStoreBot());
+            botsApi.registerBot(new InetItemStoreBotAdmin());
         } catch (Exception e) {
             e.printStackTrace();
         }

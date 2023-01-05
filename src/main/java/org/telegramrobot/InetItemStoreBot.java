@@ -40,11 +40,12 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         //OPS USER CHECKER
         TelegramOperationalUserControllerHandler telegramOperationalUserControllerHandler = new TelegramOperationalUserControllerHandler();
-        if(update.hasMessage() && telegramOperationalUserControllerHandler.isOperational(update.getMessage().getFrom().getId())) {
+        if(update.hasMessage() && telegramOperationalUserControllerHandler.isOperational(update.getMessage().getFrom().getId())
+            || update.hasCallbackQuery() && telegramOperationalUserControllerHandler.isOperational(update.getCallbackQuery().getFrom().getId())) {
             SendMessage adminMessage;
             if (update.hasMessage()) {
                 adminMessage = SendMessage.builder()
-                        .text("YOU ARE AN OPS USER, PLEASE USE ANOTHER BOT TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
+                        .text("YOU ARE AN OPS USER, PLEASE, USE https://t.me/inetitemstore_adminbot TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
                         .parseMode("HTML")
                         .chatId(update.getMessage().getChatId())
                         .build();
@@ -56,7 +57,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 }
             }
             adminMessage = SendMessage.builder()
-                    .text("YOU ARE AN OPS USER, PLEASE USE ANOTHER BOT TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
+                    .text("YOU ARE AN OPS USER, PLEASE, USE https://t.me/inetitemstore_adminbot TO MODIFY DATA IN <b>INETITEMSTORE</b> DB.")
                     .parseMode("HTML")
                     .chatId(update.getCallbackQuery().getMessage().getChatId())
                     .build();
