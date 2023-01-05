@@ -43,7 +43,6 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
             if (update.hasMessage() && update.getMessage().hasText()) {
                 //COMMANDS
                 if (update.getMessage().isCommand()) {
-                    System.out.println("IM HEEERE");
                     if (update.getMessage().getText().equals("/start")) {
                         MessageFlowGenerator messageFlowGenerator = new MessageFlowGenerator();
                         SendMessage sm = messageFlowGenerator.startFlowAdmin(update.getMessage().getChatId());
@@ -70,6 +69,24 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                                 throw new RuntimeException(e);
                             }
                         }
+                    } else if (update.getMessage().getText().equals("/promote_user")) {
+                        List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getTelegramClientPromoteUser(update);
+                        for (SendMessage sm : sendMessageList) {
+                            try {
+                                execute(sm);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    } else if (update.getMessage().getText().equals("/dissolve_opsuser")) {
+                        List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getTelegramDissolveOperUser(update);
+                        for (SendMessage sm : sendMessageList) {
+                            try {
+                                execute(sm);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     }
                 }
             }
@@ -85,6 +102,20 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                     }
                 } else if (update.getCallbackQuery().getData().substring(0, 8).equals("unbanUsr")) {
                     SendMessage sm = telegramOperationalUserControllerHandler.unbanTelegramClientUser(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (update.getCallbackQuery().getData().substring(0, 7).equals("promote")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.promoteTelegramClientUser(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                }  else if (update.getCallbackQuery().getData().substring(0, 8).equals("dissolve")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.dissolveTelegramOperUser(update);
                     try {
                         execute(sm);
                     } catch (TelegramApiException e) {

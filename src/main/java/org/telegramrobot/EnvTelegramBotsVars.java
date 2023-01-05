@@ -15,7 +15,7 @@ public interface EnvTelegramBotsVars {
             "/ban_users - Ban user \n" +
             "/unban_users - Unban user \n" +
             "/promote_user - Promote to Operational User \n" +
-            "/disable_opsuser - Disable Operational User \n" +
+            "/dissolve_opsuse - Dissolve Operational User \n" +
             "/whoami - What type of Ops User are you \n" +
             "/add_item - Add Item to Store \n" +
             "/del_item - Remove Item from Store \n" +

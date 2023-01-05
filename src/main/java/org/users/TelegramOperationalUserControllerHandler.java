@@ -59,14 +59,14 @@ public class TelegramOperationalUserControllerHandler {
     public List<SendMessage> getTelegramClientUnBanUsers(Update message){
         TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
         InlineKeyboardMarkup keyboardMarkup;
-        InlineKeyboardButton ban;
+        InlineKeyboardButton unban;
         List<SendMessage> sendMessages = new ArrayList<SendMessage>();
         for (TelegramClientUser tg: telegramAdminSuperUserService.getTelegramClientUsers()) {
             //*************KEYBOARD DEFINITION********************
-            ban = InlineKeyboardButton.builder()
+            unban = InlineKeyboardButton.builder()
                     .text("Unban").callbackData("unbanUsr." + tg.getIdTelegramUser())
                     .build();
-            keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(ban))
+            keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(unban))
                     .build();
             //****************************************************
             SendMessage sendMessage = SendMessage.builder()
@@ -79,6 +79,66 @@ public class TelegramOperationalUserControllerHandler {
                             + "Is banned: <b>"
                             + tg.isBanStatus()
                             + "</b>")
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .replyMarkup(keyboardMarkup)
+                    .build();
+            sendMessages.add(sendMessage);
+        }
+        return sendMessages;
+    }
+
+    public List<SendMessage> getTelegramClientPromoteUser(Update message){
+        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
+        InlineKeyboardMarkup keyboardMarkup;
+        InlineKeyboardButton promote;
+        List<SendMessage> sendMessages = new ArrayList<SendMessage>();
+        for (TelegramClientUser tg: telegramAdminSuperUserService.getTelegramClientUsers()) {
+            //*************KEYBOARD DEFINITION********************
+            promote = InlineKeyboardButton.builder()
+                    .text("Promote").callbackData("promote." + tg.getIdTelegramUser())
+                    .build();
+            keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(promote))
+                    .build();
+            //****************************************************
+            SendMessage sendMessage = SendMessage.builder()
+                    .text("Name: <b>"
+                            + tg.getDisplayName()
+                            + "</b>\n"
+                            + "IdTelegram: <b>"
+                            + tg.getIdTelegramUser()
+                            + "</b>\n"
+                            )
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .replyMarkup(keyboardMarkup)
+                    .build();
+            sendMessages.add(sendMessage);
+        }
+        return sendMessages;
+    }
+
+    public List<SendMessage> getTelegramDissolveOperUser(Update message){
+        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
+        InlineKeyboardMarkup keyboardMarkup;
+        InlineKeyboardButton dissolve;
+        List<SendMessage> sendMessages = new ArrayList<SendMessage>();
+        for (TelegramOperationalUser tg: telegramAdminSuperUserService.getTelegramOperUsers()) {
+            //*************KEYBOARD DEFINITION********************
+            dissolve = InlineKeyboardButton.builder()
+                    .text("Dissolve").callbackData("dissolve." + tg.getIdTelegramUser())
+                    .build();
+            keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(dissolve))
+                    .build();
+            //****************************************************
+            SendMessage sendMessage = SendMessage.builder()
+                    .text("Name: <b>"
+                            + tg.getDisplayName()
+                            + "</b>\n"
+                            + "IdTelegram: <b>"
+                            + tg.getIdTelegramUser()
+                            + "</b>\n"
+                    )
                     .parseMode("HTML")
                     .chatId(message.getMessage().getChatId())
                     .replyMarkup(keyboardMarkup)
@@ -107,6 +167,33 @@ public class TelegramOperationalUserControllerHandler {
         TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
         TelegramAdminSuperUser telegramAdminSuperUser = (TelegramAdminSuperUser) telegramAdminSuperUserService.getTelegramOperUser(message.getCallbackQuery().getFrom().getId());
         String result = telegramAdminSuperUserService.unbanTelegramClient(telegramClientUserService.getTelegramClientUser(Long.parseLong(message.getCallbackQuery().getData().substring(9))),
+                telegramAdminSuperUser);
+        SendMessage sm = SendMessage.builder()
+                .text(result)
+                .parseMode("HTML")
+                .chatId(message.getCallbackQuery().getMessage().getChatId())
+                .build();
+        return sm;
+    }
+
+    public SendMessage promoteTelegramClientUser(Update message){
+        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
+        TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+        TelegramAdminSuperUser telegramAdminSuperUser = (TelegramAdminSuperUser) telegramAdminSuperUserService.getTelegramOperUser(message.getCallbackQuery().getFrom().getId());
+        String result = telegramAdminSuperUserService.addOperationalUser(telegramClientUserService.getTelegramClientUser(Long.parseLong(message.getCallbackQuery().getData().substring(8))),
+                telegramAdminSuperUser, "content");
+        SendMessage sm = SendMessage.builder()
+                .text(result)
+                .parseMode("HTML")
+                .chatId(message.getCallbackQuery().getMessage().getChatId())
+                .build();
+        return sm;
+    }
+
+    public SendMessage dissolveTelegramOperUser(Update message){
+        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
+        TelegramAdminSuperUser telegramAdminSuperUser = (TelegramAdminSuperUser) telegramAdminSuperUserService.getTelegramOperUser(message.getCallbackQuery().getFrom().getId());
+        String result = telegramAdminSuperUserService.dissolveOperationalUser(telegramAdminSuperUserService.getTelegramOperUser(Long.parseLong(message.getCallbackQuery().getData().substring(9))),
                 telegramAdminSuperUser);
         SendMessage sm = SendMessage.builder()
                 .text(result)
