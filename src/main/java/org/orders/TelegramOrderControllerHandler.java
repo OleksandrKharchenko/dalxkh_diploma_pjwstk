@@ -147,9 +147,9 @@ public class TelegramOrderControllerHandler {
         return sm;
     }
 
-    public boolean orderIsCanceled(Update message) {
+    public boolean orderIsCanceledOrCompleted(Update message) {
         OrderService orderService = new OrderService();
         Order order = orderService.getOrders(Integer.parseInt(message.getPreCheckoutQuery().getInvoicePayload().substring(7)));
-        return order.getState().equals("canceled");
+        return order.getState().equals("canceled") || order.getState().equals("completed");
     }
 }

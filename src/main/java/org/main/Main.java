@@ -91,14 +91,14 @@ public class Main {
 //        telegramAdminContentUserService.addWebItem(gameCode0, telegramOperationalUser);
 //        telegramAdminContentUserService.addWebItem(gameCode1, telegramOperationalUser);
 //        telegramAdminContentUserService.addWebItem(gameCode2, telegramOperationalUser);
-//        Web3NFT nft1 = new Web3NFT("christmas_nft", 100, 0.01, "0xd2fF891F5556c623F36a3F22B0E4815a3e36dc23", "ETH", "ERC-721", 38, "rare", "https://i.seadn.io/gcs/files/9b3993367af853569e8174efead8e6a4.png?auto=format&w=1000");
-//        telegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
+        Web3NFT nft = new Web3NFT("ukraine_nft", 5, 0.1, "0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957", "ETH", "ERC-721", 43, "epic", "https://i.seadn.io/gae/Vjbl-6yiwT3XzSwk7q4yffAfgPv1jwV8EMs5EGR8TYyFVDl9SXEHFAXz7sVQYV72J1DfXeo9MHIvYXSwCPP0v_lkHU8hHQ8254KS?auto=format&w=1000");
+        telegramAdminContentUserService.addWebItem(nft, telegramOperationalUser);
 //        Web2GiftCard giftCard0 = new Web2GiftCard("giftCard_BattleNet", 10, 489, "O5X36T43DF212G3JE8QES", "https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/b/n/bnetgc_1601920259_1603876637.jpg", "Battle Net", 500);
-        Web2GiftCard giftCard1 = new Web2GiftCard("giftCard_BattleNet", 80, 199, "O5X3XTT3HFX12L4JE8TEU", "https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/b/n/bnetgc_1601920259_1603876637.jpg", "Battle Net", 250);
+//        Web2GiftCard giftCard1 = new Web2GiftCard("giftCard_BattleNet", 80, 199, "O5X3XTT3HFX12L4JE8TEU", "https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/b/n/bnetgc_1601920259_1603876637.jpg", "Battle Net", 250);
 //        Web2GiftCard giftCard2 = new Web2GiftCard("giftCard_Origin", 15, 99, "KKTS234932K43DF212G3JEIRSQ8QES", "https://images.g2a.com/uiadminimages/770x433/1x1x1/599554d5bbef/4a9424c9217a4e578407d5b4", "Origin", 100);
 //        Web2GiftCard giftCard3 = new Web2GiftCard("giftCard_PStore", 50, 9, "YYSSH3D952K231FKLO3JEIRSQ8QHEJ", "https://images.g2a.com/1024x768/1x1x0/playstation-network-gift-card-200-pln-psn-poland-i10000070176495/59e737dc5bafe3a7782d06b4", "Playstation Store", 10);
 //        telegramAdminContentUserService.addWebItem(giftCard0, telegramOperationalUser);
-        telegramAdminContentUserService.addWebItem(giftCard1, telegramOperationalUser);
+//        telegramAdminContentUserService.addWebItem(giftCard1, telegramOperationalUser);
 //        telegramAdminContentUserService.addWebItem(giftCard2, telegramOperationalUser);
 //        telegramAdminContentUserService.addWebItem(giftCard3, telegramOperationalUser);
 

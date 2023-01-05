@@ -24,10 +24,11 @@ public class TelegramWebItemControllerHandler {
                 .keyboardRow(List.of(ethscan)).build();
         //****************************************************
 
-        SendPhoto sendPhoto = SendPhoto.builder().caption("Name: "
+        SendPhoto sendPhoto = SendPhoto.builder().caption("Name: <b>"
                         + web3NFT.getName()
-                        + " "
-                        + "\nPrice: <b>"
+                        + "</b>\nQuality: <b>"
+                        + web3NFT.getQuality()
+                        + "</b>\nPrice: <b>"
                         + web3NFT.getCryptoPrice()
                         + " "
                         + web3NFT.getBlockchain()

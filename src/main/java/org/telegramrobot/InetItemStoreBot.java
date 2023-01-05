@@ -45,11 +45,11 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             System.out.println("CHECKOUT DETECTED");
             TelegramOrderControllerHandler telegramOrderControllerHandler = new TelegramOrderControllerHandler();
             AnswerPreCheckoutQuery answerPreCheckoutQuery;
-            if (telegramOrderControllerHandler.orderIsCanceled(update)){
+            if (telegramOrderControllerHandler.orderIsCanceledOrCompleted(update)){
                 answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
                         .preCheckoutQueryId(update.getPreCheckoutQuery().getId())
                         .ok(false)
-                        .errorMessage("Sorry, order is canceled.")
+                        .errorMessage("Sorry, order is canceled or completed.")
                         .build();
             } else {
                 answerPreCheckoutQuery = AnswerPreCheckoutQuery.builder()
@@ -230,6 +230,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 try {
                     execute(sm);
                 } catch (TelegramApiException e) {
+                    System.out.println(e);
                     throw new RuntimeException(e);
                 }
             }

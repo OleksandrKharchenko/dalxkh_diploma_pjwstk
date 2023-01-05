@@ -27,7 +27,7 @@ public class OrderCryptoReceiverSenderService {
     final BigInteger GAS_PRICE = DefaultGasProvider.GAS_PRICE;
     final String myWallet = "0x329DfA6ca4F1210231B66e6d78361D36aBF178EA";
     final okhttp3.OkHttpClient httpClient = new OkHttpClient();
-    final Web3j web3jClient = Web3j.build(new HttpService("https://goerli.infura.io/v3/fa81117868ff472c9103616ad68c0497", httpClient));
+    final Web3j web3jClient = Web3j.build(new HttpService("https://goerli.infura.io/v3/7f6e1ebbe3d1420faa797ec6d215f8e0", httpClient));
 
     public double getBalance() throws IOException {
         BigInteger bigIntegerUnscaled = web3jClient.ethGetBalance(myWallet, DefaultBlockParameterName.LATEST).send().getBalance();
