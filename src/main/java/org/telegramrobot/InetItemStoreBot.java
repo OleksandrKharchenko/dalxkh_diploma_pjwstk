@@ -198,7 +198,6 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                     throw new RuntimeException(e);
                 }
             } else if (update.getCallbackQuery().getData().substring(0, 7).equals("fiatpay")) {
-                System.out.println("TEEST");
                 TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
                 SendInvoice si = telegramPaymentControllerHandler.createPaymentForOrderWithFiat(update.getCallbackQuery());
                 try {
@@ -230,7 +229,6 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 try {
                     execute(sm);
                 } catch (TelegramApiException e) {
-                    System.out.println(e);
                     throw new RuntimeException(e);
                 }
             }

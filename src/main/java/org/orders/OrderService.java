@@ -85,6 +85,7 @@ public class OrderService {
                         updateOrder(order);
                         return "Your NFT sent to: " + order.getTelegramClientUser().getCyptoWalletAdress() + "\nTxHash: " + order.getCryptoTxHashNFT();
                     } catch (Exception e) {
+                        return "Transaction failed, try again.";
                     }
                 }
 

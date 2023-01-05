@@ -81,9 +81,9 @@ public class Main {
 // ************************************************************************
 
 // *********************ADDING WEBITEM BY CONTENT ADMIN********************
-        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
-        TelegramAdminContentUserService telegramAdminContentUserService = new TelegramAdminContentUserService();
-        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) telegramAdminSuperUserService.getTelegramOperUser(546240188);
+//        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
+//        TelegramAdminContentUserService telegramAdminContentUserService = new TelegramAdminContentUserService();
+//        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) telegramAdminSuperUserService.getTelegramOperUser(546240188);
 //        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", "https://items.gog.com/metro_exodus/Metro_Exodus_PC_Enhanced_Logo_black.png", "Origin", "Metro Exodus");
 //        Web2GameCode gameCode1 = new Web2GameCode("gameCode_TheWitcher3", 50, 150, "OX23JY87ETRKD7", "https://items.gog.com/the_witcher_3_wild_hunt/witcher_3_complete_edition_banner_en.png", "GOG", "The Witcher 3");
 //        Web2GameCode gameCode2 = new Web2GameCode("gameCode_EldenRing", 50, 250, "OX23JK8UAT8TD1", "https://geekflare.com/wp-content/uploads/2022/07/Elden-Ring-Merch.png", "Steam", "Elden Ring");
@@ -91,8 +91,8 @@ public class Main {
 //        telegramAdminContentUserService.addWebItem(gameCode0, telegramOperationalUser);
 //        telegramAdminContentUserService.addWebItem(gameCode1, telegramOperationalUser);
 //        telegramAdminContentUserService.addWebItem(gameCode2, telegramOperationalUser);
-        Web3NFT nft = new Web3NFT("ukraine_nft", 5, 0.1, "0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957", "ETH", "ERC-721", 43, "epic", "https://i.seadn.io/gae/Vjbl-6yiwT3XzSwk7q4yffAfgPv1jwV8EMs5EGR8TYyFVDl9SXEHFAXz7sVQYV72J1DfXeo9MHIvYXSwCPP0v_lkHU8hHQ8254KS?auto=format&w=1000");
-        telegramAdminContentUserService.addWebItem(nft, telegramOperationalUser);
+//        Web3NFT nft = new Web3NFT("ukraine_nft", 5, 0.1, "0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957", "ETH", "ERC-721", 43, "epic", "https://i.seadn.io/gae/Vjbl-6yiwT3XzSwk7q4yffAfgPv1jwV8EMs5EGR8TYyFVDl9SXEHFAXz7sVQYV72J1DfXeo9MHIvYXSwCPP0v_lkHU8hHQ8254KS?auto=format&w=1000");
+//        telegramAdminContentUserService.addWebItem(nft, telegramOperationalUser);
 //        Web2GiftCard giftCard0 = new Web2GiftCard("giftCard_BattleNet", 10, 489, "O5X36T43DF212G3JE8QES", "https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/b/n/bnetgc_1601920259_1603876637.jpg", "Battle Net", 500);
 //        Web2GiftCard giftCard1 = new Web2GiftCard("giftCard_BattleNet", 80, 199, "O5X3XTT3HFX12L4JE8TEU", "https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/b/n/bnetgc_1601920259_1603876637.jpg", "Battle Net", 250);
 //        Web2GiftCard giftCard2 = new Web2GiftCard("giftCard_Origin", 15, 99, "KKTS234932K43DF212G3JEIRSQ8QES", "https://images.g2a.com/uiadminimages/770x433/1x1x1/599554d5bbef/4a9424c9217a4e578407d5b4", "Origin", 100);
@@ -147,23 +147,24 @@ public class Main {
 //        TelegramAdminContentUserService.addWebItem(nft1, telegramOperationalUser);
 //        System.out.println(TelegramClientUserService.verifyIfExists(510188));
 
-//        OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
-//        orderCryptoSenderService.getWalletInfo();
-//        try {
-//            orderCryptoSenderService.sendCryptoItem("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        OrderCryptoReceiverSenderService orderCryptoSenderService = new OrderCryptoReceiverSenderService();
+        orderCryptoSenderService.getWalletInfo();
+        try {
+            orderCryptoSenderService.sendCryptoItem("0xA8D7abFc7cd770000B0fD6F9a07D5d0Ac9361096");
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
 
 
 // ************************************************************************
 
-//        try {
-//            OrderCryptoReceiverSenderService c = new OrderCryptoReceiverSenderService();
-//            c.verifyCryptoTxPayment(0.01,"0xc55763ed98222624769ca5c8a8d07fdd31204a6bc5724830a3fc712b362a8080");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            OrderCryptoReceiverSenderService c = new OrderCryptoReceiverSenderService();
+            c.verifyCryptoTxPayment(0.01,"0xc55763ed98222624769ca5c8a8d07fdd31204a6bc5724830a3fc712b362a8080");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }

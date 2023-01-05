@@ -133,16 +133,24 @@ public class TelegramOrderControllerHandler {
     public SendMessage sendOrder(Update message) {
         OrderService orderService = new OrderService();
         Order order;
-        if (message.getMessage().getSuccessfulPayment() != null) {
+        SendMessage sm;
+        String sendString;
+        if (message.hasMessage() && message.getMessage().hasSuccessfulPayment()) {
             order = orderService.getOrders(Integer.parseInt(message.getMessage().getSuccessfulPayment().getInvoicePayload().substring(7)));
-        } else {
-            order = orderService.getOrders(Integer.parseInt(message.getCallbackQuery().getData().substring(9)));
+            sendString = orderService.sendOrder(order);
+            sm = SendMessage.builder()
+                    .text(sendString)
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .build();
+            return sm;
         }
-        String sendString = orderService.sendOrder(order);
-        SendMessage sm = SendMessage.builder()
+        order = orderService.getOrders(Integer.parseInt(message.getCallbackQuery().getData().substring(9)));
+        sendString = orderService.sendOrder(order);
+        sm = SendMessage.builder()
                 .text(sendString)
                 .parseMode("HTML")
-                .chatId(message.getMessage().getChatId())
+                .chatId(message.getCallbackQuery().getMessage().getChatId())
                 .build();
         return sm;
     }
