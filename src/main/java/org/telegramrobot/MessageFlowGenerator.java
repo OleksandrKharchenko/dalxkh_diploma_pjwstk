@@ -27,4 +27,11 @@ public class MessageFlowGenerator {
         return sm;
     }
 
+    public SendMessage startFlowAdmin(long chatId){
+        SendMessage sm = SendMessage.builder().chatId(chatId)
+                .parseMode("HTML").text(EnvTelegramBotsVars.STARTDESCRIPTIONADMIN)
+                .build();
+        return sm;
+    }
+
 }

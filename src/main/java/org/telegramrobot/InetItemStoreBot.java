@@ -229,7 +229,6 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
                 TelegramPaymentControllerHandler telegramPaymentControllerHandler = new TelegramPaymentControllerHandler();
                 SendInvoice si = telegramPaymentControllerHandler.createPaymentForOrderWithFiat(update.getCallbackQuery());
                 try {
-
                     execute(si);
                 } catch (TelegramApiException e) {
                     System.out.println(e);
