@@ -5,6 +5,7 @@ import org.hibernate.query.Query;
 import org.main.HibernateCommitsSpawner;
 import org.main.HibernateSessionFactorySpawner;
 import org.orders.Order;
+import org.orders.OrderService;
 import org.webitems.*;
 
 import java.util.ArrayList;
@@ -75,5 +76,14 @@ public class TelegramAdminContentUserService {
         startSuperUserSession.close();
         return orderList;
     }
+
+    public String deleteOrder(int idOrder) {
+        OrderService orderService = new OrderService();
+        Order order = orderService.getOrders(idOrder);
+        HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+        spawner.deleteCommit(order);
+        return "Order: <b>" + order.getIdOrder() + "</b> removed.";
+    }
+
 
 }

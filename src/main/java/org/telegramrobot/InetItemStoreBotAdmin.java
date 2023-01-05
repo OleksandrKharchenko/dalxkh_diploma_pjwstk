@@ -136,7 +136,6 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                             }
                         }
                     } else if (update.getMessage().getText().equals("/whoami")) {
-
                         SendMessage sm = telegramOperationalUserControllerHandler.whoami(update);
                         try {
                             execute(sm);
@@ -144,7 +143,14 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                             throw new RuntimeException(e);
                         }
                     } else if (update.getMessage().getText().equals("/get_orders")) {
-                        List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "completed");
+                        SendMessage sm = telegramOperationalUserControllerHandler.getStateOfOrders(update);
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (update.getMessage().getText().equals("/del_order")) {
+                        List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getAllOrders(update);
                         for (SendMessage sm : sendMessageList) {
                             try {
                                 execute(sm);
@@ -186,11 +192,52 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                     } catch (TelegramApiException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (update.getCallbackQuery().getData().equals("completed")) {
+                    System.out.println("COMPLETED");
+                    List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "completed");
+                    for (SendMessage sm : sendMessageList) {
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (update.getCallbackQuery().getData().equals("canceled")) {
+                    List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "canceled");
+                    for (SendMessage sm : sendMessageList) {
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (update.getCallbackQuery().getData().equals("payment")) {
+                    List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "payment");
+                    for (SendMessage sm : sendMessageList) {
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (update.getCallbackQuery().getData().equals("initiated")) {
+                    List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "initiated");
+                    for (SendMessage sm : sendMessageList) {
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (update.getCallbackQuery().getData().substring(0, 6).equals("delete")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.deleteOrder(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
-
-
-
 
 
 

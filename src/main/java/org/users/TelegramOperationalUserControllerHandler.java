@@ -230,6 +230,33 @@ public class TelegramOperationalUserControllerHandler {
         return sm;
     }
 
+    public SendMessage getStateOfOrders(Update message){
+            //*************KEYBOARD DEFINITION********************
+        InlineKeyboardButton keyboardButton0 = InlineKeyboardButton.builder()
+                .text("Completed").callbackData("completed")
+                .build();
+        InlineKeyboardButton keyboardButton1 = InlineKeyboardButton.builder()
+                .text("Canceled").callbackData("canceled")
+                .build();
+        InlineKeyboardButton keyboardButton2 = InlineKeyboardButton.builder()
+                .text("Payment").callbackData("payment")
+                .build();
+        InlineKeyboardButton keyboardButton3 = InlineKeyboardButton.builder()
+                .text("Initiated").callbackData("initiated")
+                .build();
+        InlineKeyboardMarkup keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(keyboardButton0, keyboardButton1,
+                        keyboardButton2, keyboardButton3))
+                    .build();
+            //****************************************************
+            SendMessage sendMessage = SendMessage.builder()
+                    .text("Sort by state of orders: ")
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .replyMarkup(keyboardMarkup)
+                    .build();
+        return sendMessage;
+    }
+
     public List<SendMessage> getOrders(Update message, String typeOf){
         TelegramAdminContentUserService telegramAdminContentUserService = new TelegramAdminContentUserService();
         InlineKeyboardMarkup keyboardMarkup;
@@ -237,10 +264,11 @@ public class TelegramOperationalUserControllerHandler {
         List<SendMessage> sendMessages = new ArrayList<SendMessage>();
         List<Order> orderListByType = telegramAdminContentUserService.getOrders()
                 .stream()
-                .filter(order -> order.getState().equals(typeOf)).toList();
+                .filter(order -> order.getState().contains(typeOf)).toList();
         for (Order order: orderListByType) {
             SendMessage sendMessage = SendMessage.builder()
-                    .text("Order id <b>"
+                    .text(  "------------------------------------------------"
+                            + "\nOrder id <b>"
                             + order.getIdOrder()
                             + "</b>\n"
                             + "Client ID: <b>"
@@ -258,13 +286,71 @@ public class TelegramOperationalUserControllerHandler {
                             + "State: <b>"
                             + order.getState()
                             + "</b>\n"
+                            + "------------------------------------------------"
                     )
                     .parseMode("HTML")
-                    .chatId(message.getMessage().getChatId())
+                    .chatId(message.getCallbackQuery().getMessage().getChatId())
                     .build();
             sendMessages.add(sendMessage);
         }
         return sendMessages;
     }
+
+    public List<SendMessage> getAllOrders(Update message){
+        TelegramAdminContentUserService telegramAdminContentUserService = new TelegramAdminContentUserService();
+        InlineKeyboardMarkup keyboardMarkup;
+        InlineKeyboardButton inlineKeyboardButtonOrder;
+        List<SendMessage> sendMessages = new ArrayList<SendMessage>();
+        List<Order> orderList = telegramAdminContentUserService.getOrders();
+        for (Order order: orderList) {
+            //*************KEYBOARD DEFINITION********************
+            inlineKeyboardButtonOrder = InlineKeyboardButton.builder()
+                    .text("Delete").callbackData("delete." + order.getIdOrder())
+                    .build();
+            keyboardMarkup = InlineKeyboardMarkup.builder().keyboardRow(List.of(inlineKeyboardButtonOrder))
+                    .build();
+            //****************************************************
+            SendMessage sendMessage = SendMessage.builder()
+                    .text(  "------------------------------------------------"
+                            + "\nOrder id <b>"
+                            + order.getIdOrder()
+                            + "</b>\n"
+                            + "Client ID: <b>"
+                            + order.getTelegramClientUser().getIdTelegramUser()
+                            + "</b>\n"
+                            + "Crypto Price: <b>"
+                            + order.getCryptoEquivalentPrice()
+                            + " ETH</b>\n"
+                            + "Fiat Price: <b>"
+                            + order.getUsdEquivalentPrice()
+                            + " USD</b>\n"
+                            + "Date Time created: <b>"
+                            + order.getTimeStamp()
+                            + "</b>\n"
+                            + "State: <b>"
+                            + order.getState()
+                            + "</b>\n"
+                            + "------------------------------------------------"
+                    )
+                    .parseMode("HTML")
+                    .chatId(message.getMessage().getChatId())
+                    .replyMarkup(keyboardMarkup)
+                    .build();
+            sendMessages.add(sendMessage);
+        }
+        return sendMessages;
+    }
+
+    public SendMessage deleteOrder(Update message){
+        TelegramAdminContentUserService telegramAdminContentUserService = new TelegramAdminContentUserService();
+        String result = telegramAdminContentUserService.deleteOrder(Integer.parseInt(message.getCallbackQuery().getData().substring(7)));
+        SendMessage sm = SendMessage.builder()
+                .text(result)
+                .parseMode("HTML")
+                .chatId(message.getCallbackQuery().getMessage().getChatId())
+                .build();
+        return sm;
+    }
+
 
 }
