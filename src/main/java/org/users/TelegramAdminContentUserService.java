@@ -40,25 +40,6 @@ public class TelegramAdminContentUserService {
         }
     }
 
-    public String deleteWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
-        if (contentOperUser.isOperational()) {
-            HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
-            spawner.deleteCommit(webItem);
-            return webItem.getName() + " deleted.";
-        }
-        return "ERROR: on delete item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
-    }
-
-    public String addWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser){
-        if (contentOperUser.isOperational()) {
-            webItem.setAddedBy(contentOperUser.getIdTelegramUser());
-            HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
-            spawner.createCommit(webItem);
-            return webItem.getName() + " added.";
-        }
-        return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
-    }
-
     public List<Order> getOrders(){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
