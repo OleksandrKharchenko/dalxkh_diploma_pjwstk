@@ -37,7 +37,6 @@ public class PaymentOrderService {
             spawner.updateCommit(payment.getOrder());
         }
 
-
     public void completePaymentFiat(Payment payment) {
         //LOGIC FOR CREDIT CARD
             payment.setCompleted(true);

@@ -20,14 +20,4 @@ public class CryptoPaymentBalance {
         this.balance = orderCryptoSenderService.getBalance();
     }
 
-    public void updateBalance(){
-        HibernateCommitsSpawner hibernateCommitsSpawner = new HibernateCommitsSpawner();
-        hibernateCommitsSpawner.updateCommit(this);
-    }
-
-    public void createBalance(){
-        HibernateCommitsSpawner hibernateCommitsSpawner = new HibernateCommitsSpawner();
-        hibernateCommitsSpawner.createCommit(this);
-    }
-
 }

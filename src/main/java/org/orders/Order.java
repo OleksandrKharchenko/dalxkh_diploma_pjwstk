@@ -145,7 +145,7 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public Timestamp getTimeStamp() {
+    public Timestamp getTimeStamp() { 
         return timeStamp;
     }
 

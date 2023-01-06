@@ -23,7 +23,6 @@ public abstract class Payment {
     @Column(name="isCompleted")
     private boolean isCompleted;
 
-
     public Payment() {
     }
 
