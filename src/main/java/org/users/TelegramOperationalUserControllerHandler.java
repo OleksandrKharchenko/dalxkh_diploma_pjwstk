@@ -264,8 +264,8 @@ public class TelegramOperationalUserControllerHandler {
     public SendMessage addWeb3NFTPreMessage(Update message){
         SendMessage sendMessage = SendMessage.builder()
                 .text("In order to add NFT, please, reply this message in followed format: \n" +
-                        "\n(name);(quantity);(crypto price);(contract address);(token standard);(token id);(quality);(img url) \n" +
-                        "\nukraine_nft;5;0.1;0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957;ERC-721;43;epic;https://url.to.img/")
+                        "\n(name) ; (quantity) ; (crypto price) ; (contract address) ; (token standard) ; (token id) ; (quality) ; (img url) \n" +
+                        "\nukraine_nft ; 5 ; 0.1 ; 0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957 ; ERC-721 ; 43 ; epic ; https://url.to.img/")
                 .parseMode("HTML")
                 .chatId(message.getCallbackQuery().getMessage().getChatId())
                 .build();
@@ -275,8 +275,8 @@ public class TelegramOperationalUserControllerHandler {
     public SendMessage addWeb2GameCodePreMessage(Update message){
         SendMessage sendMessage = SendMessage.builder()
                 .text("In order to add Game Code, please, reply this message in followed format: \n" +
-                        "\n(name);(quantity);(usd price);(redeem code);(img url);(platform);(game name) \n" +
-                        "\ngameCode_EldenRing;50;250;OX23JK8UAT8TD1;https://url.to.img/;Steam;Elden Ring")
+                        "\n(name) ; (quantity) ; (usd price) ; (redeem code) ; (img url) ; (platform) ; (game name) \n" +
+                        "\ngameCode_EldenRing ; 50 ; 250 ; OX23JK8UAT8TD1 ; https://url.to.img/ ; Steam ; Elden Ring")
                 .parseMode("HTML")
                 .chatId(message.getCallbackQuery().getMessage().getChatId())
                 .build();
@@ -286,8 +286,8 @@ public class TelegramOperationalUserControllerHandler {
     public SendMessage addWeb2GiftCardPreMessage(Update message){
         SendMessage sendMessage = SendMessage.builder()
                 .text("In order to add Gift Card, please, reply this message in followed format: \n" +
-                        "\n(name);(quantity);(usd price);(redeem code);(img url);(platform);(usd value) \n" +
-                        "\ngiftCard_BattleNet;10;489;O5X36T43DF212G3JE8QES;https://url.to.img/;Battle Net;500")
+                        "\n(name) ; (quantity) ; (usd price) ; (redeem code) ; (img url) ; (platform) ; (usd value) \n" +
+                        "\ngiftCard_BattleNet ; 10 ; 489 ; O5X36T43DF212G3JE8QES ; https://url.to.img/ ; Battle Net ; 500")
                 .parseMode("HTML")
                 .chatId(message.getCallbackQuery().getMessage().getChatId())
                 .build();
@@ -462,11 +462,11 @@ public class TelegramOperationalUserControllerHandler {
             return sm;
         }
         try {
-            System.out.println(Long.parseLong(splited[1]));
-            System.out.println(Double.parseDouble(splited[2]));
-            System.out.println(Long.parseLong(splited[5]));
+            System.out.println(Long.parseLong(splited[1].trim()));
+            System.out.println(Double.parseDouble(splited[2].trim()));
+            System.out.println(Long.parseLong(splited[5].trim()));
             try {
-                if(!splited[7].substring(0, 8).equals("https://")){
+                if(!splited[7].trim().substring(0, 8).equals("https://")){
                     sm = SendMessage.builder()
                             .text("Wrong url address format, please, try again.")
                             .parseMode("HTML")
@@ -490,14 +490,14 @@ public class TelegramOperationalUserControllerHandler {
                     .build();
             return sm;
         }
-        String name = splited[0];
-        long quantity = Long.parseLong(splited[1]);
-        double cryptoPrice = Double.parseDouble(splited[2]);
-        String contactAddress = splited[3];
-        String tokenStandard = splited[4];
-        long tokenId = Long.parseLong(splited[5]);
-        String quality = splited[6];
-        String imgPath = splited[7];
+        String name = splited[0].trim();
+        long quantity = Long.parseLong(splited[1].trim());
+        double cryptoPrice = Double.parseDouble(splited[2].trim());
+        String contactAddress = splited[3].trim();
+        String tokenStandard = splited[4].trim();
+        long tokenId = Long.parseLong(splited[5].trim());
+        String quality = splited[6].trim();
+        String imgPath = splited[7].trim();
         Web3NFT web3NFT = new Web3NFT(name, quantity, cryptoPrice,
                 contactAddress, "ETH", tokenStandard, tokenId, quality, imgPath);
         web3NFT.setAddedBy(message.getMessage().getFrom().getId());
@@ -524,10 +524,10 @@ public class TelegramOperationalUserControllerHandler {
             return sm;
         }
         try {
-            System.out.println(Long.parseLong(splited[1]));
-            System.out.println(Integer.parseInt(splited[2]));
+            System.out.println(Long.parseLong(splited[1].trim()));
+            System.out.println(Integer.parseInt(splited[2].trim()));
             try {
-                if(!splited[4].substring(0, 8).equals("https://")){
+                if(!splited[4].trim().substring(0, 8).equals("https://")){
                     sm = SendMessage.builder()
                             .text("Wrong url address format, please, try again.")
                             .parseMode("HTML")
@@ -551,13 +551,13 @@ public class TelegramOperationalUserControllerHandler {
                     .build();
             return sm;
         }
-        String name = splited[0];
-        long quantity = Long.parseLong(splited[1]);
-        int usdPrice = Integer.parseInt(splited[2]);
-        String redeemCode = splited[3];
-        String imgPath = splited[4];
-        String platform = splited[5];
-        String gameName = splited[6];
+        String name = splited[0].trim();
+        long quantity = Long.parseLong(splited[1].trim());
+        int usdPrice = Integer.parseInt(splited[2].trim());
+        String redeemCode = splited[3].trim();
+        String imgPath = splited[4].trim();
+        String platform = splited[5].trim();
+        String gameName = splited[6].trim();
         Web2GameCode web2GameCode = new Web2GameCode(name, quantity, usdPrice,
                 redeemCode, imgPath, platform, gameName);
         web2GameCode.setAddedBy(message.getMessage().getFrom().getId());
@@ -584,11 +584,11 @@ public class TelegramOperationalUserControllerHandler {
             return sm;
         }
         try {
-            System.out.println(Long.parseLong(splited[1]));
-            System.out.println(Double.parseDouble(splited[2]));
-            System.out.println(Integer.parseInt(splited[6]));
+            System.out.println(Long.parseLong(splited[1].trim()));
+            System.out.println(Double.parseDouble(splited[2].trim()));
+            System.out.println(Integer.parseInt(splited[6].trim()));
             try {
-                if(!splited[4].substring(0, 8).equals("https://")){
+                if(!splited[4].trim().substring(0, 8).equals("https://")){
                     sm = SendMessage.builder()
                             .text("Wrong url address format, please, try again.")
                             .parseMode("HTML")
@@ -612,13 +612,13 @@ public class TelegramOperationalUserControllerHandler {
                     .build();
             return sm;
         }
-        String name = splited[0];
-        long quantity = Long.parseLong(splited[1]);
-        int usdPrice = Integer.parseInt(splited[2]);
-        String redeemCode = splited[3];
-        String imgPath = splited[4];
-        String platform = splited[5];
-        int usdValue = Integer.parseInt(splited[6]);
+        String name = splited[0].trim();
+        long quantity = Long.parseLong(splited[1].trim());
+        int usdPrice = Integer.parseInt(splited[2].trim());
+        String redeemCode = splited[3].trim();
+        String imgPath = splited[4].trim();
+        String platform = splited[5].trim();
+        int usdValue = Integer.parseInt(splited[6].trim());
         Web2GiftCard web2GiftCard = new Web2GiftCard(name, quantity, usdPrice,
                 redeemCode, imgPath, platform, usdValue);
         web2GiftCard.setAddedBy(message.getMessage().getFrom().getId());
