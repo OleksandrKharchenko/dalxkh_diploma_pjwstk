@@ -15,7 +15,7 @@ public class PaymentOrderService {
                 return payment;
             }
             if (typeOfPayment.equals("fiat")){
-                Payment payment = new FiatPayment(order, "PayAPI");
+                Payment payment = new FiatPayment(order, "Unlimint");
                 order.setPayment(payment);
                 order.setState(payment.getState());
                 HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
