@@ -174,12 +174,18 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                                 throw new RuntimeException(e);
                             }
                         }
+                    } else if (update.getMessage().getText().equals("/add_webitem")) {
+                        SendMessage sm = telegramOperationalUserControllerHandler.addTypeOfWebItem(update);
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
             }
             //CALLBACK QUERIES
             if (update.hasCallbackQuery()) {
-                System.out.println(update.getCallbackQuery().getData());
                 if (update.getCallbackQuery().getData().substring(0, 6).equals("banUsr")) {
                     SendMessage sm = telegramOperationalUserControllerHandler.banTelegramClientUser(update);
                     try {
@@ -236,8 +242,6 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                         }
                     }
                 } else if (update.getCallbackQuery().getData().equals("initiated")) {
-                    System.out.println("GET ORDERS");
-                    System.out.println(update.getCallbackQuery().getData());
                     List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "initiated");
                     for (SendMessage sm : sendMessageList) {
                         try {
@@ -273,6 +277,27 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                             throw new RuntimeException(e);
                         }
                     }
+                } else if (update.getCallbackQuery().getData().equals("Web3NFTitemadd")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.addWeb3NFTPreMessage(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (update.getCallbackQuery().getData().equals("Web2GameCodeitemadd")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.addWeb2GameCodePreMessage(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (update.getCallbackQuery().getData().equals("Web2GiftCarditemadd")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.addWeb2GiftCardPreMessage(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else if (update.getCallbackQuery().getData().substring(0, 7).equals("deleteo")) {
                     SendMessage sm = telegramOperationalUserControllerHandler.deleteOrder(update);
                     try {
@@ -289,26 +314,31 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                     }
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //REPLIES
+            if (update.getMessage().isReply()) {
+                if (update.getMessage().getReplyToMessage().getText().contains("NFT")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.addWebItemNFT(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (update.getMessage().getReplyToMessage().getText().contains("Game Code")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.addWebItemGameCode(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (update.getMessage().getReplyToMessage().getText().contains("Gift Card")){
+                    SendMessage sm = telegramOperationalUserControllerHandler.addWebItemGiftCard(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         } else {
             SendMessage sendMessage;
             sendMessage = SendMessage.builder()
@@ -321,8 +351,6 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                 throw new RuntimeException(e);
             }
         }
-
-
     }
 
     @Override

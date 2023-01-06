@@ -4,6 +4,7 @@ package org.main;
 import jakarta.persistence.NoResultException;
 import org.orders.*;
 import org.payments.*;
+import org.web3j.abi.datatypes.Int;
 import org.webitems.*;
 import org.users.*;
 
@@ -13,6 +14,8 @@ import java.util.concurrent.TimeoutException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+//        System.out.println("hdsads".substring(0, 8).equals("https://"));
+//        System.out.println(Integer.parseInt("dsadsad8"));
 //    OrderEmailSenderService.sendMailTo("deepalexkh@gmail.com", "dsadsad");
 
 // *********************ENTITY GENERATE DB INITIATION**********************

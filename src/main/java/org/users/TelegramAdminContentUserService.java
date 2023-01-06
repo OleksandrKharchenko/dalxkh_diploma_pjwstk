@@ -8,6 +8,7 @@ import org.orders.Order;
 import org.orders.OrderService;
 import org.webitems.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,17 @@ public class TelegramAdminContentUserService {
         WebItem webItem = webItemService.getWebItem(idWebItem);
         webItemService.deleteWebItem(webItem);
         return "WebItem: <b>" + webItem.getIdItem() + "</b> removed.";
+    }
+
+    public String addWebItem(WebItem webItem) {
+        try {
+            WebItemService webItemService = new WebItemService();
+            webItemService.addWebItem(webItem);
+            return "WebItem: <b>" + webItem.getIdItem() + "</b> added.";
+        } catch (Exception e) {
+            return "WebItem is not added, something went wrong.";
+        }
+
     }
 
 }

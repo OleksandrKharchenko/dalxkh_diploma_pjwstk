@@ -20,6 +20,11 @@ public class WebItemService {
         spawner.deleteCommit(webItem);
     }
 
+    public void addWebItem(WebItem webItem) {
+        HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+        spawner.createCommit(webItem);
+    }
+
     public WebItem getWebItem(int idItem) {
         Session startGetWebItemSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
