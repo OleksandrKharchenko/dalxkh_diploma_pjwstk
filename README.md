@@ -1,2 +1,2 @@
 # dalxkh_diploma_pjwstk
-my diploma project
+my diploma PJWSTK project s15638
