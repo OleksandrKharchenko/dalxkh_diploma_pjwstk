@@ -158,12 +158,28 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                                 throw new RuntimeException(e);
                             }
                         }
+                    } else if (update.getMessage().getText().equals("/get_webitems")) {
+                        SendMessage sm = telegramOperationalUserControllerHandler.getTypeOfWebItems(update);
+                        try {
+                            execute(sm);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else if (update.getMessage().getText().equals("/del_webitem")) {
+                        List<SendPhoto> sendPhotoList = telegramOperationalUserControllerHandler.getWebItems(update);
+                        for (SendPhoto sp : sendPhotoList) {
+                            try {
+                                execute(sp);
+                            } catch (TelegramApiException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     }
                 }
             }
             //CALLBACK QUERIES
             if (update.hasCallbackQuery()) {
-
+                System.out.println(update.getCallbackQuery().getData());
                 if (update.getCallbackQuery().getData().substring(0, 6).equals("banUsr")) {
                     SendMessage sm = telegramOperationalUserControllerHandler.banTelegramClientUser(update);
                     try {
@@ -193,7 +209,6 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                         throw new RuntimeException(e);
                     }
                 } else if (update.getCallbackQuery().getData().equals("completed")) {
-                    System.out.println("COMPLETED");
                     List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "completed");
                     for (SendMessage sm : sendMessageList) {
                         try {
@@ -221,6 +236,8 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                         }
                     }
                 } else if (update.getCallbackQuery().getData().equals("initiated")) {
+                    System.out.println("GET ORDERS");
+                    System.out.println(update.getCallbackQuery().getData());
                     List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "initiated");
                     for (SendMessage sm : sendMessageList) {
                         try {
@@ -229,8 +246,42 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                             throw new RuntimeException(e);
                         }
                     }
-                } else if (update.getCallbackQuery().getData().substring(0, 6).equals("delete")) {
+                } else if (update.getCallbackQuery().getData().equals("Web3NFTitems")) {
+                    List<SendPhoto> sendPhotoList = telegramOperationalUserControllerHandler.getWebItemsByType(update, "Web3NFT");
+                    for (SendPhoto sp : sendPhotoList) {
+                        try {
+                            execute(sp);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (update.getCallbackQuery().getData().equals("Web2GameCodeitems")) {
+                    List<SendPhoto> sendPhotoList = telegramOperationalUserControllerHandler.getWebItemsByType(update, "Web2GameCode");
+                    for (SendPhoto sp : sendPhotoList) {
+                        try {
+                            execute(sp);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (update.getCallbackQuery().getData().equals("Web2GiftCarditems")) {
+                    List<SendPhoto> sendPhotoList = telegramOperationalUserControllerHandler.getWebItemsByType(update, "Web2GiftCard");
+                    for (SendPhoto sp : sendPhotoList) {
+                        try {
+                            execute(sp);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } else if (update.getCallbackQuery().getData().substring(0, 7).equals("deleteo")) {
                     SendMessage sm = telegramOperationalUserControllerHandler.deleteOrder(update);
+                    try {
+                        execute(sm);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else if (update.getCallbackQuery().getData().substring(0, 7).equals("deletew")) {
+                    SendMessage sm = telegramOperationalUserControllerHandler.deleteWebItem(update);
                     try {
                         execute(sm);
                     } catch (TelegramApiException e) {

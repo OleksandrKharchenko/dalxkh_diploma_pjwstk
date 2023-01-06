@@ -18,8 +18,8 @@ public interface EnvTelegramBotsVars {
             "/whoami - What type of Ops User are you \n" +
             "/get_orders - Get list of orders by state \n" +
             "/del_order - Remove Order from Store \n" +
-            "/add_item - Add Item to Store \n" +
-            "/del_item - Remove Item from Store \n" +
-            "/get_webitems - Get list of webitems by type \n";
+            "/get_webitems - Get list of webitems by type \n" +
+            "/del_webitem - Remove Item from Store \n" +
+            "/add_webitem - Add Item to Store \n";
 
 }

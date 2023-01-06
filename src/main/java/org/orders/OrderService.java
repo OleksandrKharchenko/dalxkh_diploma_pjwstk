@@ -30,6 +30,11 @@ public class OrderService {
         return "Order updated";
     }
 
+    public void deleteOrder(Order order) {
+        HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
+        spawner.deleteCommit(order);
+    }
+
     public Order getOrders(int idOrder) {
         Session startGetOrdersSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;

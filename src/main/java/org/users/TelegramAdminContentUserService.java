@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TelegramAdminContentUserService {
 
-    public List<WebItem> getWebItems(String typeOf) {
+    public List<WebItem> getWebItemsByType(String typeOf) {
         Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
         Query query = null;
         List<WebItem> listWebItems = null;
@@ -58,15 +58,6 @@ public class TelegramAdminContentUserService {
         return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
     }
 
-    public String editWebItem(WebItem webItem, TelegramAdminContentUser contentOperUser) {
-        if (contentOperUser.isOperational()) {
-            HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
-            spawner.updateCommit(webItem);
-            return webItem.getName() + " updated.";
-        }
-        return "ERROR: on add item, content admin user " + contentOperUser.getIdTelegramUser() + " is disabled";
-    }
-
     public List<Order> getOrders(){
         Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
         Query query;
@@ -77,13 +68,28 @@ public class TelegramAdminContentUserService {
         return orderList;
     }
 
+    public List<WebItem> getWebItems(){
+        Session startSuperUserSession = HibernateSessionFactorySpawner.spawnSession();
+        Query query;
+        startSuperUserSession.beginTransaction();
+        query = startSuperUserSession.createQuery("from WebItem", WebItem.class);
+        List<WebItem> webItemList = query.getResultList();
+        startSuperUserSession.close();
+        return webItemList;
+    }
+
     public String deleteOrder(int idOrder) {
         OrderService orderService = new OrderService();
         Order order = orderService.getOrders(idOrder);
-        HibernateCommitsSpawner spawner = new HibernateCommitsSpawner();
-        spawner.deleteCommit(order);
+        orderService.deleteOrder(order);
         return "Order: <b>" + order.getIdOrder() + "</b> removed.";
     }
 
+    public String deleteWebItem(int idWebItem) {
+        WebItemService webItemService = new WebItemService();
+        WebItem webItem = webItemService.getWebItem(idWebItem);
+        webItemService.deleteWebItem(webItem);
+        return "WebItem: <b>" + webItem.getIdItem() + "</b> removed.";
+    }
 
 }

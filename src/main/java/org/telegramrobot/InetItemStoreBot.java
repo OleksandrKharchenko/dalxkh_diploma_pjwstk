@@ -141,7 +141,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             if (update.getCallbackQuery().getData().equals("NFT")) {
                 TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
                 WebItemService webItemService = new WebItemService();
-                List<WebItem> web3NFTs = webItemService.getWebItems("Web3NFT");
+                List<WebItem> web3NFTs = webItemService.getWebItemsByType("Web3NFT");
                 SendPhoto sp;
                 try {
                     for (WebItem w : web3NFTs) {
@@ -154,7 +154,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             } else if (update.getCallbackQuery().getData().equals("GfC")) {
                 TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
                 WebItemService webItemService = new WebItemService();
-                List<WebItem> web2GiftCard = webItemService.getWebItems("Web2GiftCard");
+                List<WebItem> web2GiftCard = webItemService.getWebItemsByType("Web2GiftCard");
                 SendPhoto sp;
                 try {
                     for (WebItem w : web2GiftCard) {
@@ -167,7 +167,7 @@ public class InetItemStoreBot extends TelegramLongPollingBot {
             } else if (update.getCallbackQuery().getData().equals("GmC")) {
                 TelegramWebItemControllerHandler telegramWebItemControllerHandler = new TelegramWebItemControllerHandler();
                 WebItemService webItemService = new WebItemService();
-                List<WebItem> web2GameCodes = webItemService.getWebItems("Web2GameCode");
+                List<WebItem> web2GameCodes = webItemService.getWebItemsByType("Web2GameCode");
                 SendPhoto sp;
                 try {
                     for (WebItem w : web2GameCodes) {

@@ -30,7 +30,7 @@ public class WebItemService {
         return webItem;
     }
 
-    public List<WebItem> getWebItems(String typeOf) {
+    public List<WebItem> getWebItemsByType(String typeOf) {
         Session startGetWebItemsSession = HibernateSessionFactorySpawner.spawnSession();
         Query query = null;
         List<WebItem> listWebItems = null;
