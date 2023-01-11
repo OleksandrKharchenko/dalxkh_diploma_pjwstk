@@ -22,10 +22,10 @@ import java.util.Optional;
 
 public class OrderCryptoReceiverSenderService {
     private boolean isTransactionCompleted = false;
-    final private String PRIVATE_KEY = "8fe592037f561efedcd8ceb49835ac4c61ae121fd2e373dee8257fd2f65ca73e";
+    final private String PRIVATE_KEY = "**************************************";
     final BigInteger GAS_LIMIT = DefaultGasProvider.GAS_LIMIT;
     final BigInteger GAS_PRICE = DefaultGasProvider.GAS_PRICE;
-    final String myWallet = "0x329DfA6ca4F1210231B66e6d78361D36aBF178EA";
+    final String myWallet = "0xfFA30a47083eB6D81731d8AAFc06C79B102F1fB9";
     final okhttp3.OkHttpClient httpClient = new OkHttpClient();
     final Web3j web3jClient = Web3j.build(new HttpService("https://goerli.infura.io/v3/7f6e1ebbe3d1420faa797ec6d215f8e0", httpClient));
 
