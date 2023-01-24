@@ -27,7 +27,7 @@ public class OrderEmailSenderService {
 
         protected PasswordAuthentication getPasswordAuthentication() {
 
-            return new PasswordAuthentication("s15638@pjwstk.edu.pl", "curbqihdwaulqwzd");
+            return new PasswordAuthentication("s15638@pjwstk.edu.pl", "*******");
 
         }
 

@@ -38,7 +38,7 @@ public class Main {
 
 // *********************SUPER USER INITIATION******************************
 //        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
-//        String admEmail = "deepalexkh@gmail.com";
+//        String admEmail = "testtestkharchenko@gmail.com";
 //        int admIdTelegramUser = 512510188;
 //        String admDisplayName = "Alex Kharchenko";
 //        telegramAdminSuperUserService.initiateTelegramFirstSuperUser(admEmail, admIdTelegramUser, admDisplayName);
@@ -61,17 +61,19 @@ public class Main {
 //        TelegramAdminSuperUserService telegramAdminSuperUserService1 = new TelegramAdminSuperUserService();
 //        TelegramAdminSuperUser initialSuperUser = telegramAdminSuperUserService1.getInitialSuperUser();
 //        System.out.println(initialSuperUser.getIdUser());
-//        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(592510188);
+//        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(546240188);
 //        System.out.println(telegramClientUser.getIdUser() + telegramClientUser.getIdUser());
 //        telegramAdminSuperUserService1.addOperationalUser(telegramClientUser, initialSuperUser, "content");// ************************************************************************
 // ************************************************************************
 
 // *********************ADMIN USER CREATE**********************************
-//        TelegramAdminSuperUser initialSuperUser = TelegramAdminSuperUserService.getInitialSuperUser();
+//        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
+//        TelegramClientUserService telegramClientUserService = new TelegramClientUserService();
+//        TelegramAdminSuperUser initialSuperUser = telegramAdminSuperUserService.getInitialSuperUser();
 //        System.out.println(initialSuperUser.getIdUser());
-//        TelegramClientUser telegramClientUser = TelegramClientUserService.getTelegramClientUser(546210188);
+//        TelegramClientUser telegramClientUser = telegramClientUserService.getTelegramClientUser(592510188);
 //        System.out.println(telegramClientUser.getIdUser() + telegramClientUser.getIdUser());
-//        TelegramAdminSuperUserService.addOperationalUser(telegramClientUser, initialSuperUser, "super");
+//        telegramAdminSuperUserService.addOperationalUser(telegramClientUser, initialSuperUser, "super");
 // ************************************************************************
 
 // *********************DISABLING OPERATIONAL USER**********************************
@@ -87,24 +89,24 @@ public class Main {
 // *********************ADDING WEBITEM BY CONTENT ADMIN********************
 //        TelegramAdminSuperUserService telegramAdminSuperUserService = new TelegramAdminSuperUserService();
 //        TelegramAdminContentUserService telegramAdminContentUserService = new TelegramAdminContentUserService();
-//        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) telegramAdminSuperUserService.getTelegramOperUser(592510188);
+//        TelegramAdminContentUser telegramOperationalUser = (TelegramAdminContentUser) telegramAdminSuperUserService.getTelegramOperUser(546240188);
 //        Web2GameCode gameCode0 = new Web2GameCode("gameCode_MetroExodus", 50, 100, "OX8572123JEQES", "https://items.gog.com/metro_exodus/Metro_Exodus_PC_Enhanced_Logo_black.png", "Origin", "Metro Exodus");
 //        Web2GameCode gameCode1 = new Web2GameCode("gameCode_TheWitcher3", 50, 150, "OX23JY87ETRKD7", "https://items.gog.com/the_witcher_3_wild_hunt/witcher_3_complete_edition_banner_en.png", "GOG", "The Witcher 3");
 //        Web2GameCode gameCode2 = new Web2GameCode("gameCode_EldenRing", 50, 250, "OX23JK8UAT8TD1", "https://geekflare.com/wp-content/uploads/2022/07/Elden-Ring-Merch.png", "Steam", "Elden Ring");
 //
-//        telegramAdminContentUserService.addWebItem(gameCode0, telegramOperationalUser);
-//        telegramAdminContentUserService.addWebItem(gameCode1, telegramOperationalUser);
-//        telegramAdminContentUserService.addWebItem(gameCode2, telegramOperationalUser);
+//        telegramAdminContentUserService.addWebItem(gameCode0);
+//        telegramAdminContentUserService.addWebItem(gameCode1);
+//        telegramAdminContentUserService.addWebItem(gameCode2);
 //        Web3NFT nft = new Web3NFT("ukraine_nft", 5, 0.1, "0x11F0640bdb99E54Cbb7bE40E18460F9c9c16B957", "ETH", "ERC-721", 43, "epic", "https://i.seadn.io/gae/Vjbl-6yiwT3XzSwk7q4yffAfgPv1jwV8EMs5EGR8TYyFVDl9SXEHFAXz7sVQYV72J1DfXeo9MHIvYXSwCPP0v_lkHU8hHQ8254KS?auto=format&w=1000");
-//        telegramAdminContentUserService.addWebItem(nft, telegramOperationalUser);
+//        telegramAdminContentUserService.addWebItem(nft);
 //        Web2GiftCard giftCard0 = new Web2GiftCard("giftCard_BattleNet", 10, 489, "O5X36T43DF212G3JE8QES", "https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/b/n/bnetgc_1601920259_1603876637.jpg", "Battle Net", 500);
 //        Web2GiftCard giftCard1 = new Web2GiftCard("giftCard_BattleNet", 80, 199, "O5X3XTT3HFX12L4JE8TEU", "https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/b/n/bnetgc_1601920259_1603876637.jpg", "Battle Net", 250);
 //        Web2GiftCard giftCard2 = new Web2GiftCard("giftCard_Origin", 15, 99, "KKTS234932K43DF212G3JEIRSQ8QES", "https://images.g2a.com/uiadminimages/770x433/1x1x1/599554d5bbef/4a9424c9217a4e578407d5b4", "Origin", 100);
 //        Web2GiftCard giftCard3 = new Web2GiftCard("giftCard_PStore", 50, 9, "YYSSH3D952K231FKLO3JEIRSQ8QHEJ", "https://images.g2a.com/1024x768/1x1x0/playstation-network-gift-card-200-pln-psn-poland-i10000070176495/59e737dc5bafe3a7782d06b4", "Playstation Store", 10);
-//        telegramAdminContentUserService.addWebItem(giftCard0, telegramOperationalUser);
-//        telegramAdminContentUserService.addWebItem(giftCard1, telegramOperationalUser);
-//        telegramAdminContentUserService.addWebItem(giftCard2, telegramOperationalUser);
-//        telegramAdminContentUserService.addWebItem(giftCard3, telegramOperationalUser);
+//        telegramAdminContentUserService.addWebItem(giftCard0);
+//        telegramAdminContentUserService.addWebItem(giftCard1);
+//        telegramAdminContentUserService.addWebItem(giftCard2);
+//        telegramAdminContentUserService.addWebItem(giftCard3);
 
 // ************************************************************************
 

@@ -243,7 +243,7 @@ public class TelegramOperationalUserControllerHandler {
                 .text("Canceled").callbackData("canceled")
                 .build();
         InlineKeyboardButton keyboardButton2 = InlineKeyboardButton.builder()
-                .text("Payment").callbackData("payment")
+                .text("Payment").callbackData("paymentwith")
                 .build();
         InlineKeyboardButton keyboardButton3 = InlineKeyboardButton.builder()
                 .text("Initiated").callbackData("initiated")

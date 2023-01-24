@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class OrderCryptoReceiverSenderService {
     private boolean isTransactionCompleted = false;
-    final private String PRIVATE_KEY = "**************************************";
+    final private String PRIVATE_KEY = "***************************";
     final BigInteger GAS_LIMIT = DefaultGasProvider.GAS_LIMIT;
     final BigInteger GAS_PRICE = DefaultGasProvider.GAS_PRICE;
     final String myWallet = "0xfFA30a47083eB6D81731d8AAFc06C79B102F1fB9";

@@ -232,7 +232,7 @@ public class InetItemStoreBotAdmin extends TelegramLongPollingBot {
                             throw new RuntimeException(e);
                         }
                     }
-                } else if (update.getCallbackQuery().getData().equals("payment")) {
+                } else if (update.getCallbackQuery().getData().equals("paymentwith")) {
                     List<SendMessage> sendMessageList = telegramOperationalUserControllerHandler.getOrders(update, "payment");
                     for (SendMessage sm : sendMessageList) {
                         try {
